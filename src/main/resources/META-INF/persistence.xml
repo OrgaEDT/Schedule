@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
-	         version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+             version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
   <persistence-unit name="schedulePU" transaction-type="RESOURCE_LOCAL">
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider> -->
+    <class>amu.licence.edt.model.beans.Admin</class>
+    <class>amu.licence.edt.model.beans.CRoom</class>
+    <class>amu.licence.edt.model.beans.CRoomType</class>
+    <class>amu.licence.edt.model.beans.Group</class>
+    <class>amu.licence.edt.model.beans.Level</class>
+    <class>amu.licence.edt.model.beans.Promo</class>
+    <class>amu.licence.edt.model.beans.Rank</class>
+    <class>amu.licence.edt.model.beans.Session</class>
+    <class>amu.licence.edt.model.beans.SessionType</class>
+    <class>amu.licence.edt.model.beans.Teacher</class>
+    <class>amu.licence.edt.model.beans.TU</class>
+    <class>amu.licence.edt.model.beans.Unavailability</class>
     <properties>
 <!-- oracle -->
-      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//localhost:1521/orcl"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//localhost:1521/bdetud"/>
       <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
 
 <!-- mysql
-      <property name="javax.persistence.jdbc.url " value="jdbc:mysql://localhost:3306/scheduleBD"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/scheduleDB"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
--->
+ -->
       <property name="javax.persistence.jdbc.user" value="user"/>
       <property name="javax.persistence.jdbc.password" value="password"/>
       <property name="eclipselink.ddl-generation" value="create-tables"/>

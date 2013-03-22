@@ -5,7 +5,7 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import amu.licence.edt.model.beans.UE;
+import amu.licence.edt.model.beans.TU;
 
 public class ScheduleTableCellRenderer extends DefaultTableCellRenderer {
     private static final long serialVersionUID = 1L;
@@ -17,9 +17,9 @@ public class ScheduleTableCellRenderer extends DefaultTableCellRenderer {
                                             row, column);
 
         try {
-            UE ue = (UE) value;
-            setText(ue.getLibelle());
-            setBackground(ue.getCouleur());
+            TU ue = (TU) value;
+            setText(ue.getLibel());
+            setBackground(ue.getColor());
         } catch (ClassCastException cce) {
             System.err.println("not a UE");// TODO exc ?
         }

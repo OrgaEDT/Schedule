@@ -4,7 +4,7 @@ import javax.swing.JTable;
 
 import amu.licence.edt.controller.ScheduleController;
 import amu.licence.edt.model.ScheduleModel;
-import amu.licence.edt.model.beans.UE;
+import amu.licence.edt.model.beans.TU;
 
 public class ScheduleTableView extends AbstractComponentView {
 
@@ -16,7 +16,7 @@ public class ScheduleTableView extends AbstractComponentView {
     protected void createView() {
         JTable table = new JTable(new ScheduleTableModel());
 
-        table.setDefaultRenderer(UE.class, new ScheduleTableCellRenderer());
+        table.setDefaultRenderer(TU.class, new ScheduleTableCellRenderer());
 
         component = table;
     }
