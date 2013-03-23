@@ -23,7 +23,7 @@ public class Promo implements Serializable {
     private Level level;
 
     @OneToMany (mappedBy="promo")
-    private Set<Group> group;
+    private Set<Group> groups;
 
     public Promo() { }
 
@@ -31,20 +31,20 @@ public class Promo implements Serializable {
         super();
         this.size = size;
         this.level = level;
-        this.group = group;
+        this.groups = group;
     }
 
     @Override
     public String toString() {
         return "Promo [id=" + id + ", size=" + size + ", level=" + level
-                + ", group=" + group + "]";
+                + ", group=" + groups + "]";
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((group == null) ? 0 : group.hashCode());
+        result = prime * result + ((groups == null) ? 0 : groups.hashCode());
         result = prime * result + ((level == null) ? 0 : level.hashCode());
         result = prime * result + size;
         return result;
@@ -56,9 +56,9 @@ public class Promo implements Serializable {
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;
         Promo other = (Promo) obj;
-        if (group == null) {
-            if (other.group != null) return false;
-        } else if (!group.equals(other.group)) return false;
+        if (groups == null) {
+            if (other.groups != null) return false;
+        } else if (!groups.equals(other.groups)) return false;
         if (level == null) {
             if (other.level != null) return false;
         } else if (!level.equals(other.level)) return false;
@@ -83,15 +83,15 @@ public class Promo implements Serializable {
     }
 
     public Set<Group> getGroup() {
-        return group;
+        return groups;
     }
 
     public boolean addGroup(Group group) {
-        return this.group.add(group);
+        return this.groups.add(group);
     }
 
     public boolean removeGroup(Group group) {
-        return this.group.remove(group);
+        return this.groups.remove(group);
     }
 
     public int getId() {
