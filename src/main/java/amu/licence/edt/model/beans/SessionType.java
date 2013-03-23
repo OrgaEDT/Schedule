@@ -92,8 +92,12 @@ public class SessionType implements Serializable {
         return compatibleCRoomTypes;
     }
 
-    public void setCompatibleCRoomTypes(Set<CRoomType> compatibleCRoomTypes) {
-        this.compatibleCRoomTypes = compatibleCRoomTypes;
+    public boolean addCompatibleCRoomType(CRoomType cRoomType) {
+        return this.compatibleCRoomTypes.add(cRoomType);
+    }
+
+    public boolean removeCompatibleCRoomType(CRoomType cRoomType) {
+        return this.compatibleCRoomTypes.remove(cRoomType);
     }
 
     public int getId() {

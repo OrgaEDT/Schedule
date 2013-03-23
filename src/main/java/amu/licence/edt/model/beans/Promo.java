@@ -86,8 +86,12 @@ public class Promo implements Serializable {
         return group;
     }
 
-    public void setGroup(Set<Group> group) {
-        this.group = group;
+    public boolean addGroup(Group group) {
+        return this.group.add(group);
+    }
+
+    public boolean removeGroup(Group group) {
+        return this.group.remove(group);
     }
 
     public int getId() {

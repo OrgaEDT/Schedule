@@ -77,8 +77,12 @@ public class CRoomType implements Serializable {
         return compatibleSessionTypes;
     }
 
-    public void setCompatibleSessionTypes(Set<SessionType> compatibleSessionTypes) {
-        this.compatibleSessionTypes = compatibleSessionTypes;
+    public boolean addCompatibleSessionType(SessionType sessionType) {
+        return this.compatibleSessionTypes.add(sessionType);
+    }
+
+    public boolean removeCompatibleSessionType(SessionType sessionType) {
+        return this.compatibleSessionTypes.remove(sessionType);
     }
 
     public int getId() {

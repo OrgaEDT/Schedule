@@ -211,8 +211,12 @@ public class TU implements Serializable {
         return competentTeachers;
     }
 
-    public void setCompetentTeachers(Set<Teacher> competentTeachers) {
-        this.competentTeachers = competentTeachers;
+    public boolean addCompetentTeacher(Teacher teacher) {
+        return this.competentTeachers.add(teacher);
+    }
+
+    public boolean removeCompetentTeacher(Teacher teacher) {
+        return this.competentTeachers.remove(teacher);
     }
 
     public int getId() {

@@ -107,8 +107,12 @@ public class Admin implements Serializable {
         return levels;
     }
 
-    public void setLevels(Set<Level> levels) {
-        this.levels = levels;
+    public boolean addLevel(Level level) {
+        return this.levels.add(level);
+    }
+
+    public boolean removeLevel(Level level) {
+        return this.levels.remove(level);
     }
 
     public int getId() {
