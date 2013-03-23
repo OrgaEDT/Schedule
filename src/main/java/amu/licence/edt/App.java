@@ -1,12 +1,14 @@
 package amu.licence.edt;
 
-import amu.licence.edt.view.MainWindow;
+import amu.licence.edt.model.ScheduleModel;
+import amu.licence.edt.presenter.SchedulePresenter;
 
 public class App {
 
     public static void main( String[] args ) {
-        MainWindow mainWindow = new MainWindow();
-        mainWindow.setVisible(true);
+        ScheduleModel model = new ScheduleModel();
+        SchedulePresenter presenter = new SchedulePresenter(model);
+        presenter.getMainFrame().getFrame().setVisible(true);
     }
 
 }
