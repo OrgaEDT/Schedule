@@ -1,6 +1,7 @@
 package amu.licence.edt.model.beans;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -32,9 +33,10 @@ public class Teacher extends Admin
 
     public Teacher() { }
 
-    public Teacher(String name, String attachmentSite, String tel, String mail,
-            int serviceHours, Rank rank) {
-        super();
+    public Teacher(String login, String pw, boolean isTeacherAdmin,
+            Set<Level> levels, String name, String attachmentSite, String tel,
+            String mail, int serviceHours, Rank rank) {
+        super(login, pw, isTeacherAdmin, levels);
         this.name = name;
         this.attachmentSite = attachmentSite;
         this.tel = tel;
