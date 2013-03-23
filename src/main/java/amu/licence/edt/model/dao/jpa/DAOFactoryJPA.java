@@ -53,7 +53,6 @@ public class DAOFactoryJPA implements DAOFactory {
     protected void finalize() throws Throwable { closeEm(); };
 
     public void closeEm() {
-        System.out.println("closing ems");
         entityManagerFactory.close();
         entityManager.close();
     }
