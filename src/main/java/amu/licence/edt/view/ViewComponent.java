@@ -2,15 +2,14 @@ package amu.licence.edt.view;
 
 import javax.swing.JComponent;
 
-import amu.licence.edt.model.ScheduleModel;
 import amu.licence.edt.presenter.SchedulePresenter;
 
 public abstract class ViewComponent extends AbstractView {
 
     protected JComponent component;
 
-    public ViewComponent(ScheduleModel model, SchedulePresenter presenter) {
-        super(model, presenter);
+    public ViewComponent(SchedulePresenter presenter) {
+        super(presenter);
         this.component = createComponent();
     }
 

@@ -5,7 +5,6 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import amu.licence.edt.model.ScheduleModel;
 import amu.licence.edt.presenter.SchedulePresenter;
 
 public class MainFrame extends AbstractView {
@@ -23,8 +22,8 @@ public class MainFrame extends AbstractView {
     ViewComponent levelAdminPanel;
     ViewComponent teacherAdminPanel;
 
-    public MainFrame(ScheduleModel model, SchedulePresenter presenter) {
-        super(model, presenter);
+    public MainFrame(SchedulePresenter presenter) {
+        super(presenter);
         frame = new JFrame();
 
         frame.setTitle("Schedule");
@@ -35,12 +34,12 @@ public class MainFrame extends AbstractView {
         pnlSide = new JPanel();
         pnlAdmin = new JPanel();
 
-        adminStatusPanel = new AdminStatusPanel(model, presenter);
-        schedulesTree = new SchedulesTree(model, presenter);
-        scheduleTable = new ScheduleTable(model, presenter);
-        scheduleStatusPanel = new ScheduleStatusPanel(model, presenter);
-        levelAdminPanel = new LevelAdminPanel(model, presenter);
-        teacherAdminPanel = new TeacherAdminPanel(model, presenter);
+        adminStatusPanel = new AdminStatusPanel(presenter);
+        schedulesTree = new SchedulesTree(presenter);
+        scheduleTable = new ScheduleTable(presenter);
+        scheduleStatusPanel = new ScheduleStatusPanel(presenter);
+        levelAdminPanel = new LevelAdminPanel(presenter);
+        teacherAdminPanel = new TeacherAdminPanel(presenter);
 
         pnlCenter.setLayout(new BorderLayout());
         pnlCenter.add(scheduleStatusPanel.getComponent(), BorderLayout.NORTH);

@@ -7,7 +7,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import amu.licence.edt.model.ScheduleModel;
 import amu.licence.edt.presenter.SchedulePresenter;
 
 public class ScheduleStatusPanel extends ViewComponent {
@@ -19,8 +18,8 @@ public class ScheduleStatusPanel extends ViewComponent {
     private JLabel lblWhat;
     private JLabel lblWhen;
 
-    public ScheduleStatusPanel(ScheduleModel model, SchedulePresenter presenter) {
-        super(model, presenter);
+    public ScheduleStatusPanel(SchedulePresenter presenter) {
+        super(presenter);
     }
 
     @Override
