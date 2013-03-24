@@ -23,7 +23,7 @@ public class ScheduleStatusPanel extends ViewComponent {
     }
 
     @Override
-    public JComponent createComponent() {
+    protected JComponent createComponent() {
         JPanel panel = new JPanel();
 
         btnLeft = new JButton("left");

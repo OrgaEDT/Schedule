@@ -12,9 +12,8 @@ public class SchedulesTree extends ViewComponent {
     }
 
     @Override
-    public JComponent createComponent() {
+    protected JComponent createComponent() {
         return new JTree();
     }
-
 
 }

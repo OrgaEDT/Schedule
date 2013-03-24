@@ -17,6 +17,6 @@ public abstract class ViewComponent extends AbstractView {
         return component;
     }
 
-    public abstract JComponent createComponent();
+    protected abstract JComponent createComponent();
 
 }

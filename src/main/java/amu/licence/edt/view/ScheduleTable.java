@@ -12,11 +12,11 @@ public class ScheduleTable extends ViewComponent {
         super(presenter);
     }
 
-        @Override
-        public JComponent createComponent() {
-            JTable table = new JTable(new ScheduleTableModel());
-            table.setDefaultRenderer(TU.class, new ScheduleTableCellRenderer());
-            return table;
-        }
+    @Override
+    protected JComponent createComponent() {
+        JTable table = new JTable(new ScheduleTableModel());
+        table.setDefaultRenderer(TU.class, new ScheduleTableCellRenderer());
+        return table;
+    }
 
 }

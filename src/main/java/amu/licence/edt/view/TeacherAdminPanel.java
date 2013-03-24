@@ -12,7 +12,7 @@ public class TeacherAdminPanel extends ViewComponent {
     }
 
     @Override
-    public JComponent createComponent() {
+    protected JComponent createComponent() {
         return new JPanel();
     }
 }

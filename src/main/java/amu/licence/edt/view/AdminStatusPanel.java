@@ -20,7 +20,7 @@ public class AdminStatusPanel extends ViewComponent {
     }
 
     @Override
-    public JComponent createComponent() {
+    protected JComponent createComponent() {
         JPanel panel = new JPanel();
 
         lblStatus = new JLabel("unknown");
