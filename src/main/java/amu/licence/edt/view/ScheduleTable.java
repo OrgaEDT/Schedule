@@ -4,11 +4,11 @@ import javax.swing.JComponent;
 import javax.swing.JTable;
 
 import amu.licence.edt.model.beans.TU;
-import amu.licence.edt.presenter.SchedulePresenter;
+import amu.licence.edt.presenter.Presenter;
 
 public class ScheduleTable extends ViewComponent {
 
-    public ScheduleTable(SchedulePresenter presenter) {
+    public ScheduleTable(Presenter presenter) {
         super(presenter);
     }
 

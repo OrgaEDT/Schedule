@@ -3,11 +3,11 @@ package amu.licence.edt.view;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import amu.licence.edt.presenter.SchedulePresenter;
+import amu.licence.edt.presenter.Presenter;
 
 public class TeacherAdminPanel extends ViewComponent {
 
-    public TeacherAdminPanel(SchedulePresenter presenter) {
+    public TeacherAdminPanel(Presenter presenter) {
         super(presenter);
     }
 

@@ -5,7 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import amu.licence.edt.presenter.SchedulePresenter;
+import amu.licence.edt.presenter.Presenter;
 
 public class MainFrame extends AbstractView {
 
@@ -22,7 +22,7 @@ public class MainFrame extends AbstractView {
     ViewComponent levelAdminPanel;
     ViewComponent teacherAdminPanel;
 
-    public MainFrame(SchedulePresenter presenter) {
+    public MainFrame(Presenter presenter) {
         super(presenter);
         frame = new JFrame();
 

@@ -1,14 +1,14 @@
 package amu.licence.edt.presenter;
 
-import amu.licence.edt.controller.ScheduleController;
+import amu.licence.edt.controller.Controller;
 import amu.licence.edt.view.MainFrame;
 
-public class SchedulePresenter {
+public class Presenter {
 
     private MainFrame mainFrame;
-    private ScheduleController controller;
+    private Controller controller;
 
-    public SchedulePresenter(ScheduleController controller) {
+    public Presenter(Controller controller) {
         this.mainFrame = new MainFrame(this);
         this.controller = controller;
     }
