@@ -46,6 +46,8 @@ public class Presenter implements ModelObserver {
     public void validateLoginButtonPressed(String login, String password) {
         if (controller.validateLoginRequested(login, password)) {
             view.getLoginForm().getComponent().setVisible(false);
+            view.getLoginForm().clearTextFields();
+            view.getLoginForm().showErrorLbl(false);
         }
         else {
             view.getLoginForm().showErrorLbl(true);
