@@ -28,4 +28,8 @@ public class Presenter implements ModelObserver {
     public void scheduleChanged(Schedule schedule) {
     }
 
+    public void connectButtonPressed() {
+        view.showLoginForm(true);
+    }
+
 }

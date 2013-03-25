@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -60,7 +62,12 @@ public class AdminStatusPanel extends ViewComponent {
         pnlManage.setVisible(false);
 
         btnConnect = new JButton("Connexion");
-        btnConnect.addActionListener(null);
+        btnConnect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                btnConnectActionPerformed(arg0);
+            }
+        });
 
         btnDisconnect = new JButton("Déconnexion");
         btnDisconnect.addActionListener(null);
@@ -75,6 +82,10 @@ public class AdminStatusPanel extends ViewComponent {
         panel.add(pnlConnectBtn, BorderLayout.SOUTH);
 
         return panel;
+    }
+
+    private void btnConnectActionPerformed(ActionEvent arg0) {
+        presenter.connectButtonPressed();
     }
 
 }
