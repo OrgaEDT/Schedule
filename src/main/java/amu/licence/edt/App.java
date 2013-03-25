@@ -10,7 +10,7 @@ public class App {
         Model model = new Model();
         Controller controller = new Controller(model);
         Presenter presenter = new Presenter(controller);
-        presenter.getMainFrame().getFrame().setVisible(true);
+        presenter.showView();
     }
 
 }

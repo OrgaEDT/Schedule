@@ -1,20 +1,20 @@
 package amu.licence.edt.presenter;
 
 import amu.licence.edt.controller.Controller;
-import amu.licence.edt.view.MainFrame;
+import amu.licence.edt.view.View;
 
 public class Presenter {
 
-    private MainFrame mainFrame;
+    private View view;
     private Controller controller;
 
     public Presenter(Controller controller) {
-        this.mainFrame = new MainFrame(this);
+        this.view = new View(this);
         this.controller = controller;
     }
 
-    public MainFrame getMainFrame() {
-        return mainFrame;
+    public void showView() {
+        view.getMainFrame().getFrame().setVisible(true);
     }
 
 }
