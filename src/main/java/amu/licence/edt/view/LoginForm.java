@@ -2,10 +2,11 @@ package amu.licence.edt.view;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -59,7 +60,12 @@ public class LoginForm extends ViewComponent {
         pnlUsernamePassword.add(passwordInput);
 
         btnSubmit = new JButton("Valider");
-        btnSubmit.addActionListener(null);
+        btnSubmit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btnSubmitActionListener(e);
+            }
+        });
 
         dialog.setLayout(new GridLayout(0, 1));
 
@@ -78,6 +84,10 @@ public class LoginForm extends ViewComponent {
 
     public void showErrorLbl(boolean b) {
         lblError.setVisible(b);
+    }
+
+    protected void btnSubmitActionListener(ActionEvent e) {
+        presenter.validateLoginButtonPressed(usernameInput.getText(), new String(passwordInput.getPassword()));
     }
 
 }

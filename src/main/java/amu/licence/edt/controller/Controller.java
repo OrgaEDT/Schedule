@@ -10,4 +10,12 @@ public class Controller {
         this.model = model;
     }
 
+    public boolean validateLoginRequested(String login, String password) {
+        return model.tryToConnect(login, password);
+    }
+
+    public void disconnectionRequested() {
+        model.disconnect();
+    }
+
 }

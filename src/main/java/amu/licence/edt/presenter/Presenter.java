@@ -22,6 +22,13 @@ public class Presenter implements ModelObserver {
 
     @Override
     public void userChanged(Admin user) {
+        if (user == null) {
+            view.getMainFrame().getAdminStatusPanel().displayPublicUserStatus();
+        }
+        else {
+            view.getMainFrame().getAdminStatusPanel().displayAdminUser(user);
+        }
+        view.getMainFrame().getFrame().pack();
     }
 
     @Override
@@ -29,7 +36,25 @@ public class Presenter implements ModelObserver {
     }
 
     public void connectButtonPressed() {
-        view.showLoginForm(true);
+        view.getLoginForm().getComponent().setVisible(true);
+    }
+
+    public void disconnectButtonPressed() {
+        controller.disconnectionRequested();
+    }
+
+    public void validateLoginButtonPressed(String login, String password) {
+        if (controller.validateLoginRequested(login, password)) {
+            view.getLoginForm().getComponent().setVisible(false);
+        }
+        else {
+            view.getLoginForm().showErrorLbl(true);
+            view.getLoginForm().clearTextFields();
+        }
+    }
+
+    public void manageLevelButtonPressed(String levelCode) {
+        // TODO
     }
 
 }

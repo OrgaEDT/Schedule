@@ -58,4 +58,19 @@ public class Model {
         return this.observers.remove(o);
     }
 
+    public boolean tryToConnect(String login, String password) {
+        Admin a = daoFactory.getDAOAdmin().findByLoginPassword(login, password);
+        if (a == null)
+            return false;
+
+        user = a;
+        fireUserChanged();
+        return true;
+    }
+
+    public void disconnect() {
+        user = null;
+        fireUserChanged();
+    }
+
 }

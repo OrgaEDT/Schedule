@@ -12,6 +12,8 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import amu.licence.edt.model.beans.Admin;
+import amu.licence.edt.model.beans.Level;
 import amu.licence.edt.presenter.Presenter;
 
 public class AdminStatusPanel extends ViewComponent {
@@ -70,7 +72,12 @@ public class AdminStatusPanel extends ViewComponent {
         });
 
         btnDisconnect = new JButton("Déconnexion");
-        btnDisconnect.addActionListener(null);
+        btnDisconnect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btnDisconnectActionPerformed(e);
+            }
+        });
 
         pnlConnectBtn = new JPanel(new CardLayout());
         pnlConnectBtn.add(btnConnect, CONNECT_BTN);
@@ -86,6 +93,43 @@ public class AdminStatusPanel extends ViewComponent {
 
     private void btnConnectActionPerformed(ActionEvent e) {
         presenter.connectButtonPressed();
+    }
+
+    private void btnDisconnectActionPerformed(ActionEvent e) {
+        presenter.disconnectButtonPressed();
+    }
+
+    public void displayPublicUserStatus() {
+        ((CardLayout)pnlConnectBtn.getLayout()).show(pnlConnectBtn, CONNECT_BTN);
+        lblConnexionLogin.setText(publicLogin);
+        pnlManage.setVisible(false);
+    }
+
+    public void displayAdminUser(Admin user) {
+        ((CardLayout)pnlConnectBtn.getLayout()).show(pnlConnectBtn, DISCONNECT_BTN);
+        lblConnexionLogin.setText(user.getLogin());
+        if (user.isTeacherAdmin()) {
+            pnlBtnsManage.add(btnManageTeachers);
+        }
+        for (Level l : user.getLevels()) {
+            JButton btnManageLevel = new JButton(l.getCode());
+            btnManageLevel.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    btnManageLevelActionPerformed(e);
+                }
+            });
+            pnlBtnsManage.add(btnManageLevel);
+        }
+        if (pnlBtnsManage.getComponentCount() == 0) {
+            JLabel lblNothingToAdmin = new JLabel("Nothing to administrate");
+            pnlBtnsManage.add(lblNothingToAdmin);
+        }
+        pnlManage.setVisible(true);
+    }
+
+    private void btnManageLevelActionPerformed(ActionEvent e) {
+        presenter.manageLevelButtonPressed(((JButton) e.getSource()).getText());
     }
 
 }

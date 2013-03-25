@@ -9,8 +9,15 @@ import javax.persistence.*;
 @Table (name="T_ADMIN")
 @Inheritance (strategy=InheritanceType.JOINED)
 @DiscriminatorColumn (name="ADMIN_STATUS")
+@NamedQueries ({
+    @NamedQuery (name=Admin.FIND_BY_LOGIN_PASSWORD,
+                 query="SELECT a FROM Admin a " +
+                       "WHERE a.login = :login AND a.pw = :pw")
+})
 public class Admin implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    public static final String FIND_BY_LOGIN_PASSWORD = "findAdminByLoginPassword";
 
     @Id
     @GeneratedValue

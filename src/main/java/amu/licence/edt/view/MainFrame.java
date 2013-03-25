@@ -15,12 +15,12 @@ public class MainFrame extends AbstractView {
     JPanel pnlSide;
     JPanel pnlAdmin;
 
-    ViewComponent adminStatusPanel;
-    ViewComponent schedulesTree;
-    ViewComponent scheduleTable;
-    ViewComponent scheduleStatusPanel;
-    ViewComponent levelAdminPanel;
-    ViewComponent teacherAdminPanel;
+    AdminStatusPanel adminStatusPanel;
+    SchedulesTree schedulesTree;
+    ScheduleTable scheduleTable;
+    ScheduleStatusPanel scheduleStatusPanel;
+    LevelAdminPanel levelAdminPanel;
+    TeacherAdminPanel teacherAdminPanel;
 
     public MainFrame(Presenter presenter) {
         super(presenter);
@@ -62,6 +62,10 @@ public class MainFrame extends AbstractView {
 
     public JFrame getFrame() {
         return frame;
+    }
+
+    public AdminStatusPanel getAdminStatusPanel() {
+        return adminStatusPanel;
     }
 
 }

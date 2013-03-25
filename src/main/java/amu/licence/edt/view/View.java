@@ -17,8 +17,8 @@ public class View extends AbstractView {
         return mainFrame;
     }
 
-    public void showLoginForm(boolean b) {
-        loginForm.getComponent().setVisible(b);
+    public LoginForm getLoginForm() {
+        return loginForm;
     }
 
 }
