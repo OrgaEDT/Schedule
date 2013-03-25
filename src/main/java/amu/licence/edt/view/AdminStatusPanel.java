@@ -64,8 +64,8 @@ public class AdminStatusPanel extends ViewComponent {
         btnConnect = new JButton("Connexion");
         btnConnect.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent arg0) {
-                btnConnectActionPerformed(arg0);
+            public void actionPerformed(ActionEvent e) {
+                btnConnectActionPerformed(e);
             }
         });
 
@@ -84,7 +84,7 @@ public class AdminStatusPanel extends ViewComponent {
         return panel;
     }
 
-    private void btnConnectActionPerformed(ActionEvent arg0) {
+    private void btnConnectActionPerformed(ActionEvent e) {
         presenter.connectButtonPressed();
     }
 
