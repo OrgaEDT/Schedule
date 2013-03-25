@@ -1,22 +1,22 @@
 package amu.licence.edt.view;
 
-import javax.swing.JComponent;
+import java.awt.Component;
 
 import amu.licence.edt.presenter.Presenter;
 
 public abstract class ViewComponent extends AbstractView {
 
-    protected JComponent component;
+    protected Component component;
 
     public ViewComponent(Presenter presenter) {
         super(presenter);
         this.component = createComponent();
     }
 
-    public JComponent getComponent() {
+    public Component getComponent() {
         return component;
     }
 
-    protected abstract JComponent createComponent();
+    protected abstract Component createComponent();
 
 }
