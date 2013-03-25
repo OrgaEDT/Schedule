@@ -1,6 +1,7 @@
 package amu.licence.edt.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -28,6 +29,7 @@ public class MainFrame extends AbstractView {
 
         frame.setTitle("Schedule");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setPreferredSize(new Dimension(800, 600));
         frame.getContentPane().setLayout(new BorderLayout());
 
         pnlCenter = new JPanel();
