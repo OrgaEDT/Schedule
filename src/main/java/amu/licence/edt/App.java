@@ -10,6 +10,7 @@ public class App {
         Model model = new Model();
         Controller controller = new Controller(model);
         Presenter presenter = new Presenter(controller);
+        model.addObserver(presenter);
         presenter.showView();
     }
 
