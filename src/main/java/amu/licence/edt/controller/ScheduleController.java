@@ -4,10 +4,10 @@ import amu.licence.edt.model.ScheduleModel;
 
 public class ScheduleController {
 
-//    private ScheduleModel model;
+    private ScheduleModel model;
 
     public ScheduleController(ScheduleModel model) {
-//        this.model = model;
+        this.model = model;
     }
 
 }
