@@ -67,43 +67,21 @@ public class Session implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((cRoom == null) ? 0 : cRoom.hashCode());
-        result = prime * result + duration;
-        result = prime * result + ((group == null) ? 0 : group.hashCode());
-        result = prime * result
-                + ((sessionType == null) ? 0 : sessionType.hashCode());
-        result = prime * result
-                + ((startDate == null) ? 0 : startDate.hashCode());
-        result = prime * result + ((tU == null) ? 0 : tU.hashCode());
-        result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
+        result = prime * result + id;
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
         Session other = (Session) obj;
-        if (cRoom == null) {
-            if (other.cRoom != null) return false;
-        } else if (!cRoom.equals(other.cRoom)) return false;
-        if (duration != other.duration) return false;
-        if (group == null) {
-            if (other.group != null) return false;
-        } else if (!group.equals(other.group)) return false;
-        if (sessionType == null) {
-            if (other.sessionType != null) return false;
-        } else if (!sessionType.equals(other.sessionType)) return false;
-        if (startDate == null) {
-            if (other.startDate != null) return false;
-        } else if (!startDate.equals(other.startDate)) return false;
-        if (tU == null) {
-            if (other.tU != null) return false;
-        } else if (!tU.equals(other.tU)) return false;
-        if (teacher == null) {
-            if (other.teacher != null) return false;
-        } else if (!teacher.equals(other.teacher)) return false;
+        if (id != other.id)
+            return false;
         return true;
     }
 

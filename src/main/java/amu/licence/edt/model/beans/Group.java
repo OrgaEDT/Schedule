@@ -39,21 +39,21 @@ public class Group implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + groupSize;
-        result = prime * result + ((promo == null) ? 0 : promo.hashCode());
+        result = prime * result + id;
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
         Group other = (Group) obj;
-        if (groupSize != other.groupSize) return false;
-        if (promo == null) {
-            if (other.promo != null) return false;
-        } else if (!promo.equals(other.promo)) return false;
+        if (id != other.id)
+            return false;
         return true;
     }
 

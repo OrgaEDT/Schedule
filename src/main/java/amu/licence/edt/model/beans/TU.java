@@ -88,50 +88,21 @@ public class TU implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + classHours;
-        result = prime * result + ((code == null) ? 0 : code.hashCode());
-        result = prime * result + ((color == null) ? 0 : color.hashCode());
-        result = prime
-                * result
-                + ((competentTeachers == null) ? 0
-                        : competentTeachers.hashCode());
-        result = prime * result + ((level == null) ? 0 : level.hashCode());
-        result = prime * result + ((libel == null) ? 0 : libel.hashCode());
-        result = prime * result + practicalHours;
-        result = prime * result + projectHours;
-        result = prime * result + ((resp == null) ? 0 : resp.hashCode());
-        result = prime * result + tutorHours;
+        result = prime * result + id;
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
         TU other = (TU) obj;
-        if (classHours != other.classHours) return false;
-        if (code == null) {
-            if (other.code != null) return false;
-        } else if (!code.equals(other.code)) return false;
-        if (color == null) {
-            if (other.color != null) return false;
-        } else if (!color.equals(other.color)) return false;
-        if (competentTeachers == null) {
-            if (other.competentTeachers != null) return false;
-        } else if (!competentTeachers.equals(other.competentTeachers)) return false;
-        if (level == null) {
-            if (other.level != null) return false;
-        } else if (!level.equals(other.level)) return false;
-        if (libel == null) {
-            if (other.libel != null) return false;
-        } else if (!libel.equals(other.libel)) return false;
-        if (practicalHours != other.practicalHours) return false;
-        if (projectHours != other.projectHours) return false;
-        if (resp == null) {
-            if (other.resp != null) return false;
-        } else if (!resp.equals(other.resp)) return false;
-        if (tutorHours != other.tutorHours) return false;
+        if (id != other.id)
+            return false;
         return true;
     }
 

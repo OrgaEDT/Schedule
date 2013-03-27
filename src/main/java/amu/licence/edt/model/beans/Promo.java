@@ -44,25 +44,21 @@ public class Promo implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((groups == null) ? 0 : groups.hashCode());
-        result = prime * result + ((level == null) ? 0 : level.hashCode());
-        result = prime * result + size;
+        result = prime * result + id;
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
         Promo other = (Promo) obj;
-        if (groups == null) {
-            if (other.groups != null) return false;
-        } else if (!groups.equals(other.groups)) return false;
-        if (level == null) {
-            if (other.level != null) return false;
-        } else if (!level.equals(other.level)) return false;
-        if (size != other.size) return false;
+        if (id != other.id)
+            return false;
         return true;
     }
 

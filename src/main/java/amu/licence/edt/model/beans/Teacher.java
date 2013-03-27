@@ -56,38 +56,24 @@ public class Teacher extends Admin
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result
-                + ((attachmentSite == null) ? 0 : attachmentSite.hashCode());
-        result = prime * result + ((mail == null) ? 0 : mail.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((rank == null) ? 0 : rank.hashCode());
-        result = prime * result + serviceHours;
-        result = prime * result + ((tel == null) ? 0 : tel.hashCode());
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!super.equals(obj)) return false;
-        if (getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
         Teacher other = (Teacher) obj;
-        if (attachmentSite == null) {
-            if (other.attachmentSite != null) return false;
-        } else if (!attachmentSite.equals(other.attachmentSite)) return false;
-        if (mail == null) {
-            if (other.mail != null) return false;
-        } else if (!mail.equals(other.mail)) return false;
         if (name == null) {
-            if (other.name != null) return false;
-        } else if (!name.equals(other.name)) return false;
-        if (rank == null) {
-            if (other.rank != null) return false;
-        } else if (!rank.equals(other.rank)) return false;
-        if (serviceHours != other.serviceHours) return false;
-        if (tel == null) {
-            if (other.tel != null) return false;
-        } else if (!tel.equals(other.tel)) return false;
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
         return true;
     }
 

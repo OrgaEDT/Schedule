@@ -42,26 +42,21 @@ public class CRoomType implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime
-                * result
-                + ((compatibleSessionTypes == null) ? 0
-                        : compatibleSessionTypes.hashCode());
-        result = prime * result + ((libel == null) ? 0 : libel.hashCode());
+        result = prime * result + id;
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
         CRoomType other = (CRoomType) obj;
-        if (compatibleSessionTypes == null) {
-            if (other.compatibleSessionTypes != null) return false;
-        } else if (!compatibleSessionTypes.equals(other.compatibleSessionTypes)) return false;
-        if (libel == null) {
-            if (other.libel != null) return false;
-        } else if (!libel.equals(other.libel)) return false;
+        if (id != other.id)
+            return false;
         return true;
     }
 

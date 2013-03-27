@@ -43,26 +43,21 @@ public class CRoom implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result
-                + ((cRoomType == null) ? 0 : cRoomType.hashCode());
-        result = prime * result + maxSize;
-        result = prime * result + ((num == null) ? 0 : num.hashCode());
+        result = prime * result + id;
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
         CRoom other = (CRoom) obj;
-        if (cRoomType == null) {
-            if (other.cRoomType != null) return false;
-        } else if (!cRoomType.equals(other.cRoomType)) return false;
-        if (maxSize != other.maxSize) return false;
-        if (num == null) {
-            if (other.num != null) return false;
-        } else if (!num.equals(other.num)) return false;
+        if (id != other.id)
+            return false;
         return true;
     }
 

@@ -33,19 +33,21 @@ public class Rank implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((libel == null) ? 0 : libel.hashCode());
+        result = prime * result + id;
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
         Rank other = (Rank) obj;
-        if (libel == null) {
-            if (other.libel != null) return false;
-        } else if (!libel.equals(other.libel)) return false;
+        if (id != other.id)
+            return false;
         return true;
     }
 

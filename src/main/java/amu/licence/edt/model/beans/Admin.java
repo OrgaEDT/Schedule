@@ -60,29 +60,21 @@ public class Admin implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + (isTeacherAdmin ? 1231 : 1237);
-        result = prime * result + ((levels == null) ? 0 : levels.hashCode());
-        result = prime * result + ((login == null) ? 0 : login.hashCode());
-        result = prime * result + ((pw == null) ? 0 : pw.hashCode());
+        result = prime * result + id;
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
         Admin other = (Admin) obj;
-        if (isTeacherAdmin != other.isTeacherAdmin) return false;
-        if (levels == null) {
-            if (other.levels != null) return false;
-        } else if (!levels.equals(other.levels)) return false;
-        if (login == null) {
-            if (other.login != null) return false;
-        } else if (!login.equals(other.login)) return false;
-        if (pw == null) {
-            if (other.pw != null) return false;
-        } else if (!pw.equals(other.pw)) return false;
+        if (id != other.id)
+            return false;
         return true;
     }
 

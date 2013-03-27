@@ -45,30 +45,21 @@ public class SessionType implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime
-                * result
-                + ((compatibleCRoomTypes == null) ? 0
-                        : compatibleCRoomTypes.hashCode());
-        result = prime * result + ((libel == null) ? 0 : libel.hashCode());
-        long temp;
-        temp = Double.doubleToLongBits(tutorWorthCoef);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
+        result = prime * result + id;
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
         SessionType other = (SessionType) obj;
-        if (compatibleCRoomTypes == null) {
-            if (other.compatibleCRoomTypes != null) return false;
-        } else if (!compatibleCRoomTypes.equals(other.compatibleCRoomTypes)) return false;
-        if (libel == null) {
-            if (other.libel != null) return false;
-        } else if (!libel.equals(other.libel)) return false;
-        if (Double.doubleToLongBits(tutorWorthCoef) != Double.doubleToLongBits(other.tutorWorthCoef)) return false;
+        if (id != other.id)
+            return false;
         return true;
     }
 
