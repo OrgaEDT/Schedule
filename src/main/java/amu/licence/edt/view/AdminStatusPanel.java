@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 
 import amu.licence.edt.model.beans.Admin;
 import amu.licence.edt.model.beans.Level;
+import amu.licence.edt.model.beans.Teacher;
 import amu.licence.edt.presenter.Presenter;
 
 public class AdminStatusPanel extends ViewComponent {
@@ -126,6 +127,10 @@ public class AdminStatusPanel extends ViewComponent {
             JLabel lblNothingToAdmin = new JLabel("Nothing to administrate");
             pnlBtnsManage.add(lblNothingToAdmin);
         }
+        try {   // if it's a teacher, show services hours
+            Teacher t = (Teacher) user;     // ok if it passes
+            lblConnexionLogin.setText(lblConnexionLogin.getText() + " (" + t.getServiceHours() + ")");
+        } catch (ClassCastException cce) {}
         pnlManage.setVisible(true);
     }
 
