@@ -45,6 +45,10 @@ public class LoginForm extends ViewComponent {
         dialog.setTitle("Formulaire de connexion");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
+            public void windowOpened(WindowEvent e) {
+                 component.setLocation(owner.getLocation());
+            }
+            @Override
             public void windowClosing(WindowEvent e) {
                 refresh();
             }
