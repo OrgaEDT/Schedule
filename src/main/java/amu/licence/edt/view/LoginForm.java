@@ -86,6 +86,11 @@ public class LoginForm extends ViewComponent {
         lblError.setVisible(b);
     }
 
+    public void refresh() {
+        clearTextFields();
+        showErrorLbl(false);
+    }
+
     protected void btnSubmitActionListener(ActionEvent e) {
         presenter.validateLoginButtonPressed(usernameInput.getText(), new String(passwordInput.getPassword()));
     }
