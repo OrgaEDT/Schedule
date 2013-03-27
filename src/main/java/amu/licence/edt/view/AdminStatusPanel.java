@@ -102,6 +102,7 @@ public class AdminStatusPanel extends ViewComponent {
     public void displayPublicUserStatus() {
         ((CardLayout)pnlConnectBtn.getLayout()).show(pnlConnectBtn, CONNECT_BTN);
         lblConnexionLogin.setText(publicLogin);
+        pnlBtnsManage.removeAll();
         pnlManage.setVisible(false);
     }
 
