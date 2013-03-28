@@ -47,8 +47,8 @@ public class TU implements Serializable {
 
     @ManyToMany (fetch=FetchType.LAZY)
     @JoinTable (name="T_COMPETENT_TEACHER",
-                joinColumns={@JoinColumn(name="ID_TEACHER")},
-                inverseJoinColumns={@JoinColumn(name="ID_TU")})
+                joinColumns={@JoinColumn(name="ID_TU")},
+                inverseJoinColumns={@JoinColumn(name="ID_TEACHER")})
     private Set<Teacher> competentTeachers;
 
     public TU() {}
