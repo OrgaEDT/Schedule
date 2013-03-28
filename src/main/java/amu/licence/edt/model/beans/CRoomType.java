@@ -24,6 +24,9 @@ public class CRoomType implements Serializable {
                 inverseJoinColumns={@JoinColumn(name="ID_SESSION_TYPE")})
     private Set<SessionType> compatibleSessionTypes;
 
+    @OneToMany (mappedBy="cRoomType", fetch=FetchType.LAZY)
+    private Set<CRoom> crooms;
+
     public CRoomType() { }
 
     public CRoomType(String libel, Set<SessionType> compatibleSessionTypes) {
@@ -81,6 +84,14 @@ public class CRoomType implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    public Set<CRoom> getCrooms() {
+        return crooms;
+    }
+
+    public void setCrooms(Set<CRoom> crooms) {
+        this.crooms = crooms;
     }
 
 }
