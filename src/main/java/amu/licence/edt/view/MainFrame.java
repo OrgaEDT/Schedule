@@ -2,10 +2,13 @@ package amu.licence.edt.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import amu.licence.edt.model.dao.DAOFactoryManager;
 import amu.licence.edt.presenter.Presenter;
 
 public class MainFrame extends AbstractView {
@@ -26,6 +29,12 @@ public class MainFrame extends AbstractView {
     public MainFrame(Presenter presenter) {
         super(presenter);
         frame = new JFrame();
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                DAOFactoryManager.getDAOFactory().finish();
+            }
+        });
 
         frame.setTitle("Schedule");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

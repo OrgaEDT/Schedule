@@ -64,11 +64,9 @@ public class DAOFactoryJPA implements DAOFactory {
     }
 
     @Override
-    protected void finalize() throws Throwable { closeEm(); };
-
-    public void closeEm() {
-        entityManagerFactory.close();
+    public void finish() {
         entityManager.close();
+        entityManagerFactory.close();
     }
 
     @Override
