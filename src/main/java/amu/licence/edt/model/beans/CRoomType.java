@@ -34,8 +34,7 @@ public class CRoomType implements Serializable {
 
     @Override
     public String toString() {
-        return "CRoomType [id=" + id + ", libel=" + libel
-                + ", compatibleSessionTypes=" + compatibleSessionTypes + "]";
+        return "CRoomType [id=" + id + ", libel=" + libel + "]";
     }
 
     @Override

@@ -36,7 +36,7 @@ public class Level implements Serializable {
     @Override
     public String toString() {
         return "Level [id=" + id + ", code=" + code + ", libel=" + libel
-                + ", promo=" + promo + "]";
+                + ", promo=" + ((promo != null ? promo.getId() : null)) + "]";
     }
 
     @Override

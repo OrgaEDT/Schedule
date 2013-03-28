@@ -49,7 +49,7 @@ public class Teacher extends Admin
     public String toString() {
         return "Teacher [name=" + name + ", attachmentSite=" + attachmentSite
                 + ", tel=" + tel + ", mail=" + mail + ", serviceHours="
-                + serviceHours + ", rank=" + rank + "]";
+                + serviceHours + ", rank=" + ((rank != null) ? rank.getLibel() : null) + "]";
     }
 
     @Override

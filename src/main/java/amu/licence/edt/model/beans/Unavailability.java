@@ -28,18 +28,19 @@ public class Unavailability implements Serializable {
 
     public Unavailability() { }
 
-	public Unavailability(Date startDate, Teacher teacher, int duration) {
-		super();
-		this.startDate = startDate;
-		this.teacher = teacher;
-		this.duration = duration;
-	}
+    public Unavailability(Date startDate, Teacher teacher, int duration) {
+        super();
+        this.startDate = startDate;
+        this.teacher = teacher;
+        this.duration = duration;
+    }
 
-	@Override
-	public String toString() {
-		return "Unavailability [id=" + id + ", startDate=" + startDate
-				+ ", teacher=" + teacher + ", duration=" + duration + "]";
-	}
+    @Override
+    public String toString() {
+        return "Unavailability [id=" + id + ", startDate=" + startDate
+                + ", teacher=" + ((teacher != null) ? teacher.getName() : null)
+                + ", duration=" + duration + "]";
+    }
 
 	@Override
     public int hashCode() {

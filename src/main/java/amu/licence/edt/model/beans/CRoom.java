@@ -36,7 +36,7 @@ public class CRoom implements Serializable {
     @Override
     public String toString() {
         return "CRoom [id=" + id + ", num=" + num + ", maxSize=" + maxSize
-                + ", cRoomType=" + cRoomType + "]";
+                + ", cRoomType=" + ((cRoomType != null) ? cRoomType.getLibel() : null) + "]";
     }
 
     @Override

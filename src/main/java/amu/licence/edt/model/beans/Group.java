@@ -32,7 +32,7 @@ public class Group implements Serializable {
     @Override
     public String toString() {
         return "Group [id=" + id + ", groupSize=" + groupSize + ", promo="
-                + promo + "]";
+                + ((promo != null) ? promo.getId() : null) + "]";
     }
 
     @Override

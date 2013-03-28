@@ -80,8 +80,8 @@ public class TU implements Serializable {
                 + ", color=" + color + ", classHours=" + classHours
                 + ", tutorHours=" + tutorHours + ", practicalHours="
                 + practicalHours + ", projectHours=" + projectHours
-                + ", level=" + level + ", resp=" + resp
-                + ", competentTeachers=" + competentTeachers + "]";
+                + ", level=" + ((level != null) ? level.getLibel() : null)
+                + ", resp=" + ((resp != null) ? resp.getName() : null) + "]";
     }
 
     @Override

@@ -37,8 +37,7 @@ public class SessionType implements Serializable {
     @Override
     public String toString() {
         return "SessionType [id=" + id + ", libel=" + libel
-                + ", tutorWorthCoef=" + tutorWorthCoef
-                + ", compatibleCRoomTypes=" + compatibleCRoomTypes + "]";
+                + ", tutorWorthCoef=" + tutorWorthCoef + "]";
     }
 
     @Override

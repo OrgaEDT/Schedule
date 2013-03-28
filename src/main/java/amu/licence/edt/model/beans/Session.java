@@ -58,9 +58,11 @@ public class Session implements Serializable {
     @Override
     public String toString() {
         return "Session [id=" + id + ", startDate=" + startDate + ", duration="
-                + duration + ", tU=" + tU + ", teacher=" + teacher + ", cRoom="
-                + cRoom + ", sessionType=" + sessionType + ", group=" + group
-                + "]";
+                + duration + ", tU=" + ((tU != null) ? tU.getLibel() : null)
+                + ", teacher=" + ((teacher != null) ? teacher.getName() : null)
+                + ", cRoom=" + ((cRoom != null) ? cRoom.getNum() : null)
+                + ", sessionType=" + ((sessionType != null) ? sessionType.getLibel() : null)
+                + ", group=" + ((group != null) ? group.getId() : null) + "]";
     }
 
     @Override

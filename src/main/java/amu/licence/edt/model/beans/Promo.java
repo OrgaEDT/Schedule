@@ -36,8 +36,8 @@ public class Promo implements Serializable {
 
     @Override
     public String toString() {
-        return "Promo [id=" + id + ", size=" + size + ", level=" + level
-                + ", group=" + groups + "]";
+        return "Promo [id=" + id + ", size=" + size
+                + ", level=" + ((level != null) ? level.getCode() : null) + "]";
     }
 
     @Override
