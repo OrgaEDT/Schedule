@@ -1,6 +1,7 @@
 package amu.licence.edt.view;
 
 import javax.swing.JComponent;
+import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.TreeNode;
 
@@ -37,7 +38,7 @@ public class SchedulesTree extends ViewComponent {
         tree.setCellRenderer(displayDelegationRenderer);
         tree.setRootVisible(true);
 
-        return tree;
+        return new JScrollPane(tree);
     }
 
 }
