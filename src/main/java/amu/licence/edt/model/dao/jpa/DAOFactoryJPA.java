@@ -59,7 +59,7 @@ public class DAOFactoryJPA implements DAOFactory {
     private DAOTU             daoTU;
     private DAOUnavailability daoUnavailability;
 
-    public DAOFactoryJPA() {
+    private DAOFactoryJPA() {
         entityManager = entityManagerFactory.createEntityManager();
     }
 
