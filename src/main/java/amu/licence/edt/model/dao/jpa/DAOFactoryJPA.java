@@ -243,7 +243,20 @@ public class DAOFactoryJPA implements DAOFactory {
         /* Promos */
         System.out.println("Promos");
         Promo p1 = new Promo(60, l3, new HashSet<Group>());
+        Promo p2 = new Promo(60, l3, new HashSet<Group>());
+        Promo p3 = new Promo(60, l3, new HashSet<Group>());
+        Promo p4 = new Promo(60, l3, new HashSet<Group>());
+        Promo p5 = new Promo(60, l3, new HashSet<Group>());
+        p1.setLevel(l1);
+        p2.setLevel(l2);
+        p3.setLevel(l3);
+        p4.setLevel(m1);
+        p5.setLevel(m2);
         entityManager.persist(p1);
+        entityManager.persist(p2);
+        entityManager.persist(p3);
+        entityManager.persist(p4);
+        entityManager.persist(p5);
         /* */
 
         /* Groups */
