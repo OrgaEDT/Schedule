@@ -4,7 +4,7 @@ import amu.licence.edt.model.dao.jpa.DAOFactoryJPA;
 
 public class DAOFactoryManager {
 
-    public static DAOFactory createDAOFactory() {
+    public static DAOFactory getDAOFactory() {
         return DAOFactoryJPA.getInstance();
     }
 

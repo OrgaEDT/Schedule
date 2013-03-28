@@ -26,7 +26,7 @@ public class Model {
 
     public Model() {
         super();
-        this.daoFactory = DAOFactoryManager.createDAOFactory();
+        this.daoFactory = DAOFactoryManager.getDAOFactory();
         this.observers = new ArrayList<ModelObserver>();
     }
 
@@ -82,7 +82,7 @@ public class Model {
     }
 
     public TreeNode getScheduleRootNode() {
-        DAOFactory f = DAOFactoryManager.createDAOFactory();
+        DAOFactory f = DAOFactoryManager.getDAOFactory();
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Emplois du temps");
 
         DefaultMutableTreeNode students = new DefaultMutableTreeNode("Etudiants");
