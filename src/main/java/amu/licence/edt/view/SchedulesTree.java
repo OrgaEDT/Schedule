@@ -6,11 +6,13 @@ import javax.swing.JTree;
 import javax.swing.tree.TreeNode;
 
 import amu.licence.edt.model.beans.CRoom;
+import amu.licence.edt.model.beans.CRoomType;
 import amu.licence.edt.model.beans.Group;
 import amu.licence.edt.model.beans.Level;
 import amu.licence.edt.model.beans.Teacher;
 import amu.licence.edt.presenter.Presenter;
 import amu.licence.edt.view.cell_renderers.CRoomTreeCellRenderer;
+import amu.licence.edt.view.cell_renderers.CRoomTypeTreeCellRenderer;
 import amu.licence.edt.view.cell_renderers.ClassBasedTreeCellDDR;
 import amu.licence.edt.view.cell_renderers.GroupTreeCellRenderer;
 import amu.licence.edt.view.cell_renderers.LevelTreeCellRenderer;
@@ -34,6 +36,7 @@ public class SchedulesTree extends ViewComponent {
         displayDelegationRenderer.addRenderer(Level.class, new LevelTreeCellRenderer());
         displayDelegationRenderer.addRenderer(CRoom.class, new CRoomTreeCellRenderer());
         displayDelegationRenderer.addRenderer(Group.class, new GroupTreeCellRenderer());
+        displayDelegationRenderer.addRenderer(CRoomType.class, new CRoomTypeTreeCellRenderer());
 
         tree.setCellRenderer(displayDelegationRenderer);
         tree.setRootVisible(true);

@@ -8,6 +8,7 @@ import javax.swing.tree.TreeNode;
 
 import amu.licence.edt.model.beans.Admin;
 import amu.licence.edt.model.beans.CRoom;
+import amu.licence.edt.model.beans.CRoomType;
 import amu.licence.edt.model.beans.Group;
 import amu.licence.edt.model.beans.Level;
 import amu.licence.edt.model.beans.Promo;
@@ -109,9 +110,13 @@ public class Model {
         DefaultMutableTreeNode crooms = new DefaultMutableTreeNode("Salles");
         rootNode.add(crooms);
 
-        for (CRoom croom : f.getDAOCRoom().findAll()) {
-            DefaultMutableTreeNode croomNode = new DefaultMutableTreeNode(croom);
-            crooms.add(croomNode);
+        for (CRoomType crType : f.getDAOCRoomType().findAll()) {
+            DefaultMutableTreeNode crTypeNode = new DefaultMutableTreeNode(crType);
+            for (CRoom cr : crType.getCrooms()) {
+                DefaultMutableTreeNode croomNode = new DefaultMutableTreeNode(cr);
+                crTypeNode.add(croomNode);
+            }
+            crooms.add(crTypeNode);
         }
 
         return rootNode;
