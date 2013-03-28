@@ -18,7 +18,7 @@ public class Promo implements Serializable {
     @Column (name="SIZE_PROMO")
     private int size;
 
-    @OneToOne (mappedBy="promo")
+    @OneToOne
     @JoinColumn (name="ID_LEVEL", nullable=false)
     private Level level;
 

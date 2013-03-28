@@ -20,8 +20,7 @@ public class Level implements Serializable {
     @Column (name="LIBEL_LEVEL")
     private String libel;
 
-    @OneToOne
-    @JoinColumn (name="ID_PROMO", nullable=false)
+    @OneToOne (mappedBy="level")
     private Promo promo;
 
     public Level() { }
