@@ -2,6 +2,7 @@ package amu.licence.edt.view;
 
 import javax.swing.JComponent;
 import javax.swing.JTree;
+import javax.swing.tree.TreeNode;
 
 import amu.licence.edt.presenter.Presenter;
 
@@ -13,7 +14,13 @@ public class SchedulesTree extends ViewComponent {
 
     @Override
     protected JComponent createComponent() {
-        return new JTree();
+        JTree tree;
+
+        TreeNode rootNode = presenter.scheduleTreeCreating();
+        tree = new JTree(rootNode);
+        tree.setRootVisible(true);
+
+        return tree;
     }
 
 }

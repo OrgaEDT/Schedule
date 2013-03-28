@@ -1,5 +1,7 @@
 package amu.licence.edt.controller;
 
+import javax.swing.tree.TreeNode;
+
 import amu.licence.edt.model.Model;
 
 public class Controller {
@@ -16,6 +18,10 @@ public class Controller {
 
     public void disconnectionRequested() {
         model.disconnect();
+    }
+
+    public TreeNode scheduleRootNodeRequested() {
+        return model.getScheduleRootNode();
     }
 
 }
