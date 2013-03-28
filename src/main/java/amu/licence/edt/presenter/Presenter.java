@@ -12,8 +12,8 @@ public class Presenter implements ModelObserver {
     private Controller controller;
 
     public Presenter(Controller controller) {
-        this.view = new View(this);
         this.controller = controller;
+        this.view = new View(this);
     }
 
     public void showView() {
