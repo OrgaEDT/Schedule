@@ -14,5 +14,6 @@ public interface DAOFactory {
     public DAOGroup          getDAOGroup();
     public DAORank           getDAORank();
     public DAOTU             getDAOTU();
+    public void              generateExampleTuples();
 
 }
