@@ -5,12 +5,21 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import amu.licence.edt.model.dao.DAOFactoryManager;
+
 @Entity
 @Table (name="T_TEACHER")
 @DiscriminatorValue (value="T")
+@NamedQueries ({
+    @NamedQuery (name=Teacher.COMPUTE_SERVICE_HOURS,
+                 query="SELECT sum(s.duration) FROM Session s " +
+                       "WHERE  s.teacher = :t")
+})
 public class Teacher extends Admin
                      implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    public static final String COMPUTE_SERVICE_HOURS = "computeTeacherServiceHours";
 
     @Column (name="NAME_TEACHER")
     private String name;
@@ -43,6 +52,10 @@ public class Teacher extends Admin
         this.mail = mail;
         this.adminHours = serviceHours;
         this.rank = rank;
+    }
+
+    public long computeServiceHours() {
+        return DAOFactoryManager.getDAOFactory().getDAOTeacher().computeServiceHours(this);
     }
 
     @Override
