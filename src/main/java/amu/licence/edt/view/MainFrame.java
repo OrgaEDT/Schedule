@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import amu.licence.edt.model.dao.DAOFactoryManager;
 import amu.licence.edt.presenter.Presenter;
@@ -57,7 +58,7 @@ public class MainFrame extends AbstractView {
         pnlCenter.add(scheduleTable.getComponent(), BorderLayout.CENTER);
 
         pnlSide.setLayout(new BorderLayout());
-        pnlSide.add(schedulesTree.getComponent(), BorderLayout.CENTER);
+        pnlSide.add(new JScrollPane(schedulesTree.getComponent()), BorderLayout.CENTER);
         pnlSide.add(adminStatusPanel.getComponent(), BorderLayout.SOUTH);
 
         pnlAdmin.setLayout(new BorderLayout());
