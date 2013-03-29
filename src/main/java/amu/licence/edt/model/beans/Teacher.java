@@ -24,8 +24,8 @@ public class Teacher extends Admin
     @Column (name="MAIL_TEACHER")
     private String mail;
 
-    @Column (name="SERVICE_HOURS")
-    private int serviceHours;
+    @Column (name="ADMIN_HOURS")
+    private int adminHours;
 
     @ManyToOne (fetch=FetchType.LAZY)
     @JoinColumn (name="ID_RANK_TEACHER")
@@ -41,7 +41,7 @@ public class Teacher extends Admin
         this.attachmentSite = attachmentSite;
         this.tel = tel;
         this.mail = mail;
-        this.serviceHours = serviceHours;
+        this.adminHours = serviceHours;
         this.rank = rank;
     }
 
@@ -49,7 +49,7 @@ public class Teacher extends Admin
     public String toString() {
         return "Teacher [name=" + name + ", attachmentSite=" + attachmentSite
                 + ", tel=" + tel + ", mail=" + mail + ", serviceHours="
-                + serviceHours + ", rank=" + ((rank != null) ? rank.getLibel() : null) + "]";
+                + adminHours + ", rank=" + ((rank != null) ? rank.getLibel() : null) + "]";
     }
 
     @Override
@@ -109,12 +109,12 @@ public class Teacher extends Admin
         this.mail = mail;
     }
 
-    public int getServiceHours() {
-        return serviceHours;
+    public int getAdminHours() {
+        return adminHours;
     }
 
-    public void setServiceHours(int serviceHours) {
-        this.serviceHours = serviceHours;
+    public void setAdminHours(int adminHours) {
+        this.adminHours = adminHours;
     }
 
     public Rank getRank() {

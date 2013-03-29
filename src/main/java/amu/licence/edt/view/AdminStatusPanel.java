@@ -129,7 +129,7 @@ public class AdminStatusPanel extends ViewComponent {
         }
         try {   // if it's a teacher, show services hours
             Teacher t = (Teacher) user;     // ok if it passes
-            lblConnexionLogin.setText(lblConnexionLogin.getText() + " (" + t.getServiceHours() + ")");
+            lblConnexionLogin.setText(lblConnexionLogin.getText() + " (" + t.getAdminHours() + ")");
         } catch (ClassCastException cce) {}
         pnlManage.setVisible(true);
     }
