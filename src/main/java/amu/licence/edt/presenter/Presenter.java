@@ -7,14 +7,34 @@ import amu.licence.edt.controller.Controller;
 import amu.licence.edt.model.ModelObserver;
 import amu.licence.edt.model.Schedule;
 import amu.licence.edt.model.beans.Admin;
+import amu.licence.edt.model.beans.CRoom;
+import amu.licence.edt.model.beans.CRoomType;
+import amu.licence.edt.model.beans.Group;
+import amu.licence.edt.model.beans.Level;
+import amu.licence.edt.model.beans.Teacher;
 import amu.licence.edt.view.View;
+import amu.licence.edt.view.renderers.CRoomRenderer;
+import amu.licence.edt.view.renderers.CRoomTypeRenderer;
+import amu.licence.edt.view.renderers.ClassBasedDDR;
+import amu.licence.edt.view.renderers.DMTNUserObjectBasedRenderer;
+import amu.licence.edt.view.renderers.GroupRenderer;
+import amu.licence.edt.view.renderers.LevelRenderer;
+import amu.licence.edt.view.renderers.TeacherRenderer;
 
 public class Presenter implements ModelObserver {
+
+    private ClassBasedDDR classBasedDDR;
 
     private View view;
     private Controller controller;
 
     public Presenter(Controller controller) {
+        this.classBasedDDR = new ClassBasedDDR();
+        classBasedDDR.addRenderer(Teacher.class, new TeacherRenderer());
+        classBasedDDR.addRenderer(Level.class, new LevelRenderer());
+        classBasedDDR.addRenderer(CRoom.class, new CRoomRenderer());
+        classBasedDDR.addRenderer(CRoomType.class, new CRoomTypeRenderer());
+        classBasedDDR.addRenderer(Group.class, new GroupRenderer());
         this.controller = controller;
         this.view = new View(this);
     }
@@ -66,7 +86,13 @@ public class Presenter implements ModelObserver {
     }
 
     public void treePathChanged(TreePath path) {
-        // TODO
+        @SuppressWarnings("unused")
+        DMTNUserObjectBasedRenderer dmtnRenderer = new DMTNUserObjectBasedRenderer(classBasedDDR);
+//        System.out.println(dmtnRenderer.getStrRender(path.getLastPathComponent()));
+    }
+
+    public ClassBasedDDR getClassBasedDDR() {
+        return classBasedDDR;
     }
 
 }
