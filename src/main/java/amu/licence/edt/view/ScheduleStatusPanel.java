@@ -11,12 +11,11 @@ import amu.licence.edt.presenter.Presenter;
 
 public class ScheduleStatusPanel extends ViewComponent {
 
+    private final String DFLT_LBL_TXT = "vide";
+
     private JButton btnLeft;
     private JButton btnRight;
-    private JLabel lblSchedule;
-    private JLabel lblWho;
-    private JLabel lblWhat;
-    private JLabel lblWhen;
+    private JLabel label;
 
     public ScheduleStatusPanel(Presenter presenter) {
         super(presenter);
@@ -32,20 +31,18 @@ public class ScheduleStatusPanel extends ViewComponent {
         btnRight = new JButton("right");
         btnRight.addActionListener(null);
 
-        lblSchedule = new JLabel("Emploi du temps");
-        lblWho = new JLabel();
-        lblWhat = new JLabel();
-        lblWhen = new JLabel();
+        label = new JLabel(DFLT_LBL_TXT);
 
         panel.setLayout(new FlowLayout());
         panel.add(btnLeft);
-        panel.add(lblSchedule);
-        panel.add(lblWho);
-        panel.add(lblWhat);
-        panel.add(lblWhen);
+        panel.add(label);
         panel.add(btnRight);
 
         return panel;
+    }
+
+    public void setLabelText(String text) {
+        label.setText(text != null ? text : DFLT_LBL_TXT);
     }
 
 }
