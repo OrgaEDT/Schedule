@@ -1,13 +1,13 @@
 package amu.licence.edt.model.beans;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.*;
 
 @Entity
 @Table (name="T_UNAVAILABILITY",
-		uniqueConstraints={@UniqueConstraint(columnNames={"START_UNAV_DATE", "ID_TEACHER"})})
+        uniqueConstraints={@UniqueConstraint(columnNames={"START_UNAV_DATE", "ID_TEACHER"})})
 public class Unavailability implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -16,6 +16,7 @@ public class Unavailability implements Serializable {
     @Column (name="ID_UNAVAILABILITY")
     private int id;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column (name="START_UNAV_DATE", nullable=false)
     private Date startDate;
 

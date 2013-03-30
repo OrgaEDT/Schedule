@@ -1,7 +1,7 @@
 package amu.licence.edt.model.beans;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -15,6 +15,7 @@ public class Session implements Serializable {
     @Column (name="ID_SESSION")
     private int id;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column (name="START_SESSION_DATE")
     private Date startDate;
 
