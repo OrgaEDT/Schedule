@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
 import amu.licence.edt.model.beans.Admin;
@@ -83,13 +84,16 @@ public class Model {
     }
 
     public TreeNode getScheduleRootNode() {
-        DAOFactory f = DAOFactoryManager.getDAOFactory();
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Emplois du temps");
+        rootNode.add(createStudentNode());
+        rootNode.add(createTeacherNode());
+        rootNode.add(createCRoomNode());
+        return rootNode;
+    }
 
+    public MutableTreeNode createStudentNode() {
         DefaultMutableTreeNode students = new DefaultMutableTreeNode("Etudiant");
-        rootNode.add(students);
-
-        for (Level l : f.getDAOLevel().findAll()) {
+        for (Level l : DAOFactoryManager.getDAOFactory().getDAOLevel().findAll()) {
             DefaultMutableTreeNode pNode = new DefaultMutableTreeNode(l);
             Promo p = l.getPromo();
             for (Group g : p.getGroup()) {
@@ -98,19 +102,23 @@ public class Model {
             }
             students.add(pNode);
         }
+        return students;
+    }
 
+    public MutableTreeNode createTeacherNode() {
         DefaultMutableTreeNode teachers = new DefaultMutableTreeNode("Enseignant");
-        rootNode.add(teachers);
 
-        for (Teacher t : f.getDAOTeacher().findAll()) {
+        for (Teacher t : DAOFactoryManager.getDAOFactory().getDAOTeacher().findAll()) {
             DefaultMutableTreeNode tNode = new DefaultMutableTreeNode(t);
             teachers.add(tNode);
         }
+        return teachers;
+    }
 
+    public MutableTreeNode createCRoomNode() {
         DefaultMutableTreeNode crooms = new DefaultMutableTreeNode("Salle");
-        rootNode.add(crooms);
 
-        for (CRoomType crType : f.getDAOCRoomType().findAll()) {
+        for (CRoomType crType : DAOFactoryManager.getDAOFactory().getDAOCRoomType().findAll()) {
             DefaultMutableTreeNode crTypeNode = new DefaultMutableTreeNode(crType);
             for (CRoom cr : crType.getCrooms()) {
                 DefaultMutableTreeNode croomNode = new DefaultMutableTreeNode(cr);
@@ -118,8 +126,7 @@ public class Model {
             }
             crooms.add(crTypeNode);
         }
-
-        return rootNode;
+        return crooms;
     }
 
 }
