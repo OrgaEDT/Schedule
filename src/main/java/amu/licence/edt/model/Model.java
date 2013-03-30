@@ -14,7 +14,6 @@ import amu.licence.edt.model.beans.Group;
 import amu.licence.edt.model.beans.Level;
 import amu.licence.edt.model.beans.Promo;
 import amu.licence.edt.model.beans.Teacher;
-import amu.licence.edt.model.dao.DAOFactory;
 import amu.licence.edt.model.dao.DAOFactoryManager;
 
 public class Model {
@@ -22,13 +21,10 @@ public class Model {
     private Admin user;
     private Schedule schedule;
 
-    private DAOFactory daoFactory;
-
     private List<ModelObserver> observers;
 
     public Model() {
         super();
-        this.daoFactory = DAOFactoryManager.getDAOFactory();
         this.observers = new ArrayList<ModelObserver>();
     }
 
@@ -69,7 +65,7 @@ public class Model {
     }
 
     public boolean tryToConnect(String login, String password) {
-        Admin a = daoFactory.getDAOAdmin().findByLoginPassword(login, password);
+        Admin a = DAOFactoryManager.getDAOFactory().getDAOAdmin().findByLoginPassword(login, password);
         if (a == null)
             return false;
 
