@@ -80,4 +80,8 @@ public class MainFrame extends AbstractView {
         return adminStatusPanel;
     }
 
+    public ScheduleStatusPanel getScheduleStatusPanel() {
+        return scheduleStatusPanel;
+    }
+
 }

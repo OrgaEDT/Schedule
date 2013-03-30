@@ -86,9 +86,18 @@ public class Presenter implements ModelObserver {
     }
 
     public void treePathChanged(TreePath path) {
-        @SuppressWarnings("unused")
         DMTNUserObjectBasedRenderer dmtnRenderer = new DMTNUserObjectBasedRenderer(classBasedDDR);
-//        System.out.println(dmtnRenderer.getStrRender(path.getLastPathComponent()));
+        String separator = " - ";
+        StringBuilder sb = new StringBuilder();
+        for (Object o : path.getPath()) {
+            sb.append(dmtnRenderer.getStrRender(o));
+            sb.append(separator);
+        }
+        if (sb.length() != 0)
+            sb.delete(sb.length() - separator.length(), sb.length());
+        view.getMainFrame().getScheduleStatusPanel().setLabelText(sb.toString());
+
+        // TODO call controller to modify schedule
     }
 
     public ClassBasedDDR getClassBasedDDR() {
