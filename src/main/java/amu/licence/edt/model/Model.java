@@ -86,7 +86,7 @@ public class Model {
         DAOFactory f = DAOFactoryManager.getDAOFactory();
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Emplois du temps");
 
-        DefaultMutableTreeNode students = new DefaultMutableTreeNode("Etudiants");
+        DefaultMutableTreeNode students = new DefaultMutableTreeNode("Etudiant");
         rootNode.add(students);
 
         for (Level l : f.getDAOLevel().findAll()) {
@@ -99,7 +99,7 @@ public class Model {
             students.add(pNode);
         }
 
-        DefaultMutableTreeNode teachers = new DefaultMutableTreeNode("Enseignants");
+        DefaultMutableTreeNode teachers = new DefaultMutableTreeNode("Enseignant");
         rootNode.add(teachers);
 
         for (Teacher t : f.getDAOTeacher().findAll()) {
@@ -107,7 +107,7 @@ public class Model {
             teachers.add(tNode);
         }
 
-        DefaultMutableTreeNode crooms = new DefaultMutableTreeNode("Salles");
+        DefaultMutableTreeNode crooms = new DefaultMutableTreeNode("Salle");
         rootNode.add(crooms);
 
         for (CRoomType crType : f.getDAOCRoomType().findAll()) {
