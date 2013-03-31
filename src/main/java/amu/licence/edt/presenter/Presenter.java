@@ -1,5 +1,7 @@
 package amu.licence.edt.presenter;
 
+import java.util.Date;
+
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
@@ -83,6 +85,10 @@ public class Presenter implements ModelObserver {
 
     public TreeNode scheduleTreeCreating() {
         return controller.scheduleRootNodeRequested();
+    }
+
+    public Date scheduleStatusCreating() {
+        return controller.scheduleDateRequested();
     }
 
     public void treePathChanged(TreePath path) {

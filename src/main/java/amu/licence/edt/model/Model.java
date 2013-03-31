@@ -26,6 +26,7 @@ public class Model {
     public Model() {
         super();
         this.observers = new ArrayList<ModelObserver>();
+        this.schedule = new Schedule();
     }
 
     public void fireUserChanged() {

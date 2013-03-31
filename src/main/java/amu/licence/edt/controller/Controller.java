@@ -1,8 +1,11 @@
 package amu.licence.edt.controller;
 
+import java.util.Date;
+
 import javax.swing.tree.TreeNode;
 
 import amu.licence.edt.model.Model;
+import amu.licence.edt.model.Schedule;
 
 public class Controller {
 
@@ -22,6 +25,11 @@ public class Controller {
 
     public TreeNode scheduleRootNodeRequested() {
         return model.getScheduleRootNode();
+    }
+
+    public Date scheduleDateRequested() {
+        Schedule s = model.getSchedule();
+        return (s != null) ? s.getFirstWeekDay() : null;
     }
 
 }
