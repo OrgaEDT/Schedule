@@ -40,7 +40,7 @@ public class ScheduleStatusPanel extends ViewComponent {
 
         label = new JLabel(DFLT_LBL_TXT);
 
-        dateFormat = new SimpleDateFormat("EEE d MMMM YYYY");
+        dateFormat = new SimpleDateFormat("EEE d MMMM yyyy");
         Date d = presenter.scheduleStatusCreating();
         lblDate = new JLabel((d != null) ? dateFormat.format(d) : DFLT_LBL_TXT);
 
