@@ -7,6 +7,8 @@ import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -16,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
 
@@ -35,7 +38,7 @@ public class TeacherManagmentForm extends ViewComponent {
     private JPanel pnlNbAdminHours;
 
     private JPanel pnlUnavForm;
-    private JTextField txtUnavStartDate;
+    private JSpinner spinnUnavStartDate;
     private JTextField txtUnavDuration;
     private JButton btnAddUnavailability;
 
@@ -75,7 +78,9 @@ public class TeacherManagmentForm extends ViewComponent {
 
         pnlUnavForm = new JPanel(new GridLayout(0, 2));
 
-        txtUnavStartDate = new JTextField();
+        spinnUnavStartDate = new JSpinner();
+        spinnUnavStartDate.setModel(new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_YEAR));
+        spinnUnavStartDate.setEditor(new JSpinner.DateEditor(spinnUnavStartDate, "d MMMM yyyy - H:m"));
 
         txtUnavDuration = new JTextField();
 
@@ -83,7 +88,7 @@ public class TeacherManagmentForm extends ViewComponent {
         btnAddUnavailability.addActionListener(null);
 
         pnlUnavForm.add(new JLabel("Date de début"));
-        pnlUnavForm.add(txtUnavStartDate);
+        pnlUnavForm.add(spinnUnavStartDate);
         pnlUnavForm.add(new JLabel("Durée"));
         pnlUnavForm.add(txtUnavDuration);
 
@@ -100,7 +105,7 @@ public class TeacherManagmentForm extends ViewComponent {
         pnlNbAdminHoursForm = new JPanel(new GridLayout(0, 2));
 
         spinnNbAdminHours = new JSpinner();
-        spinnNbAdminHours.setModel(new SpinnerNumberModel(((Teacher)cbbTeachers.getSelectedItem()).getAdminHours(), 0, 18, 1));
+        spinnNbAdminHours.setModel(new SpinnerNumberModel(((Teacher)cbbTeachers.getSelectedItem()).getAdminHours(), 0, 9000, 1));
 
         btnChangeNbAdminHours = new JButton("Modifier");
         btnChangeNbAdminHours.addActionListener(null);
