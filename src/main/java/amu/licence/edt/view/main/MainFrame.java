@@ -19,14 +19,11 @@ public class MainFrame extends AbstractView {
 
     JPanel pnlCenter;
     JPanel pnlSide;
-    JPanel pnlAdmin;
 
     AdminStatusPanel adminStatusPanel;
     SchedulesTree schedulesTree;
     ScheduleTable scheduleTable;
     ScheduleStatusPanel scheduleStatusPanel;
-    LevelAdminPanel levelAdminPanel;
-    TeacherAdminPanel teacherAdminPanel;
 
     public MainFrame(Presenter presenter) {
         super(presenter);
@@ -45,14 +42,11 @@ public class MainFrame extends AbstractView {
 
         pnlCenter = new JPanel();
         pnlSide = new JPanel();
-        pnlAdmin = new JPanel();
 
         adminStatusPanel = new AdminStatusPanel(presenter);
         schedulesTree = new SchedulesTree(presenter);
         scheduleTable = new ScheduleTable(presenter);
         scheduleStatusPanel = new ScheduleStatusPanel(presenter);
-        levelAdminPanel = new LevelAdminPanel(presenter);
-        teacherAdminPanel = new TeacherAdminPanel(presenter);
 
         pnlCenter.setLayout(new BorderLayout());
         pnlCenter.add(scheduleStatusPanel.getComponent(), BorderLayout.NORTH);
@@ -62,13 +56,8 @@ public class MainFrame extends AbstractView {
         pnlSide.add(new JScrollPane(schedulesTree.getComponent()), BorderLayout.CENTER);
         pnlSide.add(adminStatusPanel.getComponent(), BorderLayout.SOUTH);
 
-        pnlAdmin.setLayout(new BorderLayout());
-        pnlAdmin.add(levelAdminPanel.getComponent(), BorderLayout.NORTH);
-        pnlAdmin.add(teacherAdminPanel.getComponent(), BorderLayout.SOUTH);
-
         frame.getContentPane().add(pnlCenter, BorderLayout.CENTER);
         frame.getContentPane().add(pnlSide, BorderLayout.WEST);
-        frame.getContentPane().add(pnlAdmin, BorderLayout.EAST);
 
         frame.pack();
     }
