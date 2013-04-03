@@ -1,13 +1,15 @@
-package amu.licence.edt.view;
+package amu.licence.edt.view.main;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import amu.licence.edt.presenter.Presenter;
+import amu.licence.edt.view.ViewComponent;
 
-public class TeacherAdminPanel extends ViewComponent {
+public class LevelAdminPanel extends ViewComponent {
 
-    public TeacherAdminPanel(Presenter presenter) {
+
+    public LevelAdminPanel(Presenter presenter) {
         super(presenter);
     }
 
@@ -15,4 +17,5 @@ public class TeacherAdminPanel extends ViewComponent {
     protected JComponent createComponent() {
         return new JPanel();
     }
+
 }

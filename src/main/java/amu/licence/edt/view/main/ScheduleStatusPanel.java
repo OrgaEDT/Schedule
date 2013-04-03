@@ -1,4 +1,4 @@
-package amu.licence.edt.view;
+package amu.licence.edt.view.main;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import amu.licence.edt.presenter.Presenter;
+import amu.licence.edt.view.ViewComponent;
 
 public class ScheduleStatusPanel extends ViewComponent {
 

@@ -1,10 +1,11 @@
-package amu.licence.edt.view;
+package amu.licence.edt.view.main;
 
 import javax.swing.JComponent;
 import javax.swing.JTable;
 
 import amu.licence.edt.model.beans.TU;
 import amu.licence.edt.presenter.Presenter;
+import amu.licence.edt.view.ViewComponent;
 
 public class ScheduleTable extends ViewComponent {
 

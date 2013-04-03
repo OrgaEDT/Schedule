@@ -1,4 +1,4 @@
-package amu.licence.edt.view;
+package amu.licence.edt.view.main;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -16,6 +16,7 @@ import amu.licence.edt.model.beans.Admin;
 import amu.licence.edt.model.beans.Level;
 import amu.licence.edt.model.beans.Teacher;
 import amu.licence.edt.presenter.Presenter;
+import amu.licence.edt.view.ViewComponent;
 
 public class AdminStatusPanel extends ViewComponent {
 

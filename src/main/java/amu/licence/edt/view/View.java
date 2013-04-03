@@ -1,6 +1,8 @@
 package amu.licence.edt.view;
 
 import amu.licence.edt.presenter.Presenter;
+import amu.licence.edt.view.dialogs.LoginForm;
+import amu.licence.edt.view.main.MainFrame;
 
 public class View extends AbstractView {
 

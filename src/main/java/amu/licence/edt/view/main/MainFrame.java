@@ -1,4 +1,4 @@
-package amu.licence.edt.view;
+package amu.licence.edt.view.main;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 
 import amu.licence.edt.model.dao.DAOFactoryManager;
 import amu.licence.edt.presenter.Presenter;
+import amu.licence.edt.view.AbstractView;
 
 public class MainFrame extends AbstractView {
 

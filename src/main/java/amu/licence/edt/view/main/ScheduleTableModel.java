@@ -1,4 +1,4 @@
-package amu.licence.edt.view;
+package amu.licence.edt.view.main;
 
 import java.awt.Color;
 

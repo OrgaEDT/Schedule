@@ -1,4 +1,4 @@
-package amu.licence.edt.view;
+package amu.licence.edt.view.dialogs;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -18,6 +18,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import amu.licence.edt.presenter.Presenter;
+import amu.licence.edt.view.ViewComponent;
 
 public class LoginForm extends ViewComponent {
 

@@ -1,4 +1,4 @@
-package amu.licence.edt.view;
+package amu.licence.edt.view.main;
 
 import javax.swing.JComponent;
 import javax.swing.JTree;
@@ -8,6 +8,7 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 import amu.licence.edt.presenter.Presenter;
+import amu.licence.edt.view.ViewComponent;
 import amu.licence.edt.view.renderers.ClassBasedTreeCellDDR;
 import amu.licence.edt.view.renderers.DMTNUserObjectBasedRenderer;
 
