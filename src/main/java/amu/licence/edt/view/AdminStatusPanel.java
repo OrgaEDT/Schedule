@@ -3,10 +3,10 @@ package amu.licence.edt.view;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -54,7 +54,8 @@ public class AdminStatusPanel extends ViewComponent {
         pnlConnectLbl.add(lblConnexionLogin, BorderLayout.CENTER);
 
         lblManage = new JLabel("Administration");
-        pnlBtnsManage = new JPanel(new FlowLayout());
+        pnlBtnsManage = new JPanel();
+        pnlBtnsManage.setLayout(new BoxLayout(pnlBtnsManage, BoxLayout.PAGE_AXIS));
 
         btnManageTeachers = new JButton("Enseignants");
         btnManageTeachers.addActionListener(null);
