@@ -1,11 +1,13 @@
 package amu.licence.edt.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.tree.TreeNode;
 
 import amu.licence.edt.model.Model;
 import amu.licence.edt.model.Schedule;
+import amu.licence.edt.model.beans.Teacher;
 
 public class Controller {
 
@@ -30,6 +32,10 @@ public class Controller {
     public Date scheduleDateRequested() {
         Schedule s = model.getSchedule();
         return (s != null) ? s.getFirstWeekDay() : null;
+    }
+
+    public List<Teacher> teachersListRequested() {
+        return model.getTeachersList();
     }
 
 }

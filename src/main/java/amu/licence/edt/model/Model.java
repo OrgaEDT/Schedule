@@ -126,4 +126,8 @@ public class Model {
         return crooms;
     }
 
+    public List<Teacher> getTeachersList() {
+        return DAOFactoryManager.getDAOFactory().getDAOTeacher().findAll();
+    }
+
 }

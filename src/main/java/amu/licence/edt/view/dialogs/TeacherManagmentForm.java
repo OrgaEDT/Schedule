@@ -20,7 +20,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
 
 import amu.licence.edt.model.beans.Teacher;
-import amu.licence.edt.model.dao.DAOFactoryManager;
 import amu.licence.edt.presenter.Presenter;
 import amu.licence.edt.view.ViewComponent;
 import amu.licence.edt.view.renderers.ClassBasedCbbListDDR;
@@ -63,7 +62,7 @@ public class TeacherManagmentForm extends ViewComponent {
 
         pnlPnlsManage = new JPanel(new BorderLayout());
 
-        List<Teacher> teachers = DAOFactoryManager.getDAOFactory().getDAOTeacher().findAll();   // TODO : ask presenter
+        List<Teacher> teachers = presenter.teacherManagmentFormCreating();
         cbbTeachers = new JComboBox(teachers.toArray());
         cbbTeachers.setRenderer(new ClassBasedCbbListDDR(presenter.getClassBasedDDR()));
 

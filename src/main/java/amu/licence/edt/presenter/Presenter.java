@@ -1,6 +1,7 @@
 package amu.licence.edt.presenter;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
@@ -112,6 +113,10 @@ public class Presenter implements ModelObserver {
 
     public void manageTeachersButtonPressed() {
         view.getTeacherManagmentForm().getComponent().setVisible(true);
+    }
+
+    public List<Teacher> teacherManagmentFormCreating() {
+        return controller.teachersListRequested();
     }
 
 }
