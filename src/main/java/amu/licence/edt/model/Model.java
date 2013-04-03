@@ -130,4 +130,8 @@ public class Model {
         return DAOFactoryManager.getDAOFactory().getDAOTeacher().findAll();
     }
 
+    public void updateTeacher(Teacher t) {
+        DAOFactoryManager.getDAOFactory().getDAOTeacher().update(t);
+    }
+
 }

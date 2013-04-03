@@ -38,4 +38,9 @@ public class Controller {
         return model.getTeachersList();
     }
 
+    public void changeNbHoursAdminRequested(Teacher t, int nHours) {
+        t.setAdminHours(nHours);
+        model.updateTeacher(t);
+    }
+
 }

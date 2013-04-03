@@ -116,7 +116,12 @@ public class TeacherManagmentForm extends ViewComponent {
         spinnNbAdminHours.setModel(new SpinnerNumberModel(((Teacher)cbbTeachers.getSelectedItem()).getAdminHours(), 0, 9000, 1));
 
         btnChangeNbAdminHours = new JButton("Modifier");
-        btnChangeNbAdminHours.addActionListener(null);
+        btnChangeNbAdminHours.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btnChangeNbAdminHoursActionListener();
+            }
+        });
 
         pnlNbAdminHoursForm.add(new JLabel("Heures effectués"));
         pnlNbAdminHoursForm.add(spinnNbAdminHours);
@@ -134,6 +139,11 @@ public class TeacherManagmentForm extends ViewComponent {
 
         dialog.pack();
         return dialog;
+    }
+
+    protected void btnChangeNbAdminHoursActionListener() {
+        presenter.changeNbAdminHoursButtonPressed((Teacher)cbbTeachers.getSelectedItem(),
+                                                  (Integer)spinnNbAdminHours.getModel().getValue());
     }
 
     protected void cbbTeachersSelectionChanged(ActionEvent e) {

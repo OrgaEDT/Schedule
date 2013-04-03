@@ -3,6 +3,7 @@ package amu.licence.edt.presenter;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
@@ -117,6 +118,12 @@ public class Presenter implements ModelObserver {
 
     public List<Teacher> teacherManagmentFormCreating() {
         return controller.teachersListRequested();
+    }
+
+    public void changeNbAdminHoursButtonPressed(Teacher t, int nHours) {
+        controller.changeNbHoursAdminRequested(t, nHours);
+        // if no exception, changed have been made
+        JOptionPane.showMessageDialog(null, "OK.");
     }
 
 }
