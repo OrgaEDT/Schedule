@@ -59,7 +59,12 @@ public class AdminStatusPanel extends ViewComponent {
         pnlBtnsManage.setLayout(new BoxLayout(pnlBtnsManage, BoxLayout.PAGE_AXIS));
 
         btnManageTeachers = new JButton("Enseignants");
-        btnManageTeachers.addActionListener(null);
+        btnManageTeachers.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btnManageTeachersActionPerformed(e);
+            }
+        });
 
         pnlManage = new JPanel(new BorderLayout());
         pnlManage.add(lblManage, BorderLayout.NORTH);
@@ -138,6 +143,10 @@ public class AdminStatusPanel extends ViewComponent {
 
     private void btnManageLevelActionPerformed(ActionEvent e) {
         presenter.manageLevelButtonPressed(((JButton) e.getSource()).getText());
+    }
+
+    protected void btnManageTeachersActionPerformed(ActionEvent e) {
+        presenter.manageTeachersButtonPressed();
     }
 
 }

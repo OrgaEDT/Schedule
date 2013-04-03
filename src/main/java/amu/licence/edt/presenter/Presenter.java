@@ -110,4 +110,8 @@ public class Presenter implements ModelObserver {
         return classBasedDDR;
     }
 
+    public void manageTeachersButtonPressed() {
+        view.getTeacherManagmentForm().getComponent().setVisible(true);
+    }
+
 }
