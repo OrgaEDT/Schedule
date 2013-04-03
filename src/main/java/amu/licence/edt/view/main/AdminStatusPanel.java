@@ -99,11 +99,11 @@ public class AdminStatusPanel extends ViewComponent {
         return panel;
     }
 
-    private void btnConnectActionPerformed(ActionEvent e) {
+    protected void btnConnectActionPerformed(ActionEvent e) {
         presenter.connectButtonPressed();
     }
 
-    private void btnDisconnectActionPerformed(ActionEvent e) {
+    protected void btnDisconnectActionPerformed(ActionEvent e) {
         presenter.disconnectButtonPressed();
     }
 
@@ -141,7 +141,7 @@ public class AdminStatusPanel extends ViewComponent {
         pnlManage.setVisible(true);
     }
 
-    private void btnManageLevelActionPerformed(ActionEvent e) {
+    protected void btnManageLevelActionPerformed(ActionEvent e) {
         presenter.manageLevelButtonPressed(((JButton) e.getSource()).getText());
     }
 
