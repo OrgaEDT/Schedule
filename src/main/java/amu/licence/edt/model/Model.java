@@ -134,4 +134,14 @@ public class Model {
         DAOFactoryManager.getDAOFactory().getDAOTeacher().update(t);
     }
 
+    public void findNextWeek() {
+        schedule.setFirstWeekDay(schedule.computeNextWeek());
+        fireScheduleChanged();
+    }
+
+    public void findPrevWeek() {
+        schedule.setFirstWeekDay(schedule.computePrevWeek());
+        fireScheduleChanged();
+    }
+
 }

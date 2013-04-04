@@ -43,4 +43,12 @@ public class Controller {
         model.updateTeacher(t);
     }
 
+    public void nextWeekRequested() {
+        model.findNextWeek();
+    }
+
+    public void prevWeekRequested() {
+        model.findPrevWeek();
+    }
+
 }

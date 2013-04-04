@@ -60,6 +60,7 @@ public class Presenter implements ModelObserver {
 
     @Override
     public void scheduleChanged(Schedule schedule) {
+        view.getMainFrame().getScheduleStatusPanel().setDate(schedule.getFirstWeekDay());
     }
 
     public void connectButtonPressed() {
@@ -124,6 +125,14 @@ public class Presenter implements ModelObserver {
         controller.changeNbHoursAdminRequested(t, nHours);
         // if no exception, changed have been made
         JOptionPane.showMessageDialog(null, "OK.");
+    }
+
+    public void nextWeekButtonPressed() {
+        controller.nextWeekRequested();
+    }
+
+    public void prevWeekButtonPressed() {
+        controller.prevWeekRequested();
     }
 
 }

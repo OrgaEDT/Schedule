@@ -21,4 +21,22 @@ public class Schedule {
         return firstWeekDay;
     }
 
+    public void setFirstWeekDay(Date firstWeekDay) {
+        this.firstWeekDay = firstWeekDay;
+    }
+
+    public Date computeNextWeek() {
+        Calendar c = Calendar.getInstance();
+        c.setTime(firstWeekDay);
+        c.add(Calendar.DAY_OF_MONTH, 7);
+        return c.getTime();
+    }
+
+    public Date computePrevWeek() {
+        Calendar c = Calendar.getInstance();
+        c.setTime(firstWeekDay);
+        c.add(Calendar.DAY_OF_MONTH, -7);
+        return c.getTime();
+    }
+
 }
