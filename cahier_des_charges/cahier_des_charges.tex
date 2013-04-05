@@ -299,6 +299,8 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 
 \item Une période d'indisponibilité ne peut être ajoutée (ou modifiée) si l'enseignant concerné participe à une séance chevauchant la période sus-dite.
 
+\item Si un individu est connecté et qu'il n'est pas gestionnaire, c'est un enseignant. En effet, seulement trois types d'individus pourront se connecter : les enseignants, les gestionnaires d'années et les gestionnaires d'enseignants. Malheureusement, cette contrainte ne pourra pas être vérifiée en base. Prenons un exemple : nous voulons ajouter un nouveau gestionnaire d'année. Il faut d'abord insérer le gestionnaire en question avec ses identifiants, puis insérer le (premier) lien qui le lie à une année. Entre ces deux insertions, la contrainte ne sera pas satisfaite. Néanmoins, nous pouvons empêcher un individu de se connecter s'il n'est ni gestionnaire ni enseignant.
+
 \end{itemize}
 
 \subsection{\'Etude des fonctionnalités de l'application}
