@@ -2,7 +2,7 @@ package amu.licence.edt.view.renderers;
 
 import amu.licence.edt.model.beans.Level;
 
-public class LevelRenderer implements Renderer {
+public class LevelRenderer implements StrRenderer {
 
     @Override
     public String getStrRender(Object obj) {

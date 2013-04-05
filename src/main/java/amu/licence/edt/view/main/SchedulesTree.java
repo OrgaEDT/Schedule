@@ -9,8 +9,8 @@ import javax.swing.tree.TreeSelectionModel;
 
 import amu.licence.edt.presenter.Presenter;
 import amu.licence.edt.view.ViewComponent;
-import amu.licence.edt.view.renderers.ClassBasedTreeCellDDR;
-import amu.licence.edt.view.renderers.DMTNUserObjectBasedRenderer;
+import amu.licence.edt.view.renderers.TreeCellStrRenderer;
+import amu.licence.edt.view.renderers.DMTNUserObjectBasedStrRenderer;
 
 public class SchedulesTree extends ViewComponent {
 
@@ -26,7 +26,7 @@ public class SchedulesTree extends ViewComponent {
         tree = new JTree(rootNode);
         tree.setRootVisible(true);
 
-        ClassBasedTreeCellDDR renderer = new ClassBasedTreeCellDDR(new DMTNUserObjectBasedRenderer(presenter.getClassBasedDDR()));
+        TreeCellStrRenderer renderer = new TreeCellStrRenderer(new DMTNUserObjectBasedStrRenderer(presenter.getClassBasedDDR()));
         tree.setCellRenderer(renderer);
 
         tree.getSelectionModel().setSelectionMode (TreeSelectionModel.SINGLE_TREE_SELECTION);

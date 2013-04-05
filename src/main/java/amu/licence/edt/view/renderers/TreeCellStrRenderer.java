@@ -4,17 +4,14 @@ import java.awt.Component;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.TreeCellRenderer;
 
-/*
- * Class Based Tree Cell Display Delegation Renderer
- */
-public class ClassBasedTreeCellDDR extends DefaultTreeCellRenderer implements TreeCellRenderer {
+public class TreeCellStrRenderer extends DefaultTreeCellRenderer {
     private static final long serialVersionUID = 1L;
 
-    Renderer r;
+    StrRenderer r;
 
-    public ClassBasedTreeCellDDR(Renderer r) {
+    public TreeCellStrRenderer(StrRenderer r) {
+        super();
         this.r = r;
     }
 

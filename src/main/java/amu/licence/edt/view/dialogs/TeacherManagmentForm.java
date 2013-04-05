@@ -27,7 +27,7 @@ import javax.swing.border.TitledBorder;
 import amu.licence.edt.model.beans.Teacher;
 import amu.licence.edt.presenter.Presenter;
 import amu.licence.edt.view.ViewComponent;
-import amu.licence.edt.view.renderers.ClassBasedCbbListDDR;
+import amu.licence.edt.view.renderers.ListCellStrRenderer;
 
 public class TeacherManagmentForm extends ViewComponent {
 
@@ -69,7 +69,7 @@ public class TeacherManagmentForm extends ViewComponent {
 
         List<Teacher> teachers = presenter.teacherManagmentFormCreating();
         cbbTeachers = new JComboBox(teachers.toArray());
-        cbbTeachers.setRenderer(new ClassBasedCbbListDDR(presenter.getClassBasedDDR()));
+        cbbTeachers.setRenderer(new ListCellStrRenderer(presenter.getClassBasedDDR()));
         cbbTeachers.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

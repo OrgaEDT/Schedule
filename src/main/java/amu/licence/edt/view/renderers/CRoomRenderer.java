@@ -2,7 +2,7 @@ package amu.licence.edt.view.renderers;
 
 import amu.licence.edt.model.beans.CRoom;
 
-public class CRoomRenderer implements Renderer {
+public class CRoomRenderer implements StrRenderer {
 
     @Override
     public String getStrRender(Object obj) {

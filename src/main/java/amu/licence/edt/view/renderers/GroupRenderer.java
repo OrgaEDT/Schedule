@@ -2,7 +2,7 @@ package amu.licence.edt.view.renderers;
 
 import amu.licence.edt.model.beans.Group;
 
-public class GroupRenderer implements Renderer {
+public class GroupRenderer implements StrRenderer {
 
     @Override
     public String getStrRender(Object obj) {

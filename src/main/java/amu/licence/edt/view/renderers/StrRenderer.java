@@ -1,6 +1,6 @@
 package amu.licence.edt.view.renderers;
 
-public interface Renderer {
+public interface StrRenderer {
 
     public String getStrRender(Object obj);
 

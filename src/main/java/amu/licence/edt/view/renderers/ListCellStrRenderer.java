@@ -5,12 +5,12 @@ import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
-public class ClassBasedCbbListDDR extends DefaultListCellRenderer {
+public class ListCellStrRenderer extends DefaultListCellRenderer {
     private static final long serialVersionUID = 1L;
 
-    Renderer r;
+    StrRenderer r;
 
-    public ClassBasedCbbListDDR(Renderer r) {
+    public ListCellStrRenderer(StrRenderer r) {
         super();
         this.r = r;
     }
