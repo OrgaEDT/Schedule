@@ -35,7 +35,7 @@ public class ScheduleStatusPanel extends ViewComponent {
     protected JComponent createComponent() {
         JPanel panel = new JPanel(new FlowLayout());
 
-        btnLeft = new JButton("left");
+        btnLeft = new JButton("<<");
         btnLeft.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -43,7 +43,7 @@ public class ScheduleStatusPanel extends ViewComponent {
             }
         });
 
-        btnRight = new JButton("right");
+        btnRight = new JButton(">>");
         btnRight.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
