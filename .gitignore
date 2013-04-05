@@ -1,3 +1,7 @@
 target/
 bin/
+cahier_des_charges/diagrammes/
 *.log
+*.aux
+*.dvi
+*.toc
