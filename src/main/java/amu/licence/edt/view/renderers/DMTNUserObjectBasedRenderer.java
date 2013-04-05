@@ -3,13 +3,13 @@ package amu.licence.edt.view.renderers;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /*
- * Default Mutable Tree Node User Object Based String Renderer
+ * Default Mutable Tree Node User Object Based Renderer
  */
-public class DMTNUserObjectBasedStrRenderer implements StrRenderer {
+public class DMTNUserObjectBasedRenderer implements StrRenderer {
 
     private StrRenderer r;
 
-    public DMTNUserObjectBasedStrRenderer(StrRenderer r) {
+    public DMTNUserObjectBasedRenderer(StrRenderer r) {
         this.r = r;
     }
 

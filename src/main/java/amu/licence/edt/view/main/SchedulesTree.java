@@ -10,7 +10,7 @@ import javax.swing.tree.TreeSelectionModel;
 import amu.licence.edt.presenter.Presenter;
 import amu.licence.edt.view.ViewComponent;
 import amu.licence.edt.view.renderers.TreeCellStrRenderer;
-import amu.licence.edt.view.renderers.DMTNUserObjectBasedStrRenderer;
+import amu.licence.edt.view.renderers.DMTNUserObjectBasedRenderer;
 
 public class SchedulesTree extends ViewComponent {
 
@@ -26,7 +26,7 @@ public class SchedulesTree extends ViewComponent {
         tree = new JTree(rootNode);
         tree.setRootVisible(true);
 
-        TreeCellStrRenderer renderer = new TreeCellStrRenderer(new DMTNUserObjectBasedStrRenderer(presenter.getClassBasedDDR()));
+        TreeCellStrRenderer renderer = new TreeCellStrRenderer(new DMTNUserObjectBasedRenderer(presenter.getClassBasedDDR()));
         tree.setCellRenderer(renderer);
 
         tree.getSelectionModel().setSelectionMode (TreeSelectionModel.SINGLE_TREE_SELECTION);

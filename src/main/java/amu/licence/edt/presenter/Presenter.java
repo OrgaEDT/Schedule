@@ -20,7 +20,7 @@ import amu.licence.edt.view.View;
 import amu.licence.edt.view.renderers.CRoomRenderer;
 import amu.licence.edt.view.renderers.CRoomTypeRenderer;
 import amu.licence.edt.view.renderers.ClassBasedDDR;
-import amu.licence.edt.view.renderers.DMTNUserObjectBasedStrRenderer;
+import amu.licence.edt.view.renderers.DMTNUserObjectBasedRenderer;
 import amu.licence.edt.view.renderers.GroupRenderer;
 import amu.licence.edt.view.renderers.LevelRenderer;
 import amu.licence.edt.view.renderers.TeacherRenderer;
@@ -95,7 +95,7 @@ public class Presenter implements ModelObserver {
     }
 
     public void treePathChanged(TreePath path) {
-        DMTNUserObjectBasedStrRenderer dmtnRenderer = new DMTNUserObjectBasedStrRenderer(classBasedDDR);
+        DMTNUserObjectBasedRenderer dmtnRenderer = new DMTNUserObjectBasedRenderer(classBasedDDR);
         String separator = " - ";
         StringBuilder sb = new StringBuilder();
         for (Object o : path.getPath()) {
