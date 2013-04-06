@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
 
 import amu.licence.edt.model.beans.Admin;
 import amu.licence.edt.model.beans.Level;
@@ -29,8 +30,6 @@ public class AdminStatusPanel extends ViewComponent {
     private JLabel lblConnexionLogin;
     private JPanel pnlConnectLbl;
 
-    private JLabel lblManage;
-    private JPanel pnlBtnsManage;
     private JButton btnManageTeachers;
     private JPanel pnlManage;
 
@@ -54,10 +53,6 @@ public class AdminStatusPanel extends ViewComponent {
         pnlConnectLbl.add(lblConnectedAs, BorderLayout.NORTH);
         pnlConnectLbl.add(lblConnexionLogin, BorderLayout.CENTER);
 
-        lblManage = new JLabel("Administration");
-        pnlBtnsManage = new JPanel();
-        pnlBtnsManage.setLayout(new BoxLayout(pnlBtnsManage, BoxLayout.PAGE_AXIS));
-
         btnManageTeachers = new JButton("Enseignants");
         btnManageTeachers.addActionListener(new ActionListener() {
             @Override
@@ -66,9 +61,11 @@ public class AdminStatusPanel extends ViewComponent {
             }
         });
 
-        pnlManage = new JPanel(new BorderLayout());
-        pnlManage.add(lblManage, BorderLayout.NORTH);
-        pnlManage.add(pnlBtnsManage, BorderLayout.CENTER);
+        pnlManage = new JPanel();
+        pnlManage.setLayout(new BoxLayout(pnlManage, BoxLayout.PAGE_AXIS));
+        pnlManage.setBorder(new TitledBorder(null, "Administration",
+                                                     TitledBorder.LEADING, TitledBorder.TOP,
+                                                     null, Color.RED));
         pnlManage.setVisible(false);
 
         btnConnect = new JButton("Connexion");
@@ -110,7 +107,7 @@ public class AdminStatusPanel extends ViewComponent {
     public void displayPublicUserStatus() {
         ((CardLayout)pnlConnectBtn.getLayout()).show(pnlConnectBtn, CONNECT_BTN);
         lblConnexionLogin.setText(publicLogin);
-        pnlBtnsManage.removeAll();
+        pnlManage.removeAll();
         pnlManage.setVisible(false);
     }
 
@@ -118,7 +115,7 @@ public class AdminStatusPanel extends ViewComponent {
         ((CardLayout)pnlConnectBtn.getLayout()).show(pnlConnectBtn, DISCONNECT_BTN);
         lblConnexionLogin.setText(user.getLogin());
         if (user.isTeacherAdmin()) {
-            pnlBtnsManage.add(btnManageTeachers);
+            pnlManage.add(btnManageTeachers);
         }
         for (Level l : user.getLevels()) {
             JButton btnManageLevel = new JButton(l.getCode());
@@ -128,17 +125,13 @@ public class AdminStatusPanel extends ViewComponent {
                     btnManageLevelActionPerformed(e);
                 }
             });
-            pnlBtnsManage.add(btnManageLevel);
+            pnlManage.add(btnManageLevel);
         }
-        if (pnlBtnsManage.getComponentCount() == 0) {
-            JLabel lblNothingToAdmin = new JLabel("Nothing to administrate");
-            pnlBtnsManage.add(lblNothingToAdmin);
-        }
+        pnlManage.setVisible(pnlManage.getComponentCount() != 0);
         try {   // if it's a teacher, show services hours
             Teacher t = (Teacher) user;     // ok if it passes
             lblConnexionLogin.setText(lblConnexionLogin.getText() + " (" + t.computeServiceHours() + ")");
         } catch (ClassCastException cce) {}
-        pnlManage.setVisible(true);
     }
 
     protected void btnManageLevelActionPerformed(ActionEvent e) {
