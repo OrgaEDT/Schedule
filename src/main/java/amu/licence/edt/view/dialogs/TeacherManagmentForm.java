@@ -113,7 +113,7 @@ public class TeacherManagmentForm extends ViewComponent {
         pnlNbAdminHoursForm = new JPanel(new GridLayout(0, 2));
 
         spinnNbAdminHours = new JSpinner();
-        spinnNbAdminHours.setModel(new SpinnerNumberModel(((Teacher)cbbTeachers.getSelectedItem()).getAdminHours(), 0, 9000, 1));
+        spinnNbAdminHours.setModel(new SpinnerNumberModel(0, 0, 9000, 1));
 
         btnChangeNbAdminHours = new JButton("Modifier");
         btnChangeNbAdminHours.addActionListener(new ActionListener() {
