@@ -1,4 +1,4 @@
-package amu.licence.edt.view.main;
+package amu.licence.edt.view.main.table;
 
 import javax.swing.JComponent;
 import javax.swing.JTable;

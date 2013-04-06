@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import amu.licence.edt.model.dao.DAOFactoryManager;
 import amu.licence.edt.presenter.Presenter;
 import amu.licence.edt.view.AbstractView;
+import amu.licence.edt.view.main.table.ScheduleTable;
 
 public class MainFrame extends AbstractView {
 
