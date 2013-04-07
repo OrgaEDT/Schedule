@@ -2077,10 +2077,8 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 \end{figure}
 
 \section{Programmation et interfaces}
-diagramme UML \\
-rapide description du code \\
-tests \\
 
+\subsection{Les DAO (Data Access Object)}
 \begin{figure}[!ht]
 \advance\leftskip-1in
 % Graphic for TeX using PGF
@@ -2671,6 +2669,7 @@ tests \\
 \caption{Diagramme de classes des DAOs}
 \end{figure}
 
+\subsection{Les rendus}
 \begin{figure}[!ht]
 \advance\leftskip-1in
 % Graphic for TeX using PGF
@@ -3414,6 +3413,759 @@ tests \\
 % setfont left to latex
 \end{tikzpicture}
 \caption{Diagramme de classes des rendus}
+\end{figure}
+
+\subsection{La table}
+
+Pour la représentation de l'emploi du temps lui-même, nous utilisons la classe fournie par \texttt{swing} : \texttt{JTable}. Ce faisant, plusieurs difficultées se sont posées :
+
+\begin{itemize}
+\item Il a fallu trouver les coordonnées d'une séance dans la table. C'est à dire convertir le jour de la semaine en index de ligne, et l'heure dans la journée en index de colonne.
+Avec des colonnes représentant deux heures, on peux utiliser la formule suivante :
+\[numero\ colonne = heure - (7 + \frac{heure - 8}{2})\]
+
+\item Pour les séances durant plusieurs heures, nous voulions fusionner horizontalement les cellules correspondantes dans la table (\textit{column spanning}).
+Cela n'est pas initialement prévu par la classe \texttt{JTable}. Mais celle-ci semble avoir été concue pour autoriser la distribution non-uniforme des cellules.\\
+Les méthodes intéressantes à redéfinir sont :
+\begin{verbatim}
+public Rectangle getCellRect(int row, int column, boolean includeSpacing);
+\end{verbatim}
+Retourne un rectangle englobant la cellule aux positions donnés.
+\begin{verbatim}
+public int columnAtPoint(Point p);
+public int rowAtPoint(Point p);
+\end{verbatim}
+Retournent respectivement la ligne et la colonne de la cellule contenant un point donné dans la table. Dans notre cas, nous n'auront que \texttt{columnAtPoint()} à redéfinir, car les cellules ne seront fusionner que horizontalement.\\
+
+Une fois ceci accompli, le \texttt{TableCellRenderer} s'occupe du rendu des cellules. \\
+
+Mais cela ne suffit pas. Contrairement à ce que l'on pourrais penser, beaucoups de composants \texttt{swing} ne se dessinent pas directement avec la méthodes \texttt{paint} mais délèguent le travail à un objet \texttt{ComponentUI} pour permettre une plus grande flexibilité. C'est le cas avec les \texttt{JTable}s. Il nous faut donc définir une classe qui va dessiner la table à notre convenance. Pour cela, nous dérivons la classe \texttt{BasicTableUI} et redéfinissons la méthode paint. \\
+
+Enfin, il nous faut une structure pour stocker les cellules qui seront fusionnées. Elle fera parti du modèle de notre table que nous redéfinirons car le simple \texttt{DefaultTableModel} ne suffit plus.
+
+Voici le diagramme de classes :
+
+\begin{figure}[!ht]
+\advance\leftskip-0.96in
+% Graphic for TeX using PGF
+% Title: /home/eloi/Dropbox/fac/projet_applique/diagrammes/table.dia
+% Creator: Dia v0.97.2
+% CreationDate: Sun Apr  7 16:22:21 2013
+% For: eloi
+% \usepackage{tikz}
+% The following commands are not supported in PSTricks at present
+% We define them conditionally, so when they are implemented,
+% this pgf file will use them.
+\ifx\du\undefined
+  \newlength{\du}
+\fi
+\setlength{\du}{14\unitlength}
+\begin{tikzpicture}
+\pgftransformxscale{1.000000}
+\pgftransformyscale{-1.000000}
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (24.429289\du,5.123402\du)--(24.429289\du,8.023402\du)--(30.036789\du,8.023402\du)--(30.036789\du,5.123402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (24.429289\du,5.123402\du)--(24.429289\du,8.023402\du)--(30.036789\du,8.023402\du)--(30.036789\du,5.123402\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (27.233039\du,5.923402\du){$<<$interface$>>$};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (27.233039\du,6.873402\du){TableModel};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (27.233039\du,7.648402\du){javax.swing};
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (24.429289\du,8.023402\du)--(24.429289\du,8.423402\du)--(30.036789\du,8.423402\du)--(30.036789\du,8.023402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (24.429289\du,8.023402\du)--(24.429289\du,8.423402\du)--(30.036789\du,8.423402\du)--(30.036789\du,8.023402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (24.429289\du,8.423402\du)--(24.429289\du,8.823402\du)--(30.036789\du,8.823402\du)--(30.036789\du,8.423402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (24.429289\du,8.423402\du)--(24.429289\du,8.823402\du)--(30.036789\du,8.823402\du)--(30.036789\du,8.423402\du)--cycle;
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (34.029289\du,5.123403\du)--(34.029289\du,7.223403\du)--(37.871789\du,7.223403\du)--(37.871789\du,5.123403\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (34.029289\du,5.123403\du)--(34.029289\du,7.223403\du)--(37.871789\du,7.223403\du)--(37.871789\du,5.123403\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (35.950539\du,6.073403\du){Jtable};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (35.950539\du,6.848403\du){javax.swing};
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (34.029289\du,7.223403\du)--(34.029289\du,7.623403\du)--(37.871789\du,7.623403\du)--(37.871789\du,7.223403\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (34.029289\du,7.223403\du)--(34.029289\du,7.623403\du)--(37.871789\du,7.623403\du)--(37.871789\du,7.223403\du)--cycle;
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (34.029289\du,7.623403\du)--(34.029289\du,8.023403\du)--(37.871789\du,8.023403\du)--(37.871789\du,7.623403\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (34.029289\du,7.623403\du)--(34.029289\du,8.023403\du)--(37.871789\du,8.023403\du)--(37.871789\du,7.623403\du)--cycle;
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (31.079289\du,23.573402\du)--(31.079289\du,24.973402\du)--(43.129289\du,24.973402\du)--(43.129289\du,23.573402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (31.079289\du,23.573402\du)--(31.079289\du,24.973402\du)--(43.129289\du,24.973402\du)--(43.129289\du,23.573402\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (37.104289\du,24.523402\du){SpanModel};
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (31.079289\du,24.973402\du)--(31.079289\du,25.973402\du)--(43.129289\du,25.973402\du)--(43.129289\du,24.973402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (31.079289\du,24.973402\du)--(31.079289\du,25.973402\du)--(43.129289\du,25.973402\du)--(43.129289\du,24.973402\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (31.229289\du,25.673402\du){-spans: Set$<$Span$>$};
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (31.079289\du,25.973402\du)--(31.079289\du,30.973402\du)--(43.129289\du,30.973402\du)--(43.129289\du,25.973402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (31.079289\du,25.973402\du)--(31.079289\du,30.973402\du)--(43.129289\du,30.973402\du)--(43.129289\du,25.973402\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (31.229289\du,26.673402\du){+addSpan(s:Span)};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (31.229289\du,27.473402\du){+removeSpan(s:Span)};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (31.229289\du,28.273402\du){+clear()};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (31.229289\du,29.073402\du){+getDefinedSpan(row,col): Span};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (31.229289\du,29.873402\du){+spanSize(row,col): int};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (31.229289\du,30.673402\du){+spanIndex(row,col): int};
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (36.729289\du,14.173402\du)--(36.729289\du,15.573402\du)--(55.324289\du,15.573402\du)--(55.324289\du,14.173402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (36.729289\du,14.173402\du)--(36.729289\du,15.573402\du)--(55.324289\du,15.573402\du)--(55.324289\du,14.173402\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (46.026789\du,15.123402\du){SpanTable};
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (36.729289\du,15.573402\du)--(36.729289\du,15.973402\du)--(55.324289\du,15.973402\du)--(55.324289\du,15.573402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (36.729289\du,15.573402\du)--(36.729289\du,15.973402\du)--(55.324289\du,15.973402\du)--(55.324289\du,15.573402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (36.729289\du,15.973402\du)--(36.729289\du,20.173402\du)--(55.324289\du,20.173402\du)--(55.324289\du,15.973402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (36.729289\du,15.973402\du)--(36.729289\du,20.173402\du)--(55.324289\du,20.173402\du)--(55.324289\du,15.973402\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (36.879289\du,16.673402\du){+SpanTable(model:SpanTableModel)};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (36.879289\du,17.473402\du){+getCellRect(row,col,includeSpacing): Rectangle};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (36.879289\du,18.273402\du){+columnAtPoint(p:Point): int};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (36.879289\du,19.073402\du){+getSpanModel(): SpanModel};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (36.879289\du,19.873402\du){+setModel(model:TableModel)};
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (40.629289\du,5.123403\du)--(40.629289\du,6.523403\du)--(58.454289\du,6.523403\du)--(58.454289\du,5.123403\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (40.629289\du,5.123403\du)--(40.629289\du,6.523403\du)--(58.454289\du,6.523403\du)--(58.454289\du,5.123403\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (49.541789\du,6.073403\du){SpanTableUI};
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (40.629289\du,6.523403\du)--(40.629289\du,6.923403\du)--(58.454289\du,6.923403\du)--(58.454289\du,6.523403\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (40.629289\du,6.523403\du)--(40.629289\du,6.923403\du)--(58.454289\du,6.923403\du)--(58.454289\du,6.523403\du)--cycle;
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (40.629289\du,6.923403\du)--(40.629289\du,9.523403\du)--(58.454289\du,9.523403\du)--(58.454289\du,6.923403\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (40.629289\du,6.923403\du)--(40.629289\du,9.523403\du)--(58.454289\du,9.523403\du)--(58.454289\du,6.923403\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (40.779289\du,7.623403\du){+paint(g:Graphics,c:JComponent)};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (40.779289\du,8.423403\du){-paintRow(g:Graphics,row:int)};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (40.779289\du,9.223403\du){-paintCell(g:Graphics,row,col,area:Rectangle)};
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (23.329289\du,15.423402\du)--(23.329289\du,17.623402\du)--(31.194289\du,17.623402\du)--(31.194289\du,15.423402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (23.329289\du,15.423402\du)--(23.329289\du,17.623402\du)--(31.194289\du,17.623402\du)--(31.194289\du,15.423402\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (27.261789\du,16.223402\du){$<<$interface$>>$};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (27.261789\du,17.173402\du){SpanTableModel};
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (23.329289\du,17.623402\du)--(23.329289\du,18.023402\du)--(31.194289\du,18.023402\du)--(31.194289\du,17.623402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (23.329289\du,17.623402\du)--(23.329289\du,18.023402\du)--(31.194289\du,18.023402\du)--(31.194289\du,17.623402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (23.329289\du,18.023402\du)--(23.329289\du,19.023402\du)--(31.194289\du,19.023402\du)--(31.194289\du,18.023402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (23.329289\du,18.023402\du)--(23.329289\du,19.023402\du)--(31.194289\du,19.023402\du)--(31.194289\du,18.023402\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (23.479289\du,18.723402\du){+getSpanModel()};
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\pgfsetmiterjoin
+\pgfsetbuttcap
+{
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetfillcolor{dialinecolor}
+% was here!!!
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (35.950539\du,8.073769\du)--(35.950539\du,11.498399\du)--(46.026789\du,11.498399\du)--(46.026789\du,14.123030\du);
+}
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (35.950539\du,8.985573\du)--(35.950539\du,11.498399\du)--(46.026789\du,11.498399\du)--(46.026789\du,14.123030\du);
+\pgfsetmiterjoin
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (36.350539\du,8.985573\du)--(35.950539\du,8.185573\du)--(35.550539\du,8.985573\du)--cycle;
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\pgfsetmiterjoin
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (36.350539\du,8.985573\du)--(35.950539\du,8.185573\du)--(35.550539\du,8.985573\du)--cycle;
+% setfont left to latex
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (46.429290\du,0.123402\du)--(46.429290\du,2.223402\du)--(52.624290\du,2.223402\du)--(52.624290\du,0.123402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (46.429290\du,0.123402\du)--(46.429290\du,2.223402\du)--(52.624290\du,2.223402\du)--(52.624290\du,0.123402\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (49.526790\du,1.073402\du){BasicTableUI};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (49.526790\du,1.848402\du){javax.swing};
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (46.429290\du,2.223402\du)--(46.429290\du,2.623402\du)--(52.624290\du,2.623402\du)--(52.624290\du,2.223402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (46.429290\du,2.223402\du)--(46.429290\du,2.623402\du)--(52.624290\du,2.623402\du)--(52.624290\du,2.223402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (46.429290\du,2.623402\du)--(46.429290\du,3.023402\du)--(52.624290\du,3.023402\du)--(52.624290\du,2.623402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (46.429290\du,2.623402\du)--(46.429290\du,3.023402\du)--(52.624290\du,3.023402\du)--(52.624290\du,2.623402\du)--cycle;
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\pgfsetmiterjoin
+\pgfsetbuttcap
+{
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetfillcolor{dialinecolor}
+% was here!!!
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (27.233039\du,8.873866\du)--(27.233039\du,12.523409\du)--(27.261789\du,12.523409\du)--(27.261789\du,15.372951\du);
+}
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (27.233039\du,9.785670\du)--(27.233039\du,12.523409\du)--(27.261789\du,12.523409\du)--(27.261789\du,15.372951\du);
+\pgfsetmiterjoin
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (27.633039\du,9.785670\du)--(27.233039\du,8.985670\du)--(26.833039\du,9.785670\du)--cycle;
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\pgfsetmiterjoin
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (27.633039\du,9.785670\du)--(27.233039\du,8.985670\du)--(26.833039\du,9.785670\du)--cycle;
+% setfont left to latex
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\pgfsetmiterjoin
+\pgfsetbuttcap
+{
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetfillcolor{dialinecolor}
+% was here!!!
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (49.526790\du,3.073769\du)--(49.526790\du,4.473448\du)--(49.541789\du,4.473448\du)--(49.541789\du,5.073128\du);
+}
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (49.526790\du,3.985572\du)--(49.526790\du,4.473448\du)--(49.541789\du,4.473448\du)--(49.541789\du,5.073128\du);
+\pgfsetmiterjoin
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (49.926790\du,3.985572\du)--(49.526790\du,3.185572\du)--(49.126790\du,3.985572\du)--cycle;
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\pgfsetmiterjoin
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (49.926790\du,3.985572\du)--(49.526790\du,3.185572\du)--(49.126790\du,3.985572\du)--cycle;
+% setfont left to latex
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (38.229291\du,35.123402\du)--(38.229291\du,36.523402\du)--(49.509291\du,36.523402\du)--(49.509291\du,35.123402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (38.229291\du,35.123402\du)--(38.229291\du,36.523402\du)--(49.509291\du,36.523402\du)--(49.509291\du,35.123402\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (43.869291\du,36.073402\du){Span};
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (38.229291\du,36.523402\du)--(38.229291\du,39.123402\du)--(49.509291\du,39.123402\du)--(49.509291\du,36.523402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (38.229291\du,36.523402\du)--(38.229291\du,39.123402\du)--(49.509291\du,39.123402\du)--(49.509291\du,36.523402\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (38.379291\du,37.223402\du){-row: int};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (38.379291\du,38.023402\du){-col: int};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (38.379291\du,38.823402\du){-width: int};
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (38.229291\du,39.123402\du)--(38.229291\du,40.923402\du)--(49.509291\du,40.923402\du)--(49.509291\du,39.123402\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (38.229291\du,39.123402\du)--(38.229291\du,40.923402\du)--(49.509291\du,40.923402\du)--(49.509291\du,39.123402\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (38.379291\du,39.823402\du){+intersect(s:Span): boolean};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (38.379291\du,40.623402\du){+isDefined(row,col): boolean};
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\pgfsetmiterjoin
+\pgfsetbuttcap
+{
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetfillcolor{dialinecolor}
+% was here!!!
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (37.104289\du,31.023860\du)--(37.104289\du,33.398451\du)--(43.869291\du,33.398451\du)--(43.869291\du,35.073042\du);
+}
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (37.104289\du,32.282439\du)--(37.104289\du,33.398451\du)--(43.869291\du,33.398451\du)--(43.869291\du,35.073042\du);
+\pgfsetdash{}{0pt}
+\pgfsetmiterjoin
+\pgfsetbuttcap
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (37.104289\du,31.023860\du)--(37.344289\du,31.723860\du)--(37.104289\du,32.423860\du)--(36.864289\du,31.723860\du)--cycle;
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\pgfsetmiterjoin
+\pgfsetbuttcap
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (37.104289\du,31.023860\du)--(37.344289\du,31.723860\du)--(37.104289\du,32.423860\du)--(36.864289\du,31.723860\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (37.654289\du,31.623860\du){ *};
+\pgfsetlinewidth{0.100000\du}
+\pgfsetbuttcap
+\pgfsetdash{}{0pt}
+{
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetfillcolor{dialinecolor}
+% was here!!!
+\pgfsetarrowsstart{latex}
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (31.244083\du,17.212791\du)--(36.679794\du,17.198308\du);
+}
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (33.961939\du,17.705550\du){model};
+\pgfsetlinewidth{0.100000\du}
+\pgfsetbuttcap
+\pgfsetdash{}{0pt}
+{
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetfillcolor{dialinecolor}
+% was here!!!
+\pgfsetarrowsstart{to}
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (33.431975\du,23.523668\du)--(29.071214\du,19.070973\du);
+}
+% setfont left to latex
+\pgfsetlinewidth{0.100000\du}
+\pgfsetbuttcap
+\pgfsetdash{}{0pt}
+{
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetfillcolor{dialinecolor}
+% was here!!!
+\pgfsetarrowsstart{latex}
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (48.741989\du,9.564662\du)--(47.115143\du,14.123533\du);
+}
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (47.928566\du,12.344098\du){setUI};
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (15.279289\du,42.923401\du)--(15.279289\du,44.323401\du)--(25.789289\du,44.323401\du)--(25.789289\du,42.923401\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (15.279289\du,42.923401\du)--(15.279289\du,44.323401\du)--(25.789289\du,44.323401\du)--(25.789289\du,42.923401\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (20.534289\du,43.873401\du){ScheduleTableModel};
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (15.279289\du,44.323401\du)--(15.279289\du,45.323401\du)--(25.789289\du,45.323401\du)--(25.789289\du,44.323401\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (15.279289\du,44.323401\du)--(15.279289\du,45.323401\du)--(25.789289\du,45.323401\du)--(25.789289\du,44.323401\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (15.429289\du,45.023401\du){-spanModel: SpanModel};
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (15.279289\du,45.323401\du)--(15.279289\du,46.323401\du)--(25.789289\du,46.323401\du)--(25.789289\du,45.323401\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (15.279289\du,45.323401\du)--(15.279289\du,46.323401\du)--(25.789289\du,46.323401\du)--(25.789289\du,45.323401\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (15.429289\du,46.023401\du){+getSpanModel(): SpanModel};
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{{1.000000\du}{1.000000\du}}{0\du}
+\pgfsetdash{{0.400000\du}{0.400000\du}}{0\du}
+\pgfsetmiterjoin
+\pgfsetbuttcap
+{
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetfillcolor{dialinecolor}
+% was here!!!
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (27.261789\du,19.073854\du)--(27.261789\du,31.373414\du)--(20.534289\du,31.373414\du)--(20.534289\du,42.872974\du);
+}
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (27.261789\du,19.985658\du)--(27.261789\du,31.373414\du)--(20.534289\du,31.373414\du)--(20.534289\du,42.872974\du);
+\pgfsetmiterjoin
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (27.661789\du,19.985658\du)--(27.261789\du,19.185658\du)--(26.861789\du,19.985658\du)--cycle;
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\pgfsetmiterjoin
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (27.661789\du,19.985658\du)--(27.261789\du,19.185658\du)--(26.861789\du,19.985658\du)--cycle;
+% setfont left to latex
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\pgfsetmiterjoin
+\pgfsetbuttcap
+{
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetfillcolor{dialinecolor}
+% was here!!!
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (25.789289\du,43.623401\du)--(28.759104\du,43.623401\du)--(28.759104\du,27.273402\du)--(31.028919\du,27.273402\du);
+}
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (27.047868\du,43.623401\du)--(28.759104\du,43.623401\du)--(28.759104\du,27.273402\du)--(31.028919\du,27.273402\du);
+\pgfsetdash{}{0pt}
+\pgfsetmiterjoin
+\pgfsetbuttcap
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (25.789289\du,43.623401\du)--(26.489289\du,43.383401\du)--(27.189289\du,43.623401\du)--(26.489289\du,43.863401\du)--cycle;
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\pgfsetmiterjoin
+\pgfsetbuttcap
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (25.789289\du,43.623401\du)--(26.489289\du,43.383401\du)--(27.189289\du,43.623401\du)--(26.489289\du,43.863401\du)--cycle;
+% setfont left to latex
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (42.429292\du,43.460902\du)--(42.429292\du,44.860902\du)--(58.329292\du,44.860902\du)--(58.329292\du,43.460902\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (42.429292\du,43.460902\du)--(42.429292\du,44.860902\du)--(58.329292\du,44.860902\du)--(58.329292\du,43.460902\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (50.379292\du,44.410902\du){ScheduleTable};
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (42.429292\du,44.860902\du)--(42.429292\du,45.260902\du)--(58.329292\du,45.260902\du)--(58.329292\du,44.860902\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (42.429292\du,44.860902\du)--(42.429292\du,45.260902\du)--(58.329292\du,45.260902\du)--(58.329292\du,44.860902\du)--cycle;
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (42.429292\du,45.260902\du)--(42.429292\du,46.260902\du)--(58.329292\du,46.260902\du)--(58.329292\du,45.260902\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (42.429292\du,45.260902\du)--(42.429292\du,46.260902\du)--(58.329292\du,46.260902\du)--(58.329292\du,45.260902\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node[anchor=west] at (42.579292\du,45.960902\du){+ScheduleTable(model:ScheduleTableModel)};
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\pgfsetmiterjoin
+\pgfsetbuttcap
+{
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetfillcolor{dialinecolor}
+% was here!!!
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (46.026789\du,20.223774\du)--(46.026789\du,32.217161\du)--(50.379292\du,32.217161\du)--(50.379292\du,43.410548\du);
+}
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (46.026789\du,21.135578\du)--(46.026789\du,32.217161\du)--(50.379292\du,32.217161\du)--(50.379292\du,43.410548\du);
+\pgfsetmiterjoin
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (46.426789\du,21.135578\du)--(46.026789\du,20.335578\du)--(45.626789\du,21.135578\du)--cycle;
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\pgfsetmiterjoin
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (46.426789\du,21.135578\du)--(46.026789\du,20.335578\du)--(45.626789\du,21.135578\du)--cycle;
+% setfont left to latex
+\pgfsetlinewidth{0.100000\du}
+\pgfsetbuttcap
+\pgfsetdash{}{0pt}
+{
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetfillcolor{dialinecolor}
+% was here!!!
+\pgfsetarrowsstart{latex}
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (25.789289\du,44.823401\du)--(42.379361\du,44.848702\du);
+}
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (34.084325\du,45.336051\du){model};
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (15.779289\du,20.910902\du)--(15.779289\du,23.010902\du)--(25.299289\du,23.010902\du)--(25.299289\du,20.910902\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (15.779289\du,20.910902\du)--(15.779289\du,23.010902\du)--(25.299289\du,23.010902\du)--(25.299289\du,20.910902\du)--cycle;
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (20.539289\du,21.860902\du){AbstractTableModel};
+% setfont left to latex
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\node at (20.539289\du,22.635902\du){javax.swing};
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (15.779289\du,23.010902\du)--(15.779289\du,23.410902\du)--(25.299289\du,23.410902\du)--(25.299289\du,23.010902\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (15.779289\du,23.010902\du)--(15.779289\du,23.410902\du)--(25.299289\du,23.410902\du)--(25.299289\du,23.010902\du)--cycle;
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (15.779289\du,23.410902\du)--(15.779289\du,23.810902\du)--(25.299289\du,23.810902\du)--(25.299289\du,23.410902\du)--cycle;
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (15.779289\du,23.410902\du)--(15.779289\du,23.810902\du)--(25.299289\du,23.810902\du)--(25.299289\du,23.410902\du)--cycle;
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{{0.400000\du}{0.400000\du}}{0\du}
+\pgfsetdash{{0.400000\du}{0.400000\du}}{0\du}
+\pgfsetmiterjoin
+\pgfsetbuttcap
+{
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetfillcolor{dialinecolor}
+% was here!!!
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (24.429289\du,6.573402\du)--(20.539289\du,6.573402\du)--(20.539289\du,20.910902\du);
+}
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (23.517486\du,6.573402\du)--(20.539289\du,6.573402\du)--(20.539289\du,20.910902\du);
+\pgfsetmiterjoin
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (23.517486\du,6.973402\du)--(24.317486\du,6.573402\du)--(23.517486\du,6.173402\du)--cycle;
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\pgfsetmiterjoin
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (23.517486\du,6.973402\du)--(24.317486\du,6.573402\du)--(23.517486\du,6.173402\du)--cycle;
+% setfont left to latex
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\pgfsetmiterjoin
+\pgfsetbuttcap
+{
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetfillcolor{dialinecolor}
+% was here!!!
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (20.539289\du,23.810902\du)--(20.539289\du,33.741938\du)--(20.534289\du,33.741938\du)--(20.534289\du,42.872974\du);
+}
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (20.539289\du,24.722706\du)--(20.539289\du,33.741938\du)--(20.534289\du,33.741938\du)--(20.534289\du,42.872974\du);
+\pgfsetmiterjoin
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (20.939289\du,24.722706\du)--(20.539289\du,23.922706\du)--(20.139289\du,24.722706\du)--cycle;
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\pgfsetmiterjoin
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (20.939289\du,24.722706\du)--(20.539289\du,23.922706\du)--(20.139289\du,24.722706\du)--cycle;
+% setfont left to latex
+\end{tikzpicture}
+\caption{Diagramme de classes de la table}
+\end{figure}
+
+\end{itemize}
+
+\begin{figure}[!ht]
+\advance\leftskip-1in
+\caption{figure model}
 \end{figure}
 
 \end{document}
