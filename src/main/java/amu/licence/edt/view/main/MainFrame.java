@@ -12,7 +12,7 @@ import javax.swing.JScrollPane;
 import amu.licence.edt.model.dao.DAOFactoryManager;
 import amu.licence.edt.presenter.Presenter;
 import amu.licence.edt.view.AbstractView;
-import amu.licence.edt.view.main.table.ScheduleTable;
+import amu.licence.edt.view.main.table.ScheduleTableComponent;
 
 public class MainFrame extends AbstractView {
 
@@ -23,7 +23,7 @@ public class MainFrame extends AbstractView {
 
     AdminStatusPanel adminStatusPanel;
     SchedulesTree schedulesTree;
-    ScheduleTable scheduleTable;
+    ScheduleTableComponent scheduleTable;
     ScheduleStatusPanel scheduleStatusPanel;
 
     public MainFrame(Presenter presenter) {
@@ -46,7 +46,7 @@ public class MainFrame extends AbstractView {
 
         adminStatusPanel = new AdminStatusPanel(presenter);
         schedulesTree = new SchedulesTree(presenter);
-        scheduleTable = new ScheduleTable(presenter);
+        scheduleTable = new ScheduleTableComponent(presenter);
         scheduleStatusPanel = new ScheduleStatusPanel(presenter);
 
         pnlCenter.setLayout(new BorderLayout());

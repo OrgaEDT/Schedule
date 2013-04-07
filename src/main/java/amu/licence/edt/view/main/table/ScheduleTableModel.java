@@ -6,9 +6,10 @@ import javax.swing.table.AbstractTableModel;
 
 import amu.licence.edt.model.beans.TU;
 
-public class ScheduleTableModel extends AbstractTableModel {
+public class ScheduleTableModel extends AbstractTableModel implements SpanTableModel {
     private static final long serialVersionUID = 1L;
 
+    private SpanModel spanModel = new SpanModel();
     private final TU[][] donnees;
     private final String[] entete = { "matin", "midi", "soir" };
 
@@ -44,6 +45,11 @@ public class ScheduleTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int arg0, int arg1) {
         return donnees[arg0][arg1];
+    }
+
+    @Override
+    public SpanModel getSpanModel() {
+        return spanModel;
     }
 
 }
