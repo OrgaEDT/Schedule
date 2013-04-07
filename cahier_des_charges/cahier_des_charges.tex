@@ -2076,9 +2076,12 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 \caption{MCT (3)}
 \end{figure}
 
+\newpage
 \section{Programmation et interfaces}
 
 \subsection{Les DAO (Data Access Object)}
+DAOFactoryManager créé la bonne DAOFactory qui créé les DAOs.
+
 \begin{figure}[!ht]
 \advance\leftskip-1in
 % Graphic for TeX using PGF
@@ -2669,14 +2672,22 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 \caption{Diagramme de classes des DAOs}
 \end{figure}
 
+%\newpage
 \subsection{Les rendus}
+Les conteneurs graphiques (\texttt{JPanel}, \texttt{JTable}, \texttt{JTree}, ...) contiennent par définition des objets qui seront disposés à la vue de l'utilisateur. Lorsqu'un conteneur est dessiné, les objets contenus sont eux même dessinés. Cela se fait principalement avec la méthode \texttt{paint()} pour des \texttt{JComponent}, ou pour des objets dits utilisateurs (\textit{user object}), en mettant dans un "porteur" (souvent un \texttt{JLabel}) le résultat de l'appel à la méthode \texttt{toString()} (hérité de \texttt{Object}) sur l'objet à dessiner. Il suffirait donc de redéfinir cette méthode correctement pour chaque classes d'objet à afficher. Hors nos classes métiers ont déjà leur méthode \texttt{toString()} implémentée pour permettre la sérialisation. Cette méthode n'est donc plus adaptée pour l'affichage car non \textit{user friendly}. Pour afficher les objets métiers correctement sans perdre leur aspect sérialisable, nous avons donc du utiliser un autre mécanisme. Bien qu'assez complexe à mettre en place, il permet au final une plus grande maniabilité.\\ \\
+La difficultée ici, c'est que pour un objet, par exemple un \texttt{JTree}, nous ne pouvons spécifier qu'un seul moteur de rendu (\textit{renderer}) qui sera utilisé pour dessiner tous les objets (ce n'est pas le cas pour les \texttt{JTable}s car l'API nous oblige à spécifier la classe des objets lorsqu'on ajoute des moteurs de rendus\footnote{Nous pouvons toujours appliquer notre méthode en utilisant \texttt{Object.class}}). C'est pour cela que la méthode \texttt{toString()} est très utilisée (car partagée par tous les objets).\\
+Notre solution se base sur un moteur de rendu d'affichage délégué, basé sur la classe de l'objet (\textit{Class-Based Display Delegation Renderer}). On a un objet qui fait office de moteur de rendu pour le conteneur. Lorsq'il est appelé, au lieu de créer directement un rendu, il délègue ce travail à un autre moteur de rendu selon un tableau associatif ayant pour clé la classe de l'objet à dessiner et pour valeur le moteur de rendu à appeler. Ainsi, peu importe la classe des objets à dessiner, nous pouvons utiliser le bon moteur de rendu (si aucun n'est trouvé, on utilise celui par défaut). Il faut bien entendu enregistrer ceux-ci avant tout affichage (c'est le rôle du présentateur).\\ \\
+Mais en pratique cette solution ne peux que très rarement être utilisée tel quel. En effet, les conteneurs graphiques requièrent des moteurs de rendus spécialisés. Par exemple, les \texttt{JComboBox}s ne peuvent qu'utiliser des rendus implémentant l'interface \texttt{ListCellRenderer}. La solution la plus simple est d'encapsuler un DDR\footnote{DDR : Display Delegation Renderer} dans une classe dérivant de \texttt{DefaultListCellRenderer} qui implémente \texttt{ListCellRenderer} et dérive de \texttt{JLabel}. Lorsqu'un rendu est demandé, on appel d'abord la méthode \texttt{DefaultListCellRenderer} qui créera un rendu par défaut, puis on le modifie avec notre DDR.\\
+Un autre problème se pose avec les \texttt{JTree}s : ce ne sont pas les objets métiers qui sont dessinés mais les noeuds (\texttt{TreeNode}s). La solution est similaire à celle du problème des moteurs de rendus spécialisés. Pour résumer, voici les états d'encapsulations des moteurs de rendus pour notre \texttt{JTree} : Le renderer de l'arbre créé un rendu par défaut et le modifie en appelant le renderer de noeud qui extrait l'objet métier et appel le DDR qui appel le bon renderer et renvoie le rendu tant désiré au premier renderer.
+Voici le diagramme de classes.
+
 \begin{figure}[!ht]
 \advance\leftskip-1in
 % Graphic for TeX using PGF
-% Title: /filer/etudiants/g7/p1002650/Bureau/dias/Diagramme_renderers.dia
-% Creator: Dia v0.97.1
-% CreationDate: Fri Apr  5 16:22:44 2013
-% For: p1002650
+% Title: /home/eloi/Dropbox/fac/projet_applique/diagrammes/renderers.dia
+% Creator: Dia v0.97.2
+% CreationDate: Sun Apr  7 18:30:29 2013
+% For: eloi
 % \usepackage{tikz}
 % The following commands are not supported in PSTricks at present
 % We define them conditionally, so when they are implemented,
@@ -2696,34 +2707,34 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 \pgfsetdash{}{0pt}
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (17.962500\du,-29.000000\du)--(17.962500\du,-26.800000\du)--(31.167500\du,-26.800000\du)--(31.167500\du,-29.000000\du)--cycle;
+\fill (17.962500\du,-29.000000\du)--(17.962500\du,-26.800000\du)--(30.397500\du,-26.800000\du)--(30.397500\du,-29.000000\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (17.962500\du,-29.000000\du)--(17.962500\du,-26.800000\du)--(31.167500\du,-26.800000\du)--(31.167500\du,-29.000000\du)--cycle;
+\draw (17.962500\du,-29.000000\du)--(17.962500\du,-26.800000\du)--(30.397500\du,-26.800000\du)--(30.397500\du,-29.000000\du)--cycle;
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (24.565000\du,-28.200000\du){$<$$<$interface$>$$>$};
+\node at (24.180000\du,-28.200000\du){$<<$interface$>>$};
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (24.565000\du,-27.250000\du){StrRenderer};
+\node at (24.180000\du,-27.250000\du){StrRenderer};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (17.962500\du,-26.800000\du)--(17.962500\du,-26.400000\du)--(31.167500\du,-26.400000\du)--(31.167500\du,-26.800000\du)--cycle;
+\fill (17.962500\du,-26.800000\du)--(17.962500\du,-26.400000\du)--(30.397500\du,-26.400000\du)--(30.397500\du,-26.800000\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (17.962500\du,-26.800000\du)--(17.962500\du,-26.400000\du)--(31.167500\du,-26.400000\du)--(31.167500\du,-26.800000\du)--cycle;
+\draw (17.962500\du,-26.800000\du)--(17.962500\du,-26.400000\du)--(30.397500\du,-26.400000\du)--(30.397500\du,-26.800000\du)--cycle;
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (17.962500\du,-26.400000\du)--(17.962500\du,-25.400000\du)--(31.167500\du,-25.400000\du)--(31.167500\du,-26.400000\du)--cycle;
+\fill (17.962500\du,-26.400000\du)--(17.962500\du,-25.400000\du)--(30.397500\du,-25.400000\du)--(30.397500\du,-26.400000\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (17.962500\du,-26.400000\du)--(17.962500\du,-25.400000\du)--(31.167500\du,-25.400000\du)--(31.167500\du,-26.400000\du)--cycle;
+\draw (17.962500\du,-26.400000\du)--(17.962500\du,-25.400000\du)--(30.397500\du,-25.400000\du)--(30.397500\du,-26.400000\du)--cycle;
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node[anchor=west] at (18.112500\du,-25.700000\du){+getStrRenderer(o:Object): String};
+\node[anchor=west] at (18.112500\du,-25.700000\du){+getStrRender(o:Object): String};
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
@@ -2755,7 +2766,7 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node[anchor=west] at (28.187500\du,-19.900000\du){+getStrRenderer(o:Object): String};
+\node[anchor=west] at (28.187500\du,-19.900000\du){+getStrRender(o:Object): String};
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
@@ -2763,7 +2774,7 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node[anchor=west] at (28.187500\du,-18.300000\du){+removeRenderer(r:Renderer)};
+\node[anchor=west] at (28.187500\du,-18.300000\du){+getStrRenderer(r:Renderer)};
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{{1.000000\du}{1.000000\du}}{0\du}
 \pgfsetdash{{0.400000\du}{0.400000\du}}{0\du}
@@ -2775,21 +2786,21 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 % was here!!!
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.565000\du,-25.400000\du)--(24.565000\du,-24.200000\du)--(36.180000\du,-24.200000\du)--(36.180000\du,-23.000000\du);
+\draw (24.180000\du,-25.400000\du)--(24.180000\du,-23.800000\du)--(36.180000\du,-23.800000\du)--(36.180000\du,-23.000000\du);
 }
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.565000\du,-24.488197\du)--(24.565000\du,-24.200000\du)--(36.180000\du,-24.200000\du)--(36.180000\du,-23.000000\du);
+\draw (24.180000\du,-24.488197\du)--(24.180000\du,-23.800000\du)--(36.180000\du,-23.800000\du)--(36.180000\du,-23.000000\du);
 \pgfsetmiterjoin
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (24.965000\du,-24.488197\du)--(24.565000\du,-25.288197\du)--(24.165000\du,-24.488197\du)--cycle;
+\fill (24.580000\du,-24.488197\du)--(24.180000\du,-25.288197\du)--(23.780000\du,-24.488197\du)--cycle;
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \pgfsetmiterjoin
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.965000\du,-24.488197\du)--(24.565000\du,-25.288197\du)--(24.165000\du,-24.488197\du)--cycle;
+\draw (24.580000\du,-24.488197\du)--(24.180000\du,-25.288197\du)--(23.780000\du,-24.488197\du)--cycle;
 % setfont left to latex
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
@@ -2834,7 +2845,7 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (12.855000\du,-22.035000\du){DMTNUserObjectBasedRenderer};
+\node at (12.855000\du,-22.035000\du){DMTNUserObjectBasedRenderer\footnote{DMTN : Default Mutable Tree Node}};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
 \fill (4.327500\du,-21.585000\du)--(4.327500\du,-21.185000\du)--(21.382500\du,-21.185000\du)--(21.382500\du,-21.585000\du)--cycle;
@@ -2891,30 +2902,30 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 \pgfsetdash{}{0pt}
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (9.675000\du,-45.100000\du)--(9.675000\du,-43.000000\du)--(21.290000\du,-43.000000\du)--(21.290000\du,-45.100000\du)--cycle;
+\fill (9.625000\du,-45.300000\du)--(9.625000\du,-43.200000\du)--(21.240000\du,-43.200000\du)--(21.240000\du,-45.300000\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (9.675000\du,-45.100000\du)--(9.675000\du,-43.000000\du)--(21.290000\du,-43.000000\du)--(21.290000\du,-45.100000\du)--cycle;
+\draw (9.625000\du,-45.300000\du)--(9.625000\du,-43.200000\du)--(21.240000\du,-43.200000\du)--(21.240000\du,-45.300000\du)--cycle;
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (15.482500\du,-44.150000\du){DefaultTreeCellRenderer};
+\node at (15.432500\du,-44.350000\du){DefaultTreeCellRenderer};
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (15.482500\du,-43.375000\du){javax.swing};
+\node at (15.432500\du,-43.575000\du){javax.swing};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (9.675000\du,-43.000000\du)--(9.675000\du,-42.600000\du)--(21.290000\du,-42.600000\du)--(21.290000\du,-43.000000\du)--cycle;
+\fill (9.625000\du,-43.200000\du)--(9.625000\du,-42.800000\du)--(21.240000\du,-42.800000\du)--(21.240000\du,-43.200000\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (9.675000\du,-43.000000\du)--(9.675000\du,-42.600000\du)--(21.290000\du,-42.600000\du)--(21.290000\du,-43.000000\du)--cycle;
+\draw (9.625000\du,-43.200000\du)--(9.625000\du,-42.800000\du)--(21.240000\du,-42.800000\du)--(21.240000\du,-43.200000\du)--cycle;
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (9.675000\du,-42.600000\du)--(9.675000\du,-42.200000\du)--(21.290000\du,-42.200000\du)--(21.290000\du,-42.600000\du)--cycle;
+\fill (9.625000\du,-42.800000\du)--(9.625000\du,-42.400000\du)--(21.240000\du,-42.400000\du)--(21.240000\du,-42.800000\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (9.675000\du,-42.600000\du)--(9.675000\du,-42.200000\du)--(21.290000\du,-42.200000\du)--(21.290000\du,-42.600000\du)--cycle;
+\draw (9.625000\du,-42.800000\du)--(9.625000\du,-42.400000\du)--(21.240000\du,-42.400000\du)--(21.240000\du,-42.800000\du)--cycle;
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
@@ -2953,21 +2964,21 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 % was here!!!
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (15.482500\du,-42.149634\du)--(15.482500\du,-40.125043\du)--(15.460000\du,-40.125043\du)--(15.460000\du,-38.100452\du);
+\draw (15.432500\du,-42.349634\du)--(15.432500\du,-39.825043\du)--(15.460000\du,-39.825043\du)--(15.460000\du,-38.100452\du);
 }
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (15.482500\du,-41.237830\du)--(15.482500\du,-40.125043\du)--(15.460000\du,-40.125043\du)--(15.460000\du,-38.100452\du);
+\draw (15.432500\du,-41.437830\du)--(15.432500\du,-39.825043\du)--(15.460000\du,-39.825043\du)--(15.460000\du,-38.100452\du);
 \pgfsetmiterjoin
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (15.882500\du,-41.237830\du)--(15.482500\du,-42.037830\du)--(15.082500\du,-41.237830\du)--cycle;
+\fill (15.832500\du,-41.437830\du)--(15.432500\du,-42.237830\du)--(15.032500\du,-41.437830\du)--cycle;
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \pgfsetmiterjoin
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (15.882500\du,-41.237830\du)--(15.482500\du,-42.037830\du)--(15.082500\du,-41.237830\du)--cycle;
+\draw (15.832500\du,-41.437830\du)--(15.432500\du,-42.237830\du)--(15.032500\du,-41.437830\du)--cycle;
 % setfont left to latex
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
@@ -2979,11 +2990,11 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 % was here!!!
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (34.100000\du,-42.172134\du)--(34.100000\du,-40.121293\du)--(34.090000\du,-40.121293\du)--(34.090000\du,-38.070452\du);
+\draw (34.100000\du,-42.172134\du)--(34.100000\du,-39.721293\du)--(34.090000\du,-39.721293\du)--(34.090000\du,-38.070452\du);
 }
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (34.100000\du,-41.260330\du)--(34.100000\du,-40.121293\du)--(34.090000\du,-40.121293\du)--(34.090000\du,-38.070452\du);
+\draw (34.100000\du,-41.260330\du)--(34.100000\du,-39.721293\du)--(34.090000\du,-39.721293\du)--(34.090000\du,-38.070452\du);
 \pgfsetmiterjoin
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
@@ -3005,11 +3016,11 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 % was here!!!
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (15.460000\du,-34.399548\du)--(15.460000\du,-31.725000\du)--(24.565000\du,-31.725000\du)--(24.565000\du,-29.050452\du);
+\draw (15.460000\du,-34.399548\du)--(15.460000\du,-31.375000\du)--(24.180000\du,-31.375000\du)--(24.180000\du,-29.050452\du);
 }
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (15.460000\du,-33.140970\du)--(15.460000\du,-31.725000\du)--(24.565000\du,-31.725000\du)--(24.565000\du,-29.050452\du);
+\draw (15.460000\du,-33.140970\du)--(15.460000\du,-31.375000\du)--(24.180000\du,-31.375000\du)--(24.180000\du,-29.050452\du);
 \pgfsetdash{}{0pt}
 \pgfsetmiterjoin
 \pgfsetbuttcap
@@ -3026,13 +3037,13 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (20.012500\du,-31.925000\du){};
+\node at (19.820000\du,-31.575000\du){};
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
 \node[anchor=west] at (16.010000\du,-33.799548\du){};
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node[anchor=west] at (24.765000\du,-29.250452\du){};
+\node[anchor=west] at (24.380000\du,-29.250452\du){};
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \pgfsetmiterjoin
@@ -3043,11 +3054,11 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 % was here!!!
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (34.090000\du,-34.369548\du)--(34.090000\du,-31.710000\du)--(24.565000\du,-31.710000\du)--(24.565000\du,-29.050452\du);
+\draw (34.090000\du,-34.369548\du)--(34.090000\du,-31.360000\du)--(24.180000\du,-31.360000\du)--(24.180000\du,-29.050452\du);
 }
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (34.090000\du,-33.110970\du)--(34.090000\du,-31.710000\du)--(24.565000\du,-31.710000\du)--(24.565000\du,-29.050452\du);
+\draw (34.090000\du,-33.110970\du)--(34.090000\du,-31.360000\du)--(24.180000\du,-31.360000\du)--(24.180000\du,-29.050452\du);
 \pgfsetdash{}{0pt}
 \pgfsetmiterjoin
 \pgfsetbuttcap
@@ -3064,13 +3075,13 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (29.327500\du,-31.910000\du){};
+\node at (29.135000\du,-31.560000\du){};
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
 \node[anchor=west] at (34.640000\du,-33.769548\du){};
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node[anchor=west] at (24.765000\du,-29.250452\du){};
+\node[anchor=west] at (24.380000\du,-29.250452\du){};
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \pgfsetmiterjoin
@@ -3081,11 +3092,11 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 % was here!!!
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (12.855000\du,-22.985000\du)--(12.855000\du,-24.192500\du)--(17.962500\du,-24.192500\du)--(17.962500\du,-25.400000\du);
+\draw (12.855000\du,-22.985000\du)--(12.855000\du,-24.542500\du)--(17.962500\du,-24.542500\du)--(17.962500\du,-25.400000\du);
 }
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (12.855000\du,-24.243579\du)--(12.855000\du,-24.192500\du)--(17.962500\du,-24.192500\du)--(17.962500\du,-25.400000\du);
+\draw (12.855000\du,-24.243579\du)--(12.855000\du,-24.542500\du)--(17.962500\du,-24.542500\du)--(17.962500\du,-25.400000\du);
 \pgfsetdash{}{0pt}
 \pgfsetmiterjoin
 \pgfsetbuttcap
@@ -3102,7 +3113,7 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (15.408750\du,-24.392500\du){};
+\node at (15.408750\du,-24.742500\du){};
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
 \node[anchor=west] at (13.405000\du,-23.185000\du){};
@@ -3120,162 +3131,162 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 % was here!!!
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.565000\du,-25.400000\du)--(24.565000\du,-24.217726\du)--(12.855000\du,-24.217726\du)--(12.855000\du,-23.035452\du);
+\draw (24.180000\du,-25.400000\du)--(24.180000\du,-23.817726\du)--(12.855000\du,-23.817726\du)--(12.855000\du,-23.035452\du);
 }
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.565000\du,-24.488197\du)--(24.565000\du,-24.217726\du)--(12.855000\du,-24.217726\du)--(12.855000\du,-23.035452\du);
+\draw (24.180000\du,-24.488197\du)--(24.180000\du,-23.817726\du)--(12.855000\du,-23.817726\du)--(12.855000\du,-23.035452\du);
 \pgfsetmiterjoin
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (24.965000\du,-24.488197\du)--(24.565000\du,-25.288197\du)--(24.165000\du,-24.488197\du)--cycle;
+\fill (24.580000\du,-24.488197\du)--(24.180000\du,-25.288197\du)--(23.780000\du,-24.488197\du)--cycle;
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \pgfsetmiterjoin
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.965000\du,-24.488197\du)--(24.565000\du,-25.288197\du)--(24.165000\du,-24.488197\du)--cycle;
+\draw (24.580000\du,-24.488197\du)--(24.180000\du,-25.288197\du)--(23.780000\du,-24.488197\du)--cycle;
 % setfont left to latex
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (3.976910\du,-8.375000\du)--(3.976910\du,-6.975000\du)--(17.181910\du,-6.975000\du)--(17.181910\du,-8.375000\du)--cycle;
+\fill (3.976910\du,-8.375000\du)--(3.976910\du,-6.975000\du)--(16.411910\du,-6.975000\du)--(16.411910\du,-8.375000\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (3.976910\du,-8.375000\du)--(3.976910\du,-6.975000\du)--(17.181910\du,-6.975000\du)--(17.181910\du,-8.375000\du)--cycle;
+\draw (3.976910\du,-8.375000\du)--(3.976910\du,-6.975000\du)--(16.411910\du,-6.975000\du)--(16.411910\du,-8.375000\du)--cycle;
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (10.579410\du,-7.425000\du){CRoomRenderer};
+\node at (10.194410\du,-7.425000\du){CRoomRenderer};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (3.976910\du,-6.975000\du)--(3.976910\du,-6.575000\du)--(17.181910\du,-6.575000\du)--(17.181910\du,-6.975000\du)--cycle;
+\fill (3.976910\du,-6.975000\du)--(3.976910\du,-6.575000\du)--(16.411910\du,-6.575000\du)--(16.411910\du,-6.975000\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (3.976910\du,-6.975000\du)--(3.976910\du,-6.575000\du)--(17.181910\du,-6.575000\du)--(17.181910\du,-6.975000\du)--cycle;
+\draw (3.976910\du,-6.975000\du)--(3.976910\du,-6.575000\du)--(16.411910\du,-6.575000\du)--(16.411910\du,-6.975000\du)--cycle;
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (3.976910\du,-6.575000\du)--(3.976910\du,-5.575000\du)--(17.181910\du,-5.575000\du)--(17.181910\du,-6.575000\du)--cycle;
+\fill (3.976910\du,-6.575000\du)--(3.976910\du,-5.575000\du)--(16.411910\du,-5.575000\du)--(16.411910\du,-6.575000\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (3.976910\du,-6.575000\du)--(3.976910\du,-5.575000\du)--(17.181910\du,-5.575000\du)--(17.181910\du,-6.575000\du)--cycle;
+\draw (3.976910\du,-6.575000\du)--(3.976910\du,-5.575000\du)--(16.411910\du,-5.575000\du)--(16.411910\du,-6.575000\du)--cycle;
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node[anchor=west] at (4.126910\du,-5.875000\du){+getStrRenderer(o:Object): String};
+\node[anchor=west] at (4.126910\du,-5.875000\du){+getStrRender(o:Object): String};
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (10.966900\du,-4.685000\du)--(10.966900\du,-3.285000\du)--(24.171900\du,-3.285000\du)--(24.171900\du,-4.685000\du)--cycle;
+\fill (10.966900\du,-4.685000\du)--(10.966900\du,-3.285000\du)--(23.401900\du,-3.285000\du)--(23.401900\du,-4.685000\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (10.966900\du,-4.685000\du)--(10.966900\du,-3.285000\du)--(24.171900\du,-3.285000\du)--(24.171900\du,-4.685000\du)--cycle;
+\draw (10.966900\du,-4.685000\du)--(10.966900\du,-3.285000\du)--(23.401900\du,-3.285000\du)--(23.401900\du,-4.685000\du)--cycle;
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (17.569400\du,-3.735000\du){CRoomTypeRenderer};
+\node at (17.184400\du,-3.735000\du){CRoomTypeRenderer};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (10.966900\du,-3.285000\du)--(10.966900\du,-2.885000\du)--(24.171900\du,-2.885000\du)--(24.171900\du,-3.285000\du)--cycle;
+\fill (10.966900\du,-3.285000\du)--(10.966900\du,-2.885000\du)--(23.401900\du,-2.885000\du)--(23.401900\du,-3.285000\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (10.966900\du,-3.285000\du)--(10.966900\du,-2.885000\du)--(24.171900\du,-2.885000\du)--(24.171900\du,-3.285000\du)--cycle;
+\draw (10.966900\du,-3.285000\du)--(10.966900\du,-2.885000\du)--(23.401900\du,-2.885000\du)--(23.401900\du,-3.285000\du)--cycle;
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (10.966900\du,-2.885000\du)--(10.966900\du,-1.885000\du)--(24.171900\du,-1.885000\du)--(24.171900\du,-2.885000\du)--cycle;
+\fill (10.966900\du,-2.885000\du)--(10.966900\du,-1.885000\du)--(23.401900\du,-1.885000\du)--(23.401900\du,-2.885000\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (10.966900\du,-2.885000\du)--(10.966900\du,-1.885000\du)--(24.171900\du,-1.885000\du)--(24.171900\du,-2.885000\du)--cycle;
+\draw (10.966900\du,-2.885000\du)--(10.966900\du,-1.885000\du)--(23.401900\du,-1.885000\du)--(23.401900\du,-2.885000\du)--cycle;
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node[anchor=west] at (11.116900\du,-2.185000\du){+getStrRenderer(o:Object): String};
+\node[anchor=west] at (11.116900\du,-2.185000\du){+getStrRender(o:Object): String};
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (31.991900\du,-8.403750\du)--(31.991900\du,-7.003750\du)--(45.196900\du,-7.003750\du)--(45.196900\du,-8.403750\du)--cycle;
+\fill (31.991900\du,-8.403750\du)--(31.991900\du,-7.003750\du)--(44.426900\du,-7.003750\du)--(44.426900\du,-8.403750\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (31.991900\du,-8.403750\du)--(31.991900\du,-7.003750\du)--(45.196900\du,-7.003750\du)--(45.196900\du,-8.403750\du)--cycle;
+\draw (31.991900\du,-8.403750\du)--(31.991900\du,-7.003750\du)--(44.426900\du,-7.003750\du)--(44.426900\du,-8.403750\du)--cycle;
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (38.594400\du,-7.453750\du){GroupRenderer};
+\node at (38.209400\du,-7.453750\du){GroupRenderer};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (31.991900\du,-7.003750\du)--(31.991900\du,-6.603750\du)--(45.196900\du,-6.603750\du)--(45.196900\du,-7.003750\du)--cycle;
+\fill (31.991900\du,-7.003750\du)--(31.991900\du,-6.603750\du)--(44.426900\du,-6.603750\du)--(44.426900\du,-7.003750\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (31.991900\du,-7.003750\du)--(31.991900\du,-6.603750\du)--(45.196900\du,-6.603750\du)--(45.196900\du,-7.003750\du)--cycle;
+\draw (31.991900\du,-7.003750\du)--(31.991900\du,-6.603750\du)--(44.426900\du,-6.603750\du)--(44.426900\du,-7.003750\du)--cycle;
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (31.991900\du,-6.603750\du)--(31.991900\du,-5.603750\du)--(45.196900\du,-5.603750\du)--(45.196900\du,-6.603750\du)--cycle;
+\fill (31.991900\du,-6.603750\du)--(31.991900\du,-5.603750\du)--(44.426900\du,-5.603750\du)--(44.426900\du,-6.603750\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (31.991900\du,-6.603750\du)--(31.991900\du,-5.603750\du)--(45.196900\du,-5.603750\du)--(45.196900\du,-6.603750\du)--cycle;
+\draw (31.991900\du,-6.603750\du)--(31.991900\du,-5.603750\du)--(44.426900\du,-5.603750\du)--(44.426900\du,-6.603750\du)--cycle;
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node[anchor=west] at (32.141900\du,-5.903750\du){+getStrRenderer(o:Object): String};
+\node[anchor=west] at (32.141900\du,-5.903750\du){+getStrRender(o:Object): String};
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (24.956900\du,-4.707500\du)--(24.956900\du,-3.307500\du)--(38.161900\du,-3.307500\du)--(38.161900\du,-4.707500\du)--cycle;
+\fill (24.956900\du,-4.707500\du)--(24.956900\du,-3.307500\du)--(37.391900\du,-3.307500\du)--(37.391900\du,-4.707500\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.956900\du,-4.707500\du)--(24.956900\du,-3.307500\du)--(38.161900\du,-3.307500\du)--(38.161900\du,-4.707500\du)--cycle;
+\draw (24.956900\du,-4.707500\du)--(24.956900\du,-3.307500\du)--(37.391900\du,-3.307500\du)--(37.391900\du,-4.707500\du)--cycle;
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (31.559400\du,-3.757500\du){TeacherRenderer};
+\node at (31.174400\du,-3.757500\du){TeacherRenderer};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (24.956900\du,-3.307500\du)--(24.956900\du,-2.907500\du)--(38.161900\du,-2.907500\du)--(38.161900\du,-3.307500\du)--cycle;
+\fill (24.956900\du,-3.307500\du)--(24.956900\du,-2.907500\du)--(37.391900\du,-2.907500\du)--(37.391900\du,-3.307500\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.956900\du,-3.307500\du)--(24.956900\du,-2.907500\du)--(38.161900\du,-2.907500\du)--(38.161900\du,-3.307500\du)--cycle;
+\draw (24.956900\du,-3.307500\du)--(24.956900\du,-2.907500\du)--(37.391900\du,-2.907500\du)--(37.391900\du,-3.307500\du)--cycle;
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (24.956900\du,-2.907500\du)--(24.956900\du,-1.907500\du)--(38.161900\du,-1.907500\du)--(38.161900\du,-2.907500\du)--cycle;
+\fill (24.956900\du,-2.907500\du)--(24.956900\du,-1.907500\du)--(37.391900\du,-1.907500\du)--(37.391900\du,-2.907500\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.956900\du,-2.907500\du)--(24.956900\du,-1.907500\du)--(38.161900\du,-1.907500\du)--(38.161900\du,-2.907500\du)--cycle;
+\draw (24.956900\du,-2.907500\du)--(24.956900\du,-1.907500\du)--(37.391900\du,-1.907500\du)--(37.391900\du,-2.907500\du)--cycle;
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node[anchor=west] at (25.106900\du,-2.207500\du){+getStrRenderer(o:Object): String};
+\node[anchor=west] at (25.106900\du,-2.207500\du){+getStrRender(o:Object): String};
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (17.971900\du,-8.367500\du)--(17.971900\du,-6.967500\du)--(31.176900\du,-6.967500\du)--(31.176900\du,-8.367500\du)--cycle;
+\fill (17.971900\du,-8.367500\du)--(17.971900\du,-6.967500\du)--(30.406900\du,-6.967500\du)--(30.406900\du,-8.367500\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (17.971900\du,-8.367500\du)--(17.971900\du,-6.967500\du)--(31.176900\du,-6.967500\du)--(31.176900\du,-8.367500\du)--cycle;
+\draw (17.971900\du,-8.367500\du)--(17.971900\du,-6.967500\du)--(30.406900\du,-6.967500\du)--(30.406900\du,-8.367500\du)--cycle;
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node at (24.574400\du,-7.417500\du){LevelRenderer};
+\node at (24.189400\du,-7.417500\du){LevelRenderer};
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (17.971900\du,-6.967500\du)--(17.971900\du,-6.567500\du)--(31.176900\du,-6.567500\du)--(31.176900\du,-6.967500\du)--cycle;
+\fill (17.971900\du,-6.967500\du)--(17.971900\du,-6.567500\du)--(30.406900\du,-6.567500\du)--(30.406900\du,-6.967500\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (17.971900\du,-6.967500\du)--(17.971900\du,-6.567500\du)--(31.176900\du,-6.567500\du)--(31.176900\du,-6.967500\du)--cycle;
+\draw (17.971900\du,-6.967500\du)--(17.971900\du,-6.567500\du)--(30.406900\du,-6.567500\du)--(30.406900\du,-6.967500\du)--cycle;
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (17.971900\du,-6.567500\du)--(17.971900\du,-5.567500\du)--(31.176900\du,-5.567500\du)--(31.176900\du,-6.567500\du)--cycle;
+\fill (17.971900\du,-6.567500\du)--(17.971900\du,-5.567500\du)--(30.406900\du,-5.567500\du)--(30.406900\du,-6.567500\du)--cycle;
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (17.971900\du,-6.567500\du)--(17.971900\du,-5.567500\du)--(31.176900\du,-5.567500\du)--(31.176900\du,-6.567500\du)--cycle;
+\draw (17.971900\du,-6.567500\du)--(17.971900\du,-5.567500\du)--(30.406900\du,-5.567500\du)--(30.406900\du,-6.567500\du)--cycle;
 % setfont left to latex
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\node[anchor=west] at (18.121900\du,-5.867500\du){+getStrRenderer(o:Object): String};
+\node[anchor=west] at (18.121900\du,-5.867500\du){+getStrRender(o:Object): String};
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{{0.400000\du}{0.400000\du}}{0\du}
 \pgfsetdash{{0.400000\du}{0.400000\du}}{0\du}
@@ -3287,48 +3298,21 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 % was here!!!
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.565000\du,-25.400000\du)--(24.565000\du,-16.887500\du)--(10.579410\du,-16.887500\du)--(10.579410\du,-8.375000\du);
+\draw (24.180000\du,-25.400000\du)--(24.180000\du,-16.487500\du)--(10.194410\du,-16.487500\du)--(10.194410\du,-8.375000\du);
 }
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.565000\du,-24.488197\du)--(24.565000\du,-16.887500\du)--(10.579410\du,-16.887500\du)--(10.579410\du,-8.375000\du);
+\draw (24.180000\du,-24.488197\du)--(24.180000\du,-16.487500\du)--(10.194410\du,-16.487500\du)--(10.194410\du,-8.375000\du);
 \pgfsetmiterjoin
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (24.965000\du,-24.488197\du)--(24.565000\du,-25.288197\du)--(24.165000\du,-24.488197\du)--cycle;
+\fill (24.580000\du,-24.488197\du)--(24.180000\du,-25.288197\du)--(23.780000\du,-24.488197\du)--cycle;
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \pgfsetmiterjoin
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.965000\du,-24.488197\du)--(24.565000\du,-25.288197\du)--(24.165000\du,-24.488197\du)--cycle;
-% setfont left to latex
-\pgfsetlinewidth{0.100000\du}
-\pgfsetdash{{0.400000\du}{0.400000\du}}{0\du}
-\pgfsetdash{{0.400000\du}{0.400000\du}}{0\du}
-\pgfsetmiterjoin
-\pgfsetbuttcap
-{
-\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
-\pgfsetfillcolor{dialinecolor}
-% was here!!!
-\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
-\pgfsetstrokecolor{dialinecolor}
-\draw (24.565000\du,-25.400000\du)--(24.565000\du,-15.042500\du)--(17.569400\du,-15.042500\du)--(17.569400\du,-4.685000\du);
-}
-\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
-\pgfsetstrokecolor{dialinecolor}
-\draw (24.565000\du,-24.488197\du)--(24.565000\du,-15.042500\du)--(17.569400\du,-15.042500\du)--(17.569400\du,-4.685000\du);
-\pgfsetmiterjoin
-\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
-\pgfsetfillcolor{dialinecolor}
-\fill (24.965000\du,-24.488197\du)--(24.565000\du,-25.288197\du)--(24.165000\du,-24.488197\du)--cycle;
-\pgfsetlinewidth{0.100000\du}
-\pgfsetdash{}{0pt}
-\pgfsetmiterjoin
-\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
-\pgfsetstrokecolor{dialinecolor}
-\draw (24.965000\du,-24.488197\du)--(24.565000\du,-25.288197\du)--(24.165000\du,-24.488197\du)--cycle;
+\draw (24.580000\du,-24.488197\du)--(24.180000\du,-25.288197\du)--(23.780000\du,-24.488197\du)--cycle;
 % setfont left to latex
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{{0.400000\du}{0.400000\du}}{0\du}
@@ -3341,21 +3325,21 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 % was here!!!
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.565000\du,-25.400000\du)--(24.565000\du,-16.883750\du)--(24.574400\du,-16.883750\du)--(24.574400\du,-8.367500\du);
+\draw (24.180000\du,-25.400000\du)--(24.180000\du,-14.642500\du)--(17.184400\du,-14.642500\du)--(17.184400\du,-4.685000\du);
 }
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.565000\du,-24.488197\du)--(24.565000\du,-16.883750\du)--(24.574400\du,-16.883750\du)--(24.574400\du,-8.367500\du);
+\draw (24.180000\du,-24.488197\du)--(24.180000\du,-14.642500\du)--(17.184400\du,-14.642500\du)--(17.184400\du,-4.685000\du);
 \pgfsetmiterjoin
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (24.965000\du,-24.488197\du)--(24.565000\du,-25.288197\du)--(24.165000\du,-24.488197\du)--cycle;
+\fill (24.580000\du,-24.488197\du)--(24.180000\du,-25.288197\du)--(23.780000\du,-24.488197\du)--cycle;
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \pgfsetmiterjoin
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.965000\du,-24.488197\du)--(24.565000\du,-25.288197\du)--(24.165000\du,-24.488197\du)--cycle;
+\draw (24.580000\du,-24.488197\du)--(24.180000\du,-25.288197\du)--(23.780000\du,-24.488197\du)--cycle;
 % setfont left to latex
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{{0.400000\du}{0.400000\du}}{0\du}
@@ -3368,21 +3352,21 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 % was here!!!
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.565000\du,-25.400000\du)--(24.565000\du,-15.053750\du)--(31.559400\du,-15.053750\du)--(31.559400\du,-4.707500\du);
+\draw (24.180000\du,-25.400000\du)--(24.180000\du,-16.483750\du)--(24.189400\du,-16.483750\du)--(24.189400\du,-8.367500\du);
 }
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.565000\du,-24.488197\du)--(24.565000\du,-15.053750\du)--(31.559400\du,-15.053750\du)--(31.559400\du,-4.707500\du);
+\draw (24.180000\du,-24.488197\du)--(24.180000\du,-16.483750\du)--(24.189400\du,-16.483750\du)--(24.189400\du,-8.367500\du);
 \pgfsetmiterjoin
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (24.965000\du,-24.488197\du)--(24.565000\du,-25.288197\du)--(24.165000\du,-24.488197\du)--cycle;
+\fill (24.580000\du,-24.488197\du)--(24.180000\du,-25.288197\du)--(23.780000\du,-24.488197\du)--cycle;
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \pgfsetmiterjoin
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.965000\du,-24.488197\du)--(24.565000\du,-25.288197\du)--(24.165000\du,-24.488197\du)--cycle;
+\draw (24.580000\du,-24.488197\du)--(24.180000\du,-25.288197\du)--(23.780000\du,-24.488197\du)--cycle;
 % setfont left to latex
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{{0.400000\du}{0.400000\du}}{0\du}
@@ -3395,35 +3379,60 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 % was here!!!
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.565000\du,-25.400000\du)--(24.565000\du,-16.901875\du)--(38.594400\du,-16.901875\du)--(38.594400\du,-8.403750\du);
+\draw (24.180000\du,-25.400000\du)--(24.180000\du,-14.653750\du)--(31.174400\du,-14.653750\du)--(31.174400\du,-4.707500\du);
 }
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.565000\du,-24.488197\du)--(24.565000\du,-16.901875\du)--(38.594400\du,-16.901875\du)--(38.594400\du,-8.403750\du);
+\draw (24.180000\du,-24.488197\du)--(24.180000\du,-14.653750\du)--(31.174400\du,-14.653750\du)--(31.174400\du,-4.707500\du);
 \pgfsetmiterjoin
 \definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
 \pgfsetfillcolor{dialinecolor}
-\fill (24.965000\du,-24.488197\du)--(24.565000\du,-25.288197\du)--(24.165000\du,-24.488197\du)--cycle;
+\fill (24.580000\du,-24.488197\du)--(24.180000\du,-25.288197\du)--(23.780000\du,-24.488197\du)--cycle;
 \pgfsetlinewidth{0.100000\du}
 \pgfsetdash{}{0pt}
 \pgfsetmiterjoin
 \definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
 \pgfsetstrokecolor{dialinecolor}
-\draw (24.965000\du,-24.488197\du)--(24.565000\du,-25.288197\du)--(24.165000\du,-24.488197\du)--cycle;
+\draw (24.580000\du,-24.488197\du)--(24.180000\du,-25.288197\du)--(23.780000\du,-24.488197\du)--cycle;
+% setfont left to latex
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{{0.400000\du}{0.400000\du}}{0\du}
+\pgfsetdash{{0.400000\du}{0.400000\du}}{0\du}
+\pgfsetmiterjoin
+\pgfsetbuttcap
+{
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetfillcolor{dialinecolor}
+% was here!!!
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (24.180000\du,-25.400000\du)--(24.180000\du,-16.501875\du)--(38.209400\du,-16.501875\du)--(38.209400\du,-8.403750\du);
+}
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (24.180000\du,-24.488197\du)--(24.180000\du,-16.501875\du)--(38.209400\du,-16.501875\du)--(38.209400\du,-8.403750\du);
+\pgfsetmiterjoin
+\definecolor{dialinecolor}{rgb}{1.000000, 1.000000, 1.000000}
+\pgfsetfillcolor{dialinecolor}
+\fill (24.580000\du,-24.488197\du)--(24.180000\du,-25.288197\du)--(23.780000\du,-24.488197\du)--cycle;
+\pgfsetlinewidth{0.100000\du}
+\pgfsetdash{}{0pt}
+\pgfsetmiterjoin
+\definecolor{dialinecolor}{rgb}{0.000000, 0.000000, 0.000000}
+\pgfsetstrokecolor{dialinecolor}
+\draw (24.580000\du,-24.488197\du)--(24.180000\du,-25.288197\du)--(23.780000\du,-24.488197\du)--cycle;
 % setfont left to latex
 \end{tikzpicture}
 \caption{Diagramme de classes des rendus}
 \end{figure}
 
+\newpage
 \subsection{La table}
-
 Pour la représentation de l'emploi du temps lui-même, nous utilisons la classe fournie par \texttt{swing} : \texttt{JTable}. Ce faisant, plusieurs difficultées se sont posées :
-
 \begin{itemize}
 \item Il a fallu trouver les coordonnées d'une séance dans la table. C'est à dire convertir le jour de la semaine en index de ligne, et l'heure dans la journée en index de colonne.
 Avec des colonnes représentant deux heures, on peux utiliser la formule suivante :
 \[numero\ colonne = heure - (7 + \frac{heure - 8}{2})\]
-
 \item Pour les séances durant plusieurs heures, nous voulions fusionner horizontalement les cellules correspondantes dans la table (\textit{column spanning}).
 Cela n'est pas initialement prévu par la classe \texttt{JTable}. Mais celle-ci semble avoir été concue pour autoriser la distribution non-uniforme des cellules.\\
 Les méthodes intéressantes à redéfinir sont :
@@ -3436,13 +3445,9 @@ public int columnAtPoint(Point p);
 public int rowAtPoint(Point p);
 \end{verbatim}
 Retournent respectivement la ligne et la colonne de la cellule contenant un point donné dans la table. Dans notre cas, nous n'auront que \texttt{columnAtPoint()} à redéfinir, car les cellules ne seront fusionner que horizontalement.\\
-
 Une fois ceci accompli, le \texttt{TableCellRenderer} s'occupe du rendu des cellules. \\
-
 Mais cela ne suffit pas. Contrairement à ce que l'on pourrais penser, beaucoups de composants \texttt{swing} ne se dessinent pas directement avec la méthodes \texttt{paint} mais délèguent le travail à un objet \texttt{ComponentUI} pour permettre une plus grande flexibilité. C'est le cas avec les \texttt{JTable}s. Il nous faut donc définir une classe qui va dessiner la table à notre convenance. Pour cela, nous dérivons la classe \texttt{BasicTableUI} et redéfinissons la méthode paint. \\
-
 Enfin, il nous faut une structure pour stocker les cellules qui seront fusionnées. Elle fera parti du modèle de notre table que nous redéfinirons car le simple \texttt{DefaultTableModel} ne suffit plus.
-
 Voici le diagramme de classes :
 
 \begin{figure}[!ht]
@@ -4160,12 +4165,11 @@ Voici le diagramme de classes :
 \end{tikzpicture}
 \caption{Diagramme de classes de la table}
 \end{figure}
-
 \end{itemize}
 
-\begin{figure}[!ht]
-\advance\leftskip-1in
-\caption{figure model}
-\end{figure}
+%\begin{figure}[!ht]
+%\advance\leftskip-1in
+%\caption{Diagramme de classes MVCP}
+%\end{figure}
 
 \end{document}
