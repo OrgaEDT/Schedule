@@ -80,6 +80,7 @@ public class ScheduleTableComponent extends ViewComponent {
     }
 
     public void displaySessions(List<Session> sessions) {
+        tableModel.clear();
         tableModel.fillData(sessions);
     }
 

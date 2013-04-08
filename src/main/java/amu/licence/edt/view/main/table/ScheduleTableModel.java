@@ -21,12 +21,6 @@ public class ScheduleTableModel extends AbstractTableModel implements SpanTableM
     }
 
     public void fillData(List<Session> sessions) {
-        for (int i = 0; i < 5; ++i) {
-            for (int j = 0; j < entete.length; ++j) {
-                data[i][j] = null;
-            }
-        }
-        spanModel.clear();
         Calendar c = Calendar.getInstance();
         for (Session s : sessions) {
             int row, col;
@@ -39,6 +33,15 @@ public class ScheduleTableModel extends AbstractTableModel implements SpanTableM
             data[row][col] = s;
         }
         fireTableDataChanged();
+    }
+
+    public void clear() {
+        for (int i = 0; i < 5; ++i) {
+            for (int j = 0; j < entete.length; ++j) {
+                data[i][j] = null;
+            }
+        }
+        spanModel.clear();
     }
 
     @Override
