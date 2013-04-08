@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import amu.licence.edt.model.beans.Session;
@@ -23,8 +24,10 @@ public class ScheduleTableCellRenderer extends DefaultTableCellRenderer {
         }
         try {
             Session s = (Session) value;
-            setText("<html>" + s.gettU().getLibel() + " " + s.getSessionType().getLibel() + "<br>" + s.getTeacher().getName() + "<br>" + s.getcRoom().getNum() + "</html>");
+            setText("<html>" + s.gettU().getLibel() + " - " + s.getSessionType().getLibel() + "<br>" + s.getTeacher().getName() + "<br>" + s.getcRoom().getNum() + "</html>");
             setBackground(Color.decode(s.gettU().getColor()));
+            setVerticalAlignment(SwingConstants.TOP);
+            setHorizontalAlignment(SwingConstants.CENTER);
         } catch (ClassCastException cce) {
             System.err.println("not a Session");// TODO exc ?
         }
