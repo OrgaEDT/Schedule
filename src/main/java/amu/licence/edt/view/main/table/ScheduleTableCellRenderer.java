@@ -24,7 +24,7 @@ public class ScheduleTableCellRenderer extends DefaultTableCellRenderer {
         try {
             Session s = (Session) value;
             setText(s.gettU().getCode() + " " + s.getcRoom().getNum());
-            setBackground(Color.LIGHT_GRAY);
+            setBackground(Color.decode(s.gettU().getColor()));
         } catch (ClassCastException cce) {
             System.err.println("not a Session");// TODO exc ?
         }

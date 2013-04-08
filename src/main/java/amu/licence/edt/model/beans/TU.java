@@ -1,6 +1,5 @@
 package amu.licence.edt.model.beans;
 
-import java.awt.Color;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -22,8 +21,8 @@ public class TU implements Serializable {
     @Column (name="LIBEL_TU")
     private String libel;
 
-    @Column (name="COLOR_TU")
-    private Color color;
+    @Column (name="COLOR_TU", length=7)
+    private String color;
 
     @Column (name="CLASS_HOURS")
     private int classHours;
@@ -53,12 +52,12 @@ public class TU implements Serializable {
 
     public TU() {}
 
-    public TU(String libelle, Color couleur) {
+    public TU(String libelle, String couleur) {
         this.libel = libelle;
         this.color = couleur;
     }
 
-    public TU(String code, String libel, Color color, int classHours,
+    public TU(String code, String libel, String color, int classHours,
             int tutorHours, int practicalHours, int projectHours, Level level,
             Teacher resp, Set<Teacher> competentTeachers) {
         super();
@@ -122,11 +121,11 @@ public class TU implements Serializable {
         this.libel = libel;
     }
 
-    public Color getColor() {
+    public String getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(String color) {
         this.color = color;
     }
 

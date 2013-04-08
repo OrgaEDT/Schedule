@@ -1,6 +1,5 @@
 package amu.licence.edt.model.dao.jpa;
 
-import java.awt.Color;
 import java.util.Calendar;
 import java.util.HashSet;
 
@@ -284,15 +283,15 @@ public class DAOFactoryJPA implements DAOFactory {
 
         /* TUs */
         System.out.println("TUs");
-        TU compil  = new TU("ENSIN6U1", "Compilation",                            Color.getColor("#CC9933"), 20, 20, 20, 0  , l3, nasr,     new HashSet<Teacher>());
-        TU logique = new TU("ENSIN6U2", "Logique et calculabilité",               Color.getColor("#FF9900"), 20, 30, 0 , 0  , l3, jamet,    new HashSet<Teacher>());
-        TU syst    = new TU("ENSIN6U3", "Systèmes d'exploitation",                Color.getColor("#FFFF99"), 20, 20, 20, 0  , l3, massat,   new HashSet<Teacher>());
-        TU geoAlgo = new TU("ENSIN6U4", "Géométrie algorithmique",                Color.getColor("#CC6666"), 56, 0 , 20, 0  , l3, chepoi,   new HashSet<Teacher>());
-        TU devWeb  = new TU("ENSIN6U5", "Développement web 2",                    Color.getColor("#6699FF"), 28, 0 , 56, 0  , l3, estellon, new HashSet<Teacher>());
-        TU crypto  = new TU("ENSMI6U6", "Cryptographie",                          Color.getColor("#33FFFF"), 28, 26, 24, 0  , l3, ritz,     new HashSet<Teacher>());
-        TU tal     = new TU("ENSMI6U7", "Langage naturel",                        Color.getColor("#66FFFF"), 0 , 0 , 0 , 0  , l3, nasr,     new HashSet<Teacher>());
-        TU pPOO    = new TU("ENSIN6U8", "Projet de Programmation Orientée Objet", Color.getColor("#00CC99"), 4 , 0 , 0 , 100, l3, avell,    new HashSet<Teacher>());
-        TU pApp    = new TU("ENSIN6U9", "Projet informatique appliqué",           Color.getColor("#00CC99"), 6 , 0 , 0 , 80 , l3, sabatier, new HashSet<Teacher>());
+        TU compil  = new TU("ENSIN6U1", "Compilation",                            "#CC9933", 20, 20, 20, 0  , l3, nasr,     new HashSet<Teacher>());
+        TU logique = new TU("ENSIN6U2", "Logique et calculabilité",               "#FF9900", 20, 30, 0 , 0  , l3, jamet,    new HashSet<Teacher>());
+        TU syst    = new TU("ENSIN6U3", "Systèmes d'exploitation",                "#FFFF99", 20, 20, 20, 0  , l3, massat,   new HashSet<Teacher>());
+        TU geoAlgo = new TU("ENSIN6U4", "Géométrie algorithmique",                "#CC6666", 56, 0 , 20, 0  , l3, chepoi,   new HashSet<Teacher>());
+        TU devWeb  = new TU("ENSIN6U5", "Développement web 2",                    "#6699FF", 28, 0 , 56, 0  , l3, estellon, new HashSet<Teacher>());
+        TU crypto  = new TU("ENSMI6U6", "Cryptographie",                          "#33FFFF", 28, 26, 24, 0  , l3, ritz,     new HashSet<Teacher>());
+        TU tal     = new TU("ENSMI6U7", "Langage naturel",                        "#66FFFF", 0 , 0 , 0 , 0  , l3, nasr,     new HashSet<Teacher>());
+        TU pPOO    = new TU("ENSIN6U8", "Projet de Programmation Orientée Objet", "#00CC99", 4 , 0 , 0 , 100, l3, avell,    new HashSet<Teacher>());
+        TU pApp    = new TU("ENSIN6U9", "Projet informatique appliqué",           "#00CC99", 6 , 0 , 0 , 80 , l3, sabatier, new HashSet<Teacher>());
         compil.addCompetentTeacher(nasr);
         compil.addCompetentTeacher(bechet);
         logique.addCompetentTeacher(jamet);
