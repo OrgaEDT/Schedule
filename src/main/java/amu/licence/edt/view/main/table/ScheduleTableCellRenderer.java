@@ -1,5 +1,6 @@
 package amu.licence.edt.view.main.table;
 
+import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTable;
@@ -16,6 +17,10 @@ public class ScheduleTableCellRenderer extends DefaultTableCellRenderer {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
                                             row, column);
 
+        if (value == null) {
+            setBackground(Color.WHITE);
+            return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        }
         try {
             TU ue = (TU) value;
             setText(ue.getLibel());

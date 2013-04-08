@@ -8,6 +8,7 @@ public class ScheduleTable extends SpanTable {
 
     public ScheduleTable(ScheduleTableModel model) {
         super(model);
+        setRowSelectionAllowed(false);
         setDefaultRenderer(TU.class, new ScheduleTableCellRenderer());
     }
 

@@ -47,7 +47,7 @@ public class SpanTableUI extends BasicTableUI {
 
         Color c = g.getColor();
         g.setColor(table.getGridColor());
-        g.drawRect(area.x, area.y, area.width - 1, area.height - 1);
+//        g.drawRect(area.x, area.y, area.width - 1, area.height - 1);
         g.setColor(c);
 
         area.setBounds(area.x + horizontalMargin / 2, area.y + verticalMargin
@@ -65,7 +65,7 @@ public class SpanTableUI extends BasicTableUI {
             if (component.getParent() == null)
                 rendererPane.add(component);
             rendererPane.paintComponent(g, component, table, area.x, area.y,
-                    area.width, area.height, true);
+                    area.width+1, area.height+1, true);
         }
     }
 

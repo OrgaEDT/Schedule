@@ -64,7 +64,7 @@ public class ScheduleTableComponent extends ViewComponent {
         rowHeader.setFixedCellWidth(100);
 
 //        rowHeader.setFixedCellHeight(table.getRowHeight() * 3 + table.getRowMargin());
-        rowHeader.setFixedCellHeight(table.getRowHeight() + table.getRowMargin());
+        rowHeader.setFixedCellHeight(table.getRowHeight()/*+ table.getRowMargin()*/);
         rowHeader.setCellRenderer(new RowHeaderRenderer(table));
 
         JScrollPane scrollPane = new JScrollPane(table);
