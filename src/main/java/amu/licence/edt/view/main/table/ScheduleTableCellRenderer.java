@@ -23,11 +23,14 @@ public class ScheduleTableCellRenderer extends DefaultTableCellRenderer {
         }
         try {
             Session s = (Session) value;
-            setText(s.gettU().getCode() + " " + s.getcRoom().getNum());
+            setText("<html>" + s.gettU().getLibel() + " " + s.getSessionType().getLibel() + "<br>" + s.getTeacher().getName() + "<br>" + s.getcRoom().getNum() + "</html>");
             setBackground(Color.decode(s.gettU().getColor()));
         } catch (ClassCastException cce) {
             System.err.println("not a Session");// TODO exc ?
         }
+        int height = new Double(getPreferredSize().getHeight()).intValue();
+        table.setRowHeight(height);
+        ((ScheduleTableModel)table.getModel()).getRowHeader().setFixedCellHeight(height);
 
         return this;
     }
