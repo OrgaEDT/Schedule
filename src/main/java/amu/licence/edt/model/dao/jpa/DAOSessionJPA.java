@@ -27,7 +27,6 @@ public class DAOSessionJPA extends DAOGeneriqueJPA<Session> implements DAOSessio
         Calendar c = Calendar.getInstance();
         c.setTime(startDate);
         c.add(Calendar.DAY_OF_MONTH, days);
-        System.out.println("between : " + startDate + " and " + c.getTime());
         query.setParameter("endDate", c.getTime());
         return query.getResultList();
     }
@@ -39,7 +38,6 @@ public class DAOSessionJPA extends DAOGeneriqueJPA<Session> implements DAOSessio
         Calendar c = Calendar.getInstance();
         c.setTime(startDate);
         c.add(Calendar.DAY_OF_MONTH, days);
-        System.out.println("between : " + startDate + " and " + c.getTime());
         query.setParameter("endDate", c.getTime());
         return query.getResultList();
     }
