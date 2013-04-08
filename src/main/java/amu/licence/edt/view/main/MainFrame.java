@@ -51,7 +51,7 @@ public class MainFrame extends AbstractView {
 
         pnlCenter.setLayout(new BorderLayout());
         pnlCenter.add(scheduleStatusPanel.getComponent(), BorderLayout.NORTH);
-        pnlCenter.add(new JScrollPane(scheduleTable.getComponent()), BorderLayout.CENTER);
+        pnlCenter.add(scheduleTable.getComponent(), BorderLayout.CENTER);
 
         pnlSide.setLayout(new BorderLayout());
         pnlSide.add(new JScrollPane(schedulesTree.getComponent()), BorderLayout.CENTER);
