@@ -11,12 +11,22 @@ import javax.persistence.*;
     @NamedQuery (name=Session.FIND_BY_TEACHER,
                  query="SELECT s FROM Session s " +
                        "WHERE s.teacher = :teacher AND" +
+                       "      s.startDate BETWEEN :startDate AND :endDate"),
+    @NamedQuery (name=Session.FIND_BY_GROUP,
+                 query="SELECT s FROM Session s " +
+                       "WHERE s.group = :group AND" +
+                       "      s.startDate BETWEEN :startDate AND :endDate"),
+    @NamedQuery (name=Session.FIND_BY_CROOM,
+                 query="SELECT s FROM Session s " +
+                       "WHERE s.cRoom = :cRoom AND" +
                        "      s.startDate BETWEEN :startDate AND :endDate")
 })
 public class Session implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static final String FIND_BY_TEACHER = "findSessionsByTeacher";
+    public static final String FIND_BY_GROUP = "findSessionsByGroup";
+    public static final String FIND_BY_CROOM = "findSessionsByCRoom";
 
     @Id
     @GeneratedValue

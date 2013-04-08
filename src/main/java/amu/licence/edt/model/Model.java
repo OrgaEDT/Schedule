@@ -131,6 +131,21 @@ public class Model {
         fireScheduleChanged();
     }
 
+    public void setSessionsOfGroup(Group g) {
+        schedule.setSessions(DAOFactoryManager.getDAOFactory().getDAOSession().findByGroupPeriod(g, schedule.getFirstWeekDay(), 5));
+        fireScheduleChanged();
+    }
+
+    public void setSessionsOfCRoom(CRoom cr) {
+        schedule.setSessions(DAOFactoryManager.getDAOFactory().getDAOSession().findByCRoomPeriod(cr, schedule.getFirstWeekDay(), 5));
+        fireScheduleChanged();
+    }
+
+    public void setSessionsOfLevel(Level l) {
+        schedule.setSessions(DAOFactoryManager.getDAOFactory().getDAOSession().findByLevelPeriod(l, schedule.getFirstWeekDay(), 5));
+        fireScheduleChanged();
+    }
+
     public List<Teacher> getTeachersList() {
         return DAOFactoryManager.getDAOFactory().getDAOTeacher().findAll();
     }

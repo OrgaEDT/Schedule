@@ -7,6 +7,9 @@ import javax.swing.tree.TreeNode;
 
 import amu.licence.edt.model.Model;
 import amu.licence.edt.model.Schedule;
+import amu.licence.edt.model.beans.CRoom;
+import amu.licence.edt.model.beans.Group;
+import amu.licence.edt.model.beans.Level;
 import amu.licence.edt.model.beans.Session;
 import amu.licence.edt.model.beans.Teacher;
 
@@ -59,6 +62,15 @@ public class Controller {
     public void newScheduleSessionsRequested(Object o) {
         if (o instanceof Teacher) {
             model.setSessionsOfTeacher((Teacher) o);
+        }
+        else if (o instanceof Group) {
+            model.setSessionsOfGroup((Group) o);
+        }
+        else if (o instanceof CRoom) {
+            model.setSessionsOfCRoom((CRoom) o);
+        }
+        else if (o instanceof Level) {
+            model.setSessionsOfLevel((Level) o);
         }
     }
 

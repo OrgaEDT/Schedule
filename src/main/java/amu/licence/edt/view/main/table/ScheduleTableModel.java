@@ -21,6 +21,7 @@ public class ScheduleTableModel extends AbstractTableModel implements SpanTableM
     }
 
     public void fillData(List<Session> sessions) {
+        if (sessions == null) return;
         Calendar c = Calendar.getInstance();
         for (Session s : sessions) {
             int row, col;
