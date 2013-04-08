@@ -1,6 +1,7 @@
 package amu.licence.edt.model.dao.jpa;
 
 import java.awt.Color;
+import java.util.Calendar;
 import java.util.HashSet;
 
 import javax.persistence.EntityManager;
@@ -15,6 +16,7 @@ import amu.licence.edt.model.beans.Group;
 import amu.licence.edt.model.beans.Level;
 import amu.licence.edt.model.beans.Promo;
 import amu.licence.edt.model.beans.Rank;
+import amu.licence.edt.model.beans.Session;
 import amu.licence.edt.model.beans.SessionType;
 import amu.licence.edt.model.beans.TU;
 import amu.licence.edt.model.beans.Teacher;
@@ -240,16 +242,11 @@ public class DAOFactoryJPA implements DAOFactory {
 
         /* Promos */
         System.out.println("Promos");
-        Promo p1 = new Promo(60, l3, new HashSet<Group>());
-        Promo p2 = new Promo(60, l3, new HashSet<Group>());
+        Promo p1 = new Promo(60, l1, new HashSet<Group>());
+        Promo p2 = new Promo(60, l2, new HashSet<Group>());
         Promo p3 = new Promo(60, l3, new HashSet<Group>());
-        Promo p4 = new Promo(60, l3, new HashSet<Group>());
-        Promo p5 = new Promo(60, l3, new HashSet<Group>());
-        p1.setLevel(l1);
-        p2.setLevel(l2);
-        p3.setLevel(l3);
-        p4.setLevel(m1);
-        p5.setLevel(m2);
+        Promo p4 = new Promo(60, m1, new HashSet<Group>());
+        Promo p5 = new Promo(60, m2, new HashSet<Group>());
         entityManager.persist(p1);
         entityManager.persist(p2);
         entityManager.persist(p3);
@@ -259,12 +256,30 @@ public class DAOFactoryJPA implements DAOFactory {
 
         /* Groups */
         System.out.println("Groups");
-        Group g1 = new Group(30, p1);
-        Group g2 = new Group(30, p1);
-        p1.addGroup(g1);
-        p1.addGroup(g2);
+        Group g1 = new Group(10, p3);
+        Group g2 = new Group(10, p3);
+        Group g3 = new Group(10, p3);
+        Group g4 = new Group(10, p3);
+        Group g5 = new Group(10, p3);
+        Group g6 = new Group(10, p3);
+        Group g7 = new Group(30, p1);
+        Group g8 = new Group(30, p1);
+        p3.addGroup(g1);
+        p3.addGroup(g2);
+        p3.addGroup(g3);
+        p3.addGroup(g4);
+        p3.addGroup(g5);
+        p3.addGroup(g6);
+        p1.addGroup(g7);
+        p1.addGroup(g8);
         entityManager.persist(g1);
         entityManager.persist(g2);
+        entityManager.persist(g3);
+        entityManager.persist(g4);
+        entityManager.persist(g5);
+        entityManager.persist(g6);
+        entityManager.persist(g7);
+        entityManager.persist(g8);
         /* */
 
         /* TUs */
@@ -436,7 +451,82 @@ public class DAOFactoryJPA implements DAOFactory {
         /* */
 
         /* Sessions */
-        // TODO
+        // todo contrainte: ajouter une session pour un groupe dont le niveau est le meme que l'UE
+        Calendar c = Calendar.getInstance();
+        c.set(2013, Calendar.APRIL, 8, 8, 0);
+        Session s1 = new Session(c.getTime(), 4, pPOO, avell, cr19, sessionProjet, g1);
+        c.set(2013, Calendar.APRIL, 8, 14, 0);
+        Session s2 = new Session(c.getTime(), 4, pPOO, avell, cr19, sessionProjet, g1);
+        c.set(2013, Calendar.APRIL, 8, 8, 0);
+        Session s3 = new Session(c.getTime(), 4, pApp, sabatier, cr42, sessionProjet, g2);
+        c.set(2013, Calendar.APRIL, 8, 14, 0);
+        Session s4 = new Session(c.getTime(), 4, pApp, sabatier, cr42, sessionProjet, g2);
+
+        c.set(2013, Calendar.APRIL, 9, 10, 0);
+        Session s5 = new Session(c.getTime(), 2, logique, jamet, cr9, sessionCours, null);
+        c.set(2013, Calendar.APRIL, 9, 13, 0);
+        Session s6 = new Session(c.getTime(), 3, logique, jamet, cr32, sessionTD, g1);
+        c.set(2013, Calendar.APRIL, 9, 13, 0);
+        Session s7 = new Session(c.getTime(), 3, logique, sabatier, cr34, sessionTD, g2);
+        c.set(2013, Calendar.APRIL, 9, 16, 0);
+        Session s8 = new Session(c.getTime(), 2, syst, massat, cr4, sessionCours, null);
+
+        c.set(2013, Calendar.APRIL, 10, 8, 0);
+        Session s9 = new Session(c.getTime(), 2, syst, massat, cr34, sessionTD, g1);
+        c.set(2013, Calendar.APRIL, 10, 8, 0);
+        Session s10 = new Session(c.getTime(), 2, syst, talbot, cr32, sessionTD, g2);
+        c.set(2013, Calendar.APRIL, 10, 10, 0);
+        Session s11 = new Session(c.getTime(), 2, syst, massat, cr40, sessionTP, g1);
+        c.set(2013, Calendar.APRIL, 10, 10, 0);
+        Session s12 = new Session(c.getTime(), 2, syst, talbot, cr41, sessionTP, g2);
+        c.set(2013, Calendar.APRIL, 10, 14, 0);
+        Session s13 = new Session(c.getTime(), 2, crypto, ritz, cr12, sessionCours, g3);
+        c.set(2013, Calendar.APRIL, 10, 16, 0);
+        Session s14 = new Session(c.getTime(), 2, crypto, ritz, cr12, sessionTD, g3);
+
+        c.set(2013, Calendar.APRIL, 11, 8, 0);
+        Session s15 = new Session(c.getTime(), 2, crypto, ritz, cr45, sessionTP, g3);
+        c.set(2013, Calendar.APRIL, 11, 14, 0);
+        Session s16 = new Session(c.getTime(), 2, compil, nasr, cr34, sessionTD, g1);
+        c.set(2013, Calendar.APRIL, 11, 14, 0);
+        Session s17 = new Session(c.getTime(), 2, compil, bechet, cr32, sessionTD, g2);
+        c.set(2013, Calendar.APRIL, 11, 16, 0);
+        Session s18 = new Session(c.getTime(), 2, compil, nasr, cr40, sessionTP, g1);
+        c.set(2013, Calendar.APRIL, 11, 16, 0);
+        Session s19 = new Session(c.getTime(), 2, compil, bechet, cr41, sessionTP, g2);
+
+        c.set(2013, Calendar.APRIL, 12, 8, 0);
+        Session s20 = new Session(c.getTime(), 4, devWeb, estellon, cr41, sessionProjet, g4);
+        c.set(2013, Calendar.APRIL, 12, 14, 0);
+        Session s21 = new Session(c.getTime(), 2, devWeb, estellon, cr42, sessionTP, g4);
+        c.set(2013, Calendar.APRIL, 12, 10, 0);
+        Session s22 = new Session(c.getTime(), 2, geoAlgo, chepoi, cr31, sessionCours, g5);
+        c.set(2013, Calendar.APRIL, 12, 14, 0);
+        Session s23 = new Session(c.getTime(), 2, geoAlgo, chepoi, cr32, sessionCours, g5);
+
+        entityManager.persist(s1);
+        entityManager.persist(s2);
+        entityManager.persist(s3);
+        entityManager.persist(s4);
+        entityManager.persist(s5);
+        entityManager.persist(s6);
+        entityManager.persist(s7);
+        entityManager.persist(s8);
+        entityManager.persist(s9);
+        entityManager.persist(s10);
+        entityManager.persist(s11);
+        entityManager.persist(s12);
+        entityManager.persist(s13);
+        entityManager.persist(s14);
+        entityManager.persist(s15);
+        entityManager.persist(s16);
+        entityManager.persist(s17);
+        entityManager.persist(s18);
+        entityManager.persist(s19);
+        entityManager.persist(s20);
+        entityManager.persist(s21);
+        entityManager.persist(s22);
+        entityManager.persist(s23);
         /* */
 
         System.out.println("Committing...");
