@@ -33,7 +33,7 @@ public class TeacherManagmentForm extends ViewComponent {
 
     Frame owner;
 
-    private JComboBox<Teacher> cbbTeachers;
+    private JComboBox cbbTeachers;
     private JPanel pnlPnlsManage;
 
     private JPanel pnlUnavailability;
@@ -68,7 +68,7 @@ public class TeacherManagmentForm extends ViewComponent {
         pnlPnlsManage = new JPanel(new BorderLayout());
 
         List<Teacher> teachers = presenter.teacherManagmentFormCreating();
-        cbbTeachers = new JComboBox<Teacher>(teachers.toArray(new Teacher[0]));
+        cbbTeachers = new JComboBox(teachers.toArray(new Teacher[0]));
         cbbTeachers.setRenderer(new ListCellStrRenderer(presenter.getClassBasedDDR()));
         cbbTeachers.addActionListener(new ActionListener() {
             @Override
