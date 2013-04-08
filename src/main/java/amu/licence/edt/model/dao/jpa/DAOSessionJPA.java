@@ -1,6 +1,5 @@
 package amu.licence.edt.model.dao.jpa;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -46,10 +45,9 @@ public class DAOSessionJPA extends DAOGeneriqueJPA<Session> implements DAOSessio
 
     @Override
     public List<Session> findByLevelPeriod(Level l, Date startDate, int days) {
-        return new ArrayList<Session>();
-//        query = entityManager.createNamedQuery(Session.FIND_BY_LEVEL, Session.class);
-//        query.setParameter("level", l);
-//        return executeFindSessionByPeriod(startDate, days);
+        query = entityManager.createNamedQuery(Session.FIND_BY_LEVEL, Session.class);
+        query.setParameter("level", l);
+        return executeFindSessionByPeriod(startDate, days);
     }
 
     @Override

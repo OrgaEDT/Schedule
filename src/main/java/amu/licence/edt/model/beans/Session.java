@@ -19,7 +19,11 @@ import javax.persistence.*;
     @NamedQuery (name=Session.FIND_BY_CROOM,
                  query="SELECT s FROM Session s " +
                        "WHERE s.cRoom = :cRoom AND" +
-                       "      s.startDate BETWEEN :startDate AND :endDate")
+                       "      s.startDate BETWEEN :startDate AND :endDate"),
+    @NamedQuery (name=Session.FIND_BY_LEVEL,
+                 query="SELECT s FROM Session s JOIN s.tU tu " +
+                       "WHERE s.group IS NULL AND tu.level = :level AND" +
+                       "      s.startDate BETWEEN :startDate AND :endDate"),
 })
 public class Session implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -27,6 +31,7 @@ public class Session implements Serializable {
     public static final String FIND_BY_TEACHER = "findSessionsByTeacher";
     public static final String FIND_BY_GROUP = "findSessionsByGroup";
     public static final String FIND_BY_CROOM = "findSessionsByCRoom";
+    public static final String FIND_BY_LEVEL = "findSessionsByLevel";
 
     @Id
     @GeneratedValue
