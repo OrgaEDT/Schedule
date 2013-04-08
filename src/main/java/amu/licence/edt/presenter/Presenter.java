@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
@@ -62,6 +63,7 @@ public class Presenter implements ModelObserver {
     @Override
     public void scheduleChanged(Schedule schedule) {
         view.getMainFrame().getScheduleStatusPanel().setDate(schedule.getFirstWeekDay());
+        view.getMainFrame().getScheduleTableComponent().displaySessions(schedule.getSessions());
     }
 
     public void connectButtonPressed() {
@@ -107,7 +109,7 @@ public class Presenter implements ModelObserver {
             sb.delete(sb.length() - separator.length(), sb.length());
         view.getMainFrame().getScheduleStatusPanel().setLabelText(sb.toString());
 
-        // TODO call controller to modify schedule
+        controller.newScheduleSessionsRequested(((DefaultMutableTreeNode)path.getLastPathComponent()).getUserObject());
     }
 
     public ClassBasedDDR getClassBasedDDR() {

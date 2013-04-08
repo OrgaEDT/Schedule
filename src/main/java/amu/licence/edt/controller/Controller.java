@@ -56,4 +56,10 @@ public class Controller {
         return model.getSchedule().getSessions();
     }
 
+    public void newScheduleSessionsRequested(Object o) {
+        if (o instanceof Teacher) {
+            model.setSessionsOfTeacher((Teacher) o);
+        }
+    }
+
 }

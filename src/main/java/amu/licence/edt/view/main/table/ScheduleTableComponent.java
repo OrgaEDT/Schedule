@@ -1,6 +1,7 @@
 package amu.licence.edt.view.main.table;
 
 import java.awt.Component;
+import java.util.List;
 
 import javax.swing.AbstractListModel;
 import javax.swing.JComponent;
@@ -12,6 +13,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 import javax.swing.table.JTableHeader;
 
+import amu.licence.edt.model.beans.Session;
 import amu.licence.edt.presenter.Presenter;
 import amu.licence.edt.view.ViewComponent;
 
@@ -38,15 +40,18 @@ class RowHeaderRenderer extends JLabel implements ListCellRenderer {
 
 public class ScheduleTableComponent extends ViewComponent {
 
+    private ScheduleTable table;
+    private ScheduleTableModel tableModel;
+
     public ScheduleTableComponent(Presenter presenter) {
         super(presenter);
     }
 
     @Override
     protected JComponent createComponent() {
-        ScheduleTableModel scheduleModel = new ScheduleTableModel();
-        scheduleModel.fillData(presenter.tableCreating());
-        JTable table = new ScheduleTable(scheduleModel);
+        tableModel = new ScheduleTableModel();
+        tableModel.fillData(presenter.tableCreating());
+        table = new ScheduleTable(tableModel);
 
         JList rowHeader = new JList(new AbstractListModel() {
             private static final long serialVersionUID = 1L;
@@ -72,6 +77,10 @@ public class ScheduleTableComponent extends ViewComponent {
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setRowHeaderView(rowHeader);
         return scrollPane;
+    }
+
+    public void displaySessions(List<Session> sessions) {
+        tableModel.fillData(sessions);
     }
 
 }

@@ -6,7 +6,7 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import amu.licence.edt.model.beans.TU;
+import amu.licence.edt.model.beans.Session;
 
 public class ScheduleTableCellRenderer extends DefaultTableCellRenderer {
     private static final long serialVersionUID = 1L;
@@ -22,11 +22,11 @@ public class ScheduleTableCellRenderer extends DefaultTableCellRenderer {
             return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         }
         try {
-            TU ue = (TU) value;
-            setText(ue.getLibel());
-            setBackground(ue.getColor());
+            Session s = (Session) value;
+            setText(s.gettU().getCode() + " " + s.getcRoom().getNum());
+            setBackground(Color.LIGHT_GRAY);
         } catch (ClassCastException cce) {
-            System.err.println("not a UE");// TODO exc ?
+            System.err.println("not a Session");// TODO exc ?
         }
 
         return this;

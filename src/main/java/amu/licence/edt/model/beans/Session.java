@@ -7,8 +7,16 @@ import javax.persistence.*;
 
 @Entity
 @Table (name="T_SESSION")
+@NamedQueries ({
+    @NamedQuery (name=Session.FIND_BY_TEACHER,
+                 query="SELECT s FROM Session s " +
+                       "WHERE s.teacher = :teacher AND" +
+                       "      s.startDate BETWEEN :startDate AND :endDate")
+})
 public class Session implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    public static final String FIND_BY_TEACHER = "findSessionsByTeacher";
 
     @Id
     @GeneratedValue

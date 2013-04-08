@@ -126,6 +126,11 @@ public class Model {
         return crooms;
     }
 
+    public void setSessionsOfTeacher(Teacher t) {
+        schedule.setSessions(DAOFactoryManager.getDAOFactory().getDAOSession().findByTeacherPeriod(t, schedule.getFirstWeekDay(), 5));
+        fireScheduleChanged();
+    }
+
     public List<Teacher> getTeachersList() {
         return DAOFactoryManager.getDAOFactory().getDAOTeacher().findAll();
     }
@@ -136,11 +141,13 @@ public class Model {
 
     public void findNextWeek() {
         schedule.setFirstWeekDay(schedule.computeNextWeek());
+        schedule.setSessions(DAOFactoryManager.getDAOFactory().getDAOSession().executeFindSessionByPeriod(schedule.getFirstWeekDay(), 5));
         fireScheduleChanged();
     }
 
     public void findPrevWeek() {
         schedule.setFirstWeekDay(schedule.computePrevWeek());
+        schedule.setSessions(DAOFactoryManager.getDAOFactory().getDAOSession().executeFindSessionByPeriod(schedule.getFirstWeekDay(), 5));
         fireScheduleChanged();
     }
 

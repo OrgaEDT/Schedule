@@ -75,4 +75,8 @@ public class MainFrame extends AbstractView {
         return scheduleStatusPanel;
     }
 
+    public ScheduleTableComponent getScheduleTableComponent() {
+        return scheduleTable;
+    }
+
 }

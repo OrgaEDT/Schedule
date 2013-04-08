@@ -13,7 +13,7 @@ import amu.licence.edt.model.dao.DAOFactoryManager;
 @NamedQueries ({
     @NamedQuery (name=Teacher.COMPUTE_SERVICE_HOURS,
                  query="SELECT sum(s.duration) FROM Session s " +
-                       "WHERE  s.teacher = :t")
+                       "WHERE  s.teacher = :t"),
 })
 public class Teacher extends Admin
                      implements Serializable {

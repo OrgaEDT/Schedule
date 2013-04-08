@@ -1,5 +1,6 @@
 package amu.licence.edt.view.main.table;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -20,7 +21,24 @@ public class ScheduleTableModel extends AbstractTableModel implements SpanTableM
     }
 
     public void fillData(List<Session> sessions) {
-        // TODO
+        for (int i = 0; i < 5; ++i) {
+            for (int j = 0; j < entete.length; ++j) {
+                data[i][j] = null;
+            }
+        }
+        spanModel.clear();
+        Calendar c = Calendar.getInstance();
+        for (Session s : sessions) {
+            int row, col;
+            c.setTime(s.getStartDate());
+            row = c.get(Calendar.DAY_OF_WEEK) - Calendar.MONDAY;
+            col = c.get(Calendar.HOUR_OF_DAY) - 8;
+            if (s.getDuration() > 1) {
+                spanModel.addSpan(new Span(row, col, s.getDuration()));
+            }
+            data[row][col] = s;
+        }
+        fireTableDataChanged();
     }
 
     @Override
