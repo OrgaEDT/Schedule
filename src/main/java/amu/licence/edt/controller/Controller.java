@@ -7,6 +7,7 @@ import javax.swing.tree.TreeNode;
 
 import amu.licence.edt.model.Model;
 import amu.licence.edt.model.Schedule;
+import amu.licence.edt.model.beans.Session;
 import amu.licence.edt.model.beans.Teacher;
 
 public class Controller {
@@ -49,6 +50,10 @@ public class Controller {
 
     public void prevWeekRequested() {
         model.findPrevWeek();
+    }
+
+    public List<Session> scheduleSessionsRequested() {
+        return model.getSchedule().getSessions();
     }
 
 }

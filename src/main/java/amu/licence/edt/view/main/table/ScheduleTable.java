@@ -12,7 +12,4 @@ public class ScheduleTable extends SpanTable {
         setDefaultRenderer(TU.class, new ScheduleTableCellRenderer());
     }
 
-    public void refreshTable() {
-    }
-
 }

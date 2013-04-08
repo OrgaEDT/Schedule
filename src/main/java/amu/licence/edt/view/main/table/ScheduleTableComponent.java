@@ -44,7 +44,9 @@ public class ScheduleTableComponent extends ViewComponent {
 
     @Override
     protected JComponent createComponent() {
-        JTable table = new ScheduleTable(new ScheduleTableModel());
+        ScheduleTableModel scheduleModel = new ScheduleTableModel();
+        scheduleModel.fillData(presenter.tableCreating());
+        JTable table = new ScheduleTable(scheduleModel);
 
         JList rowHeader = new JList(new AbstractListModel() {
             private static final long serialVersionUID = 1L;

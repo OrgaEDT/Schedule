@@ -15,6 +15,7 @@ import amu.licence.edt.model.beans.CRoom;
 import amu.licence.edt.model.beans.CRoomType;
 import amu.licence.edt.model.beans.Group;
 import amu.licence.edt.model.beans.Level;
+import amu.licence.edt.model.beans.Session;
 import amu.licence.edt.model.beans.Teacher;
 import amu.licence.edt.view.View;
 import amu.licence.edt.view.renderers.CRoomRenderer;
@@ -133,6 +134,10 @@ public class Presenter implements ModelObserver {
 
     public void prevWeekButtonPressed() {
         controller.prevWeekRequested();
+    }
+
+    public List<Session> tableCreating() {
+        return controller.scheduleSessionsRequested();
     }
 
 }
