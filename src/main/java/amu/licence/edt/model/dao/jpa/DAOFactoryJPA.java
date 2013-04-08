@@ -304,15 +304,11 @@ public class DAOFactoryJPA implements DAOFactory {
         entityManager.persist(pApp);
         /* */
 
-        for (Teacher t : syst.getCompetentTeachers()) {
-            System.out.println(t.getName());
-        }
-
         /* SessionTypes */
         System.out.println("SessionTypes");
         SessionType sessionTD = new SessionType("TD", 1, new HashSet<CRoomType>());
-        SessionType sessionTP = new SessionType("TP", 1, new HashSet<CRoomType>());
-        SessionType sessionCours = new SessionType("Lecture", 1, new HashSet<CRoomType>());
+        SessionType sessionTP = new SessionType("TP", 2/3.0, new HashSet<CRoomType>());
+        SessionType sessionCours = new SessionType("Lecture", 1.5, new HashSet<CRoomType>());
         SessionType sessionProjet = new SessionType("Project", 1, new HashSet<CRoomType>());
         entityManager.persist(sessionTD);
         entityManager.persist(sessionTP);
