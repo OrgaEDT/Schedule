@@ -65,7 +65,6 @@ public class ScheduleTableModel extends AbstractTableModel implements SpanTableM
             }
         });
         rowHeader.setFixedCellWidth(100);
-//        rowHeader.setFixedCellHeight(table.getRowHeight()/*+ table.getRowMargin()*/);
         rowHeader.setCellRenderer(new RowHeaderRenderer());
     }
 

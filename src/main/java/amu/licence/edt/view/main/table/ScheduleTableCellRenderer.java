@@ -28,9 +28,6 @@ public class ScheduleTableCellRenderer extends DefaultTableCellRenderer {
         } catch (ClassCastException cce) {
             System.err.println("not a Session");// TODO exc ?
         }
-        int height = new Double(getPreferredSize().getHeight()).intValue();
-        table.setRowHeight(height);
-        ((ScheduleTableModel)table.getModel()).getRowHeader().setFixedCellHeight(height);
 
         return this;
     }
