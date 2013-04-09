@@ -3,6 +3,7 @@ package amu.licence.edt.view.main.table;
 import java.awt.Color;
 import java.awt.Component;
 
+import javax.swing.BorderFactory;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -28,6 +29,7 @@ public class ScheduleTableCellRenderer extends DefaultTableCellRenderer {
             setBackground(Color.decode(s.gettU().getColor()));
             setVerticalAlignment(SwingConstants.TOP);
             setHorizontalAlignment(SwingConstants.CENTER);
+            setBorder(BorderFactory.createTitledBorder(s.gettU().getCode()));
         } catch (ClassCastException cce) {
             System.err.println("not a Session");// TODO exc ?
         }
