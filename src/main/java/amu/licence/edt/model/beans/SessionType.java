@@ -15,7 +15,7 @@ public class SessionType implements Serializable {
     @Column (name="ID_SESSION_TYPE")
     private int id;
 
-    @Column (name="LIBEL_SESSION_TYPE")
+    @Column (name="LIBEL_SESSION_TYPE", unique=true)
     private String libel;
 
     @Column (name="TUTOR_WORTH_COEF")
