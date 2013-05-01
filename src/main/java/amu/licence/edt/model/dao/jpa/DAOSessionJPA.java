@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import amu.licence.edt.model.beans.CRoom;
@@ -58,6 +59,14 @@ public class DAOSessionJPA extends DAOGeneriqueJPA<Session> implements DAOSessio
         c.setTime(startDate);
         c.add(Calendar.DAY_OF_MONTH, days);
         query.setParameter("endDate", c.getTime());
+        return query.getResultList();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Iterable<Object[]> findUnplanned(Level l) {
+        Query query = entityManager.createNativeQuery("SELECT * FROM table(unplanned_sessions(?1))");
+        query.setParameter(1, l.getId());
         return query.getResultList();
     }
 

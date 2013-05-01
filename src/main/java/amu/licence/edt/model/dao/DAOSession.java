@@ -21,4 +21,15 @@ public interface DAOSession extends DAO<Session> {
 
     List<Session> findByLevelPeriod(Level l, Date firstWeekDay, int i);
 
+    /**
+     * Find all unplanned session hours,
+     * the result's objects are arrays :
+     * o[0] : String - libel of the TU
+     * o[1] : BigDecimal - unplanned class sessions for the TU o[0]
+     * o[2] : BigDecimal - unplanned tutor sessions for the TU o[0]
+     * o[3] : BigDecimal - unplanned practical sessions for the TU o[0]
+     * o[4] : BigDecimal - unplanned project sessions for the TU o[0]
+     */
+    Iterable<Object[]> findUnplanned(Level l);
+
 }
