@@ -74,4 +74,8 @@ public class Controller {
         }
     }
 
+    public Iterable<Object[]> unplannedSessionsRequested(Level l) {
+        return model.getUnplannedSessions(l);
+    }
+
 }

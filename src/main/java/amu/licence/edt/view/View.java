@@ -1,6 +1,10 @@
 package amu.licence.edt.view;
 
+import java.util.HashMap;
+
+import amu.licence.edt.model.beans.Level;
 import amu.licence.edt.presenter.Presenter;
+import amu.licence.edt.view.dialogs.LevelManagmentForm;
 import amu.licence.edt.view.dialogs.LoginForm;
 import amu.licence.edt.view.dialogs.TeacherManagmentForm;
 import amu.licence.edt.view.main.MainFrame;
@@ -10,12 +14,14 @@ public class View extends AbstractView {
     private MainFrame mainFrame;
     private LoginForm loginForm;
     private TeacherManagmentForm teacherManagmentForm;
+    private HashMap<Level, LevelManagmentForm> levelManagmentForms;
 
     public View(Presenter presenter) {
         super(presenter);
         mainFrame = new MainFrame(presenter);
         loginForm = new LoginForm(presenter, mainFrame.getFrame());
         teacherManagmentForm = new TeacherManagmentForm(presenter, mainFrame.getFrame());
+        levelManagmentForms = new HashMap<Level, LevelManagmentForm>();
     }
 
     public MainFrame getMainFrame() {
@@ -28,6 +34,15 @@ public class View extends AbstractView {
 
     public TeacherManagmentForm getTeacherManagmentForm() {
         return teacherManagmentForm;
+    }
+
+    public ViewComponent getLevelManagmentForm(Level l) {
+        LevelManagmentForm lmf = levelManagmentForms.get(l);
+        if (lmf == null) {
+            lmf = new LevelManagmentForm(presenter, mainFrame.getFrame(), l);
+            levelManagmentForms.put(l, lmf);
+        }
+        return lmf;
     }
 
 }

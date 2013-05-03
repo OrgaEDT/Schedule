@@ -85,8 +85,8 @@ public class Presenter implements ModelObserver {
         }
     }
 
-    public void manageLevelButtonPressed(String levelCode) {
-        // TODO
+    public void manageLevelButtonPressed(Level l) {
+        view.getLevelManagmentForm(l).getComponent().setVisible(true);
     }
 
     public TreeNode scheduleTreeCreating() {
@@ -140,6 +140,10 @@ public class Presenter implements ModelObserver {
 
     public List<Session> tableCreating() {
         return controller.scheduleSessionsRequested();
+    }
+
+    public Iterable<Object[]> levelManagmentFormCreating(Level level) {
+        return controller.unplannedSessionsRequested(level);
     }
 
 }

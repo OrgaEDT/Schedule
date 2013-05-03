@@ -166,4 +166,8 @@ public class Model {
         fireScheduleChanged();
     }
 
+    public Iterable<Object[]> getUnplannedSessions(Level l) {
+        return DAOFactoryManager.getDAOFactory().getDAOSession().findUnplanned(l);
+    }
+
 }

@@ -119,12 +119,7 @@ public class AdminStatusPanel extends ViewComponent {
         }
         for (Level l : user.getLevels()) {
             JButton btnManageLevel = new JButton(l.getCode());
-            btnManageLevel.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    btnManageLevelActionPerformed(e);
-                }
-            });
+            btnManageLevel.addActionListener(new btnManageActionListener(this, l));
             pnlManage.add(btnManageLevel);
         }
         pnlManage.setVisible(pnlManage.getComponentCount() != 0);
@@ -134,12 +129,28 @@ public class AdminStatusPanel extends ViewComponent {
         } catch (ClassCastException cce) {}
     }
 
-    protected void btnManageLevelActionPerformed(ActionEvent e) {
-        presenter.manageLevelButtonPressed(((JButton) e.getSource()).getText());
+    protected void btnManageLevelActionPerformed(ActionEvent e, Level l) {
+        presenter.manageLevelButtonPressed(l);
     }
 
     protected void btnManageTeachersActionPerformed(ActionEvent e) {
         presenter.manageTeachersButtonPressed();
+    }
+
+    class btnManageActionListener implements ActionListener {
+
+        private AdminStatusPanel asp;
+        private Level l;
+
+        public btnManageActionListener(AdminStatusPanel asp, Level l) {
+            this.asp = asp;
+            this.l = l;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            asp.btnManageLevelActionPerformed(e, l);
+        }
     }
 
 }
