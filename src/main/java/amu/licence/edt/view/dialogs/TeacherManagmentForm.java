@@ -31,7 +31,7 @@ import amu.licence.edt.view.renderers.ListCellStrRenderer;
 
 public class TeacherManagmentForm extends ViewComponent {
 
-    Frame owner;
+    private Frame owner;
 
     private JComboBox cbbTeachers;
     private JPanel pnlPnlsManage;
