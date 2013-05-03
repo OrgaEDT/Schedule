@@ -4,4 +4,6 @@ import amu.licence.edt.model.beans.SessionType;
 
 public interface DAOSessionType extends DAO<SessionType> {
 
+    SessionType getByLibel(String libel);
+
 }

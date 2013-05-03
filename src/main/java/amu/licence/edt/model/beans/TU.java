@@ -7,8 +7,14 @@ import javax.persistence.*;
 
 @Entity
 @Table (name="T_TU")
+@NamedQueries ({
+    @NamedQuery (name=TU.GET_BY_LIBEL,
+                 query="SELECT t FROM TU t WHERE t.libel = :libel"),
+})
 public class TU implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    public static final String GET_BY_LIBEL = "getTUByLibel";
 
     @Id
     @GeneratedValue

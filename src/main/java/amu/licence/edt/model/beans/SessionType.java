@@ -7,8 +7,14 @@ import javax.persistence.*;
 
 @Entity
 @Table (name="T_SESSION_TYPE")
+@NamedQueries ({
+    @NamedQuery (name=SessionType.GET_BY_LIBEL,
+                 query="SELECT st FROM SessionType st WHERE st.libel = :libel"),
+})
 public class SessionType implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    public static final String GET_BY_LIBEL = "getSessionTypeByLibel";
 
     @Id
     @GeneratedValue
