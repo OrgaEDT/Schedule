@@ -181,4 +181,8 @@ public class Model {
         return DAOFactoryManager.getDAOFactory().getDAOTeacher().findAvailables(tu, date, duration);
     }
 
+    public boolean isGroupAvailable(Group group, Date date, Integer duration) {
+        return DAOFactoryManager.getDAOFactory().getDAOGroup().isAvailable(group, date, duration);
+    }
+
 }

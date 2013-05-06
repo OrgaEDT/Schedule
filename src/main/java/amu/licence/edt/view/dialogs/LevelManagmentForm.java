@@ -15,6 +15,7 @@ import java.util.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,6 +25,7 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
 
+import amu.licence.edt.model.beans.Group;
 import amu.licence.edt.model.beans.Level;
 import amu.licence.edt.model.beans.SessionType;
 import amu.licence.edt.model.beans.TU;
@@ -31,6 +33,7 @@ import amu.licence.edt.model.dao.DAOFactory;
 import amu.licence.edt.model.dao.DAOFactoryManager;
 import amu.licence.edt.presenter.Presenter;
 import amu.licence.edt.view.ViewComponent;
+import amu.licence.edt.view.renderers.ListCellStrRenderer;
 
 public class LevelManagmentForm extends ViewComponent {
 
@@ -48,9 +51,11 @@ public class LevelManagmentForm extends ViewComponent {
     private Character TUSTSeparator; // TU / SessionType Separator
 
     private JPanel pnlPlanSessionForm;
+    private JLabel lblGroup;
     private JLabel lblStartDay;
 //    private JLabel lblHourStart;
     private JLabel lblDuration;
+    private JComboBox groupInput;
     private JSpinner startDayInput;
 //    private JSpinner hourStartInput;
     private JSpinner durationInput;
@@ -86,6 +91,10 @@ public class LevelManagmentForm extends ViewComponent {
 
         pnlPlanSessionForm = new JPanel(new GridLayout(0, 2));
 
+        lblGroup = new JLabel("Groupe");
+        groupInput = new JComboBox();
+        groupInput.setRenderer(new ListCellStrRenderer(presenter.getClassBasedDDR()));
+
         lblStartDay = new JLabel("Date de début");
         startDayInput = new JSpinner();
         startDayInput.setModel(new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_YEAR));
@@ -99,6 +108,8 @@ public class LevelManagmentForm extends ViewComponent {
         durationInput = new JSpinner();
         durationInput.setModel(new SpinnerNumberModel(2, 1, 4, 1));
 
+        pnlPlanSessionForm.add(lblGroup);
+        pnlPlanSessionForm.add(groupInput);
         pnlPlanSessionForm.add(lblStartDay);
         pnlPlanSessionForm.add(startDayInput);
 //        pnlPlanSessionForm.add(lblHourStart);
@@ -148,6 +159,11 @@ public class LevelManagmentForm extends ViewComponent {
                 pnlUnplannedSessions.add(pnlUnplannedTU);
             }
         }
+        groupInput.removeAllItems();
+        groupInput.addItem(new Group());    // whole promo
+        for (Group g : level.getPromo().getGroups()) {
+            groupInput.addItem(g);
+        }
         thisDialog.pack();
     }
 
@@ -156,9 +172,10 @@ public class LevelManagmentForm extends ViewComponent {
         DAOFactory daoF = DAOFactoryManager.getDAOFactory();
         TU tu = daoF.getDAOTU().getByLibel(splitedAC[0]);
         SessionType st = daoF.getDAOSessionType().getByLibel(splitedAC[1]);
+        Group group = (Group) groupInput.getSelectedItem();
         Date date = (Date) startDayInput.getValue();
         Integer duration = (Integer) durationInput.getValue();
-        presenter.btnSearchCRoomTeacherPressed(tu, st, date, duration);
+        presenter.btnSearchCRoomTeacherPressed(tu, st, group, date, duration);
     }
 
 }

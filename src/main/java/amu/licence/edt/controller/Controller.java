@@ -88,4 +88,8 @@ public class Controller {
         return model.getAvailableTeachers(tu, date, duration);
     }
 
+    public boolean availableGroupRequest(Group group, Date date, Integer duration) {
+        return model.isGroupAvailable(group, date, duration);
+    }
+
 }
