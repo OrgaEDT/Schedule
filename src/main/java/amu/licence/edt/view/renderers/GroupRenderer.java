@@ -8,7 +8,8 @@ public class GroupRenderer implements StrRenderer {
     public String getStrRender(Object obj) {
         try {
             Group group = (Group) obj;
-            return "G"+group.getId();   // maby find a better display
+            return (group.getId() != 0) ? "G"+group.getId()    // maby find a better display
+                                        : "Promotion entière";
         } catch (ClassCastException cce) {
             System.err.println("error: trying to render a non-Group in GroupRenderer");
             return null;

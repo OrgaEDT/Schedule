@@ -16,7 +16,9 @@ public class ClassBasedDDR implements StrRenderer {
 
         // /!\ inheritance not handled, specific class only
         StrRenderer r;
-        if (obj == null || (r = renderers.get(obj.getClass())) == null) {
+        if (obj == null) {
+            return "null";
+        } else if ((r = renderers.get(obj.getClass())) == null) {
             return obj.toString();
         }
 
