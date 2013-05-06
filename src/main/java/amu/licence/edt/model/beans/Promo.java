@@ -78,7 +78,7 @@ public class Promo implements Serializable {
         this.level = level;
     }
 
-    public Set<Group> getGroup() {
+    public Set<Group> getGroups() {
         return groups;
     }
 

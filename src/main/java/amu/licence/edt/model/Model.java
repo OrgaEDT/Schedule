@@ -96,7 +96,7 @@ public class Model {
         for (Level l : DAOFactoryManager.getDAOFactory().getDAOLevel().findAll()) {
             DefaultMutableTreeNode pNode = new DefaultMutableTreeNode(l);
             Promo p = l.getPromo();
-            for (Group g : p.getGroup()) {
+            for (Group g : p.getGroups()) {
                 DefaultMutableTreeNode gNode = new DefaultMutableTreeNode(g);
                 pNode.add(gNode);
             }
