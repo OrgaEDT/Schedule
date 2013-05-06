@@ -6,8 +6,14 @@ import javax.persistence.*;
 
 @Entity
 @Table (name="T_CROOM")
+@NamedNativeQueries ({
+    @NamedNativeQuery (name=CRoom.FIND_AVAILABLES_BY_ST_PERIOD,
+                       query="SELECT croom_occupied(?1, ?2, ?3) FROM dual"),
+})
 public class CRoom implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    public static final String FIND_AVAILABLES_BY_ST_PERIOD = "findAvailablesCRoomsBySTPeriod";
 
     @Id
     @GeneratedValue

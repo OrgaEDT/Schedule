@@ -32,7 +32,7 @@ public class DAOTeacherJPA extends DAOGeneriqueJPA<Teacher> implements DAOTeache
 
     @Override
     public List<Teacher> findAvailables(TU tu, Date date, Integer duration) {
-        Query q = entityManager.createNativeQuery("SELECT teacher_busy(?1, ?2, ?3) FROM dual");
+        Query q = entityManager.createNamedQuery(Teacher.FIND_AVAILABLES_BY_TU_PERIOD);
         q.setParameter(2, date);
         q.setParameter(3, duration);
 

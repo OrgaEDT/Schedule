@@ -15,11 +15,16 @@ import amu.licence.edt.model.dao.DAOFactoryManager;
                  query="SELECT sum(s.duration) FROM Session s " +
                        "WHERE  s.teacher = :t"),
 })
+@NamedNativeQueries ({
+    @NamedNativeQuery (name=Teacher.FIND_AVAILABLES_BY_TU_PERIOD,
+                       query="SELECT teacher_busy(?1, ?2, ?3) FROM dual"),
+})
 public class Teacher extends Admin
                      implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static final String COMPUTE_SERVICE_HOURS = "computeTeacherServiceHours";
+    public static final String FIND_AVAILABLES_BY_TU_PERIOD = "findAvailablesTeachersByTUPeriod";
 
     @Column (name="NAME_TEACHER")
     private String name;

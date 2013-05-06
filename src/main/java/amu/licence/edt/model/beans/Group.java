@@ -6,8 +6,14 @@ import javax.persistence.*;
 
 @Entity
 @Table (name="T_GROUP")
+@NamedNativeQueries ({
+    @NamedNativeQuery (name=Group.IS_AVAILABLE,
+                       query="SELECT group_available(?1, ?2, ?3) FROM dual"),
+})
 public class Group implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    public static final String IS_AVAILABLE = "isGroupAvailable";
 
     @Id
     @GeneratedValue

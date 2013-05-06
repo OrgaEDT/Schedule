@@ -65,7 +65,7 @@ public class DAOSessionJPA extends DAOGeneriqueJPA<Session> implements DAOSessio
     @Override
     @SuppressWarnings("unchecked")
     public Iterable<Object[]> findUnplanned(Level l) {
-        Query query = entityManager.createNativeQuery("SELECT * FROM table(unplanned_sessions(?1))");
+        Query query = entityManager.createNamedQuery(Session.FIND_UNPLANNED);
         query.setParameter(1, l.getId());
         return query.getResultList();
     }

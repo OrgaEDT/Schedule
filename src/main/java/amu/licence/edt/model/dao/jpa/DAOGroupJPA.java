@@ -24,7 +24,7 @@ public class DAOGroupJPA extends DAOGeneriqueJPA<Group> implements DAOGroup {
             c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
             return false;
         } else {
-            Query q = entityManager.createNativeQuery("SELECT group_available(?1, ?2, ?3) FROM dual");
+            Query q = entityManager.createNamedQuery(Group.IS_AVAILABLE);
             q.setParameter(1, (group.getId() != 0) ? group.getId() : null);
             q.setParameter(2, date);
             q.setParameter(3, duration);

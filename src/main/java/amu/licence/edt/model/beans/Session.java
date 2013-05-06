@@ -25,6 +25,10 @@ import javax.persistence.*;
                        "WHERE s.group IS NULL AND tu.level = :level AND" +
                        "      s.startDate BETWEEN :startDate AND :endDate"),
 })
+@NamedNativeQueries ({
+    @NamedNativeQuery (name=Session.FIND_UNPLANNED,
+                       query="SELECT * FROM table(unplanned_sessions(?1))"),
+})
 public class Session implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -32,6 +36,7 @@ public class Session implements Serializable {
     public static final String FIND_BY_GROUP = "findSessionsByGroup";
     public static final String FIND_BY_CROOM = "findSessionsByCRoom";
     public static final String FIND_BY_LEVEL = "findSessionsByLevel";
+    public static final String FIND_UNPLANNED = "findUnplannedSessions";
 
     @Id
     @GeneratedValue

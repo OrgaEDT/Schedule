@@ -21,7 +21,7 @@ public class DAOCRoomJPA extends DAOGeneriqueJPA<CRoom> implements DAOCRoom {
 
     @Override
     public List<CRoom> findAvailables(SessionType st, Date date, Integer duration) {
-        Query q = entityManager.createNativeQuery("SELECT croom_occupied(?1, ?2, ?3) FROM dual");
+        Query q = entityManager.createNamedQuery(CRoom.FIND_AVAILABLES_BY_ST_PERIOD);
         q.setParameter(2, date);
         q.setParameter(3, duration);
 
