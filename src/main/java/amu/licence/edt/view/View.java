@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import amu.licence.edt.model.beans.Level;
 import amu.licence.edt.presenter.Presenter;
+import amu.licence.edt.view.dialogs.CRoomTeacherChooser;
 import amu.licence.edt.view.dialogs.LevelManagmentForm;
 import amu.licence.edt.view.dialogs.LoginForm;
 import amu.licence.edt.view.dialogs.TeacherManagmentForm;
@@ -15,6 +16,7 @@ public class View extends AbstractView {
     private LoginForm loginForm;
     private TeacherManagmentForm teacherManagmentForm;
     private HashMap<Level, LevelManagmentForm> levelManagmentForms;
+    private CRoomTeacherChooser croomTeacherChooser;
 
     public View(Presenter presenter) {
         super(presenter);
@@ -22,6 +24,7 @@ public class View extends AbstractView {
         loginForm = new LoginForm(presenter, mainFrame.getFrame());
         teacherManagmentForm = new TeacherManagmentForm(presenter, mainFrame.getFrame());
         levelManagmentForms = new HashMap<Level, LevelManagmentForm>();
+        croomTeacherChooser = new CRoomTeacherChooser(presenter, mainFrame.getFrame());
     }
 
     public MainFrame getMainFrame() {
@@ -43,6 +46,10 @@ public class View extends AbstractView {
             levelManagmentForms.put(l, lmf);
         }
         return lmf;
+    }
+
+    public CRoomTeacherChooser getCRoomTeacherChooser() {
+        return croomTeacherChooser;
     }
 
 }

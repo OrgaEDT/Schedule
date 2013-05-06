@@ -25,6 +25,10 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
 
 import amu.licence.edt.model.beans.Level;
+import amu.licence.edt.model.beans.SessionType;
+import amu.licence.edt.model.beans.TU;
+import amu.licence.edt.model.dao.DAOFactory;
+import amu.licence.edt.model.dao.DAOFactoryManager;
 import amu.licence.edt.presenter.Presenter;
 import amu.licence.edt.view.ViewComponent;
 
@@ -45,10 +49,10 @@ public class LevelManagmentForm extends ViewComponent {
 
     private JPanel pnlPlanSessionForm;
     private JLabel lblStartDay;
-    private JLabel lblHourStart;
+//    private JLabel lblHourStart;
     private JLabel lblDuration;
     private JSpinner startDayInput;
-    private JSpinner hourStartInput;
+//    private JSpinner hourStartInput;
     private JSpinner durationInput;
 
     private JButton btnValidate;
@@ -82,14 +86,14 @@ public class LevelManagmentForm extends ViewComponent {
 
         pnlPlanSessionForm = new JPanel(new GridLayout(0, 2));
 
-        lblStartDay = new JLabel("Jour de début");
+        lblStartDay = new JLabel("Date de début");
         startDayInput = new JSpinner();
         startDayInput.setModel(new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_YEAR));
-        startDayInput.setEditor(new JSpinner.DateEditor(startDayInput, "d MMMM yyyy"));
+        startDayInput.setEditor(new JSpinner.DateEditor(startDayInput, "d MMMM yyyy - HH:00"));
 
-        lblHourStart = new JLabel("Heure de début");
-        hourStartInput = new JSpinner();
-        hourStartInput.setModel(new SpinnerNumberModel(8, 8, 19, 1));
+//        lblHourStart = new JLabel("Heure de début");
+//        hourStartInput = new JSpinner();
+//        hourStartInput.setModel(new SpinnerNumberModel(8, 8, 19, 1));
 
         lblDuration = new JLabel("Durée");
         durationInput = new JSpinner();
@@ -97,8 +101,8 @@ public class LevelManagmentForm extends ViewComponent {
 
         pnlPlanSessionForm.add(lblStartDay);
         pnlPlanSessionForm.add(startDayInput);
-        pnlPlanSessionForm.add(lblHourStart);
-        pnlPlanSessionForm.add(hourStartInput);
+//        pnlPlanSessionForm.add(lblHourStart);
+//        pnlPlanSessionForm.add(hourStartInput);
         pnlPlanSessionForm.add(lblDuration);
         pnlPlanSessionForm.add(durationInput);
 
@@ -148,7 +152,13 @@ public class LevelManagmentForm extends ViewComponent {
     }
 
     private void btnValidateActionListener(ActionEvent e) {
-        // TODO : use btnGroup.getSelection().getActionCommand() and split it to have TU and SessionType
+        String[] splitedAC = btnSessionsGroup.getSelection().getActionCommand().split(TUSTSeparator.toString());
+        DAOFactory daoF = DAOFactoryManager.getDAOFactory();
+        TU tu = daoF.getDAOTU().getByLibel(splitedAC[0]);
+        SessionType st = daoF.getDAOSessionType().getByLibel(splitedAC[1]);
+        Date date = (Date) startDayInput.getValue();
+        Integer duration = (Integer) durationInput.getValue();
+        presenter.btnSearchCRoomTeacherPressed(tu, st, date, duration);
     }
 
 }

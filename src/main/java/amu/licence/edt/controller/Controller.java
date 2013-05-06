@@ -11,6 +11,8 @@ import amu.licence.edt.model.beans.CRoom;
 import amu.licence.edt.model.beans.Group;
 import amu.licence.edt.model.beans.Level;
 import amu.licence.edt.model.beans.Session;
+import amu.licence.edt.model.beans.SessionType;
+import amu.licence.edt.model.beans.TU;
 import amu.licence.edt.model.beans.Teacher;
 
 public class Controller {
@@ -76,6 +78,14 @@ public class Controller {
 
     public Iterable<Object[]> unplannedSessionsRequested(Level l) {
         return model.getUnplannedSessions(l);
+    }
+
+    public List<CRoom> availableCRoomsRequested(SessionType st, Date date, Integer duration) {
+        return model.getAvailableCRooms(st, date, duration);
+    }
+
+    public List<Teacher> availableTeachersRequested(TU tu, Date date, Integer duration) {
+        return model.getAvailableTeachers(tu, date, duration);
     }
 
 }

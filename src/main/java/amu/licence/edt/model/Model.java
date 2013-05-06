@@ -1,6 +1,7 @@
 package amu.licence.edt.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -13,6 +14,8 @@ import amu.licence.edt.model.beans.CRoomType;
 import amu.licence.edt.model.beans.Group;
 import amu.licence.edt.model.beans.Level;
 import amu.licence.edt.model.beans.Promo;
+import amu.licence.edt.model.beans.SessionType;
+import amu.licence.edt.model.beans.TU;
 import amu.licence.edt.model.beans.Teacher;
 import amu.licence.edt.model.dao.DAOFactoryManager;
 
@@ -168,6 +171,14 @@ public class Model {
 
     public Iterable<Object[]> getUnplannedSessions(Level l) {
         return DAOFactoryManager.getDAOFactory().getDAOSession().findUnplanned(l);
+    }
+
+    public List<CRoom> getAvailableCRooms(SessionType st, Date date, Integer duration) {
+        return DAOFactoryManager.getDAOFactory().getDAOCRoom().findAvailables(st, date, duration);
+    }
+
+    public List<Teacher> getAvailableTeachers(TU tu, Date date, Integer duration) {
+        return DAOFactoryManager.getDAOFactory().getDAOTeacher().findAvailables(tu, date, duration);
     }
 
 }

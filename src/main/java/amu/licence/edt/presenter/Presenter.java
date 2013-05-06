@@ -17,6 +17,8 @@ import amu.licence.edt.model.beans.CRoomType;
 import amu.licence.edt.model.beans.Group;
 import amu.licence.edt.model.beans.Level;
 import amu.licence.edt.model.beans.Session;
+import amu.licence.edt.model.beans.SessionType;
+import amu.licence.edt.model.beans.TU;
 import amu.licence.edt.model.beans.Teacher;
 import amu.licence.edt.view.View;
 import amu.licence.edt.view.renderers.CRoomRenderer;
@@ -144,6 +146,12 @@ public class Presenter implements ModelObserver {
 
     public Iterable<Object[]> levelManagmentFormCreating(Level level) {
         return controller.unplannedSessionsRequested(level);
+    }
+
+    public void btnSearchCRoomTeacherPressed(TU tu, SessionType st, Date date, Integer duration) {
+        List<CRoom> crooms = controller.availableCRoomsRequested(st, date, duration);
+        List<Teacher> teachers = controller.availableTeachersRequested(tu, date, duration);
+        view.getCRoomTeacherChooser().fill(crooms, teachers).setVisible(true);
     }
 
 }
