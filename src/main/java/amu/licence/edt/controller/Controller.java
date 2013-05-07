@@ -80,8 +80,8 @@ public class Controller {
         return model.getUnplannedSessions(l);
     }
 
-    public List<CRoom> availableCRoomsRequested(SessionType st, Date date, Integer duration) {
-        return model.getAvailableCRooms(st, date, duration);
+    public List<CRoom> availableCRoomsRequested(Group group, SessionType st, Date date, Integer duration) {
+        return model.getAvailableCRooms(group, st, date, duration);
     }
 
     public List<Teacher> availableTeachersRequested(TU tu, Date date, Integer duration) {

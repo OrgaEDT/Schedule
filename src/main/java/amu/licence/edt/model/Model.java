@@ -174,8 +174,8 @@ public class Model {
         return DAOFactoryManager.getDAOFactory().getDAOSession().findUnplanned(l);
     }
 
-    public List<CRoom> getAvailableCRooms(SessionType st, Date date, Integer duration) {
-        return DAOFactoryManager.getDAOFactory().getDAOCRoom().findAvailables(st, date, duration);
+    public List<CRoom> getAvailableCRooms(Group group, SessionType st, Date date, Integer duration) {
+        return DAOFactoryManager.getDAOFactory().getDAOCRoom().findAvailables(group, st, date, duration);
     }
 
     public List<Teacher> getAvailableTeachers(TU tu, Date date, Integer duration) {

@@ -183,6 +183,7 @@ public class LevelManagmentForm extends ViewComponent {
         Group group = (Group) groupInput.getSelectedItem();
         Date date = (Date) startDayInput.getValue();
         Integer duration = (Integer) durationInput.getValue();
+        if (group.getId() == 0) group.setGroupSize(level.getPromo().getSize());
         presenter.btnSearchCRoomTeacherPressed(tu, st, group, date, duration);
     }
 

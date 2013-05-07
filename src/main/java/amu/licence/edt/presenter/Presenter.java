@@ -150,7 +150,7 @@ public class Presenter implements ModelObserver {
 
     public void btnSearchCRoomTeacherPressed(TU tu, SessionType st, Group group, Date date, Integer duration) {
         if (controller.availableGroupRequest(group, date, duration)) {
-            List<CRoom> crooms = controller.availableCRoomsRequested(st, date, duration);
+            List<CRoom> crooms = controller.availableCRoomsRequested(group, st, date, duration);
             List<Teacher> teachers = controller.availableTeachersRequested(tu, date, duration);
             view.getCRoomTeacherChooser().fill(crooms, teachers, tu, st, group, date, duration).setVisible(true);
         } else {
