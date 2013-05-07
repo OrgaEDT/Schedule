@@ -14,6 +14,7 @@ import amu.licence.edt.model.beans.CRoomType;
 import amu.licence.edt.model.beans.Group;
 import amu.licence.edt.model.beans.Level;
 import amu.licence.edt.model.beans.Promo;
+import amu.licence.edt.model.beans.Session;
 import amu.licence.edt.model.beans.SessionType;
 import amu.licence.edt.model.beans.TU;
 import amu.licence.edt.model.beans.Teacher;
@@ -183,6 +184,10 @@ public class Model {
 
     public boolean isGroupAvailable(Group group, Date date, Integer duration) {
         return DAOFactoryManager.getDAOFactory().getDAOGroup().isAvailable(group, date, duration);
+    }
+
+    public void addSession(Session session) {
+        DAOFactoryManager.getDAOFactory().getDAOSession().create(session);
     }
 
 }

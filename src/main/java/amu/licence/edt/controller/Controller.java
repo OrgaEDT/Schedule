@@ -92,4 +92,10 @@ public class Controller {
         return model.isGroupAvailable(group, date, duration);
     }
 
+    public void addSessionRequest(Date startDate, Integer duration, TU tu,
+                                  Teacher teacher, CRoom croom, SessionType st,
+                                  Group group) {
+        model.addSession(new Session(startDate, duration, tu, teacher, croom, st, (group.getId() != 0) ? group : null));
+    }
+
 }

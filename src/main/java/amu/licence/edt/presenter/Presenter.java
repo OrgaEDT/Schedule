@@ -152,11 +152,18 @@ public class Presenter implements ModelObserver {
         if (controller.availableGroupRequest(group, date, duration)) {
             List<CRoom> crooms = controller.availableCRoomsRequested(st, date, duration);
             List<Teacher> teachers = controller.availableTeachersRequested(tu, date, duration);
-            view.getCRoomTeacherChooser().fill(crooms, teachers).setVisible(true);
+            view.getCRoomTeacherChooser().fill(crooms, teachers, tu, st, group, date, duration).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Le groupe n'est pas disponible pour cette période",
                                           "Erreur", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public void validateAddSessionButtonPressed(Date startDate, Integer duration, TU tu,
+                                                Teacher teacher, CRoom croom, SessionType st,
+                                                Group group) {
+        controller.addSessionRequest(startDate, duration, tu, teacher, croom, st, group);
+        view.getCRoomTeacherChooser().getComponent().setVisible(false);
     }
 
 }

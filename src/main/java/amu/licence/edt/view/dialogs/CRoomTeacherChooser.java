@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -19,6 +20,9 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 import amu.licence.edt.model.beans.CRoom;
+import amu.licence.edt.model.beans.Group;
+import amu.licence.edt.model.beans.SessionType;
+import amu.licence.edt.model.beans.TU;
 import amu.licence.edt.model.beans.Teacher;
 import amu.licence.edt.presenter.Presenter;
 import amu.licence.edt.view.ViewComponent;
@@ -28,6 +32,12 @@ public class CRoomTeacherChooser extends ViewComponent {
 
     private JFrame owner;
     private JDialog thisDialog;
+
+    private TU tu;
+    private SessionType st;
+    private Group group;
+    private Date date;
+    private Integer duration;
 
     private JLabel lblChoose;
 
@@ -84,7 +94,12 @@ public class CRoomTeacherChooser extends ViewComponent {
         return thisDialog;
     }
 
-    public JDialog fill(List<CRoom> crooms, List<Teacher> teachers) {
+    public JDialog fill(List<CRoom> crooms, List<Teacher> teachers, TU tu, SessionType st, Group group, Date date, Integer duration) {
+        this.tu = tu;
+        this.st = st;
+        this.group = group;
+        this.date = date;
+        this.duration = duration;
         DefaultListModel lmCR = (DefaultListModel)jlistCRooms.getModel();
         DefaultListModel lmT = (DefaultListModel)jlistTeachers.getModel();
         lmCR.removeAllElements();
@@ -100,7 +115,10 @@ public class CRoomTeacherChooser extends ViewComponent {
     }
 
     protected void btnValidateActionListener(ActionEvent e) {
-        // TODO call presenter w/ jlistCRooms.getSelectedValue(), etc...
+        presenter.validateAddSessionButtonPressed(date, duration, tu,
+                                                  (Teacher)jlistTeachers.getSelectedValue(),
+                                                  (CRoom)jlistCRooms.getSelectedValue(),
+                                                  st, group);
     }
 
 }
