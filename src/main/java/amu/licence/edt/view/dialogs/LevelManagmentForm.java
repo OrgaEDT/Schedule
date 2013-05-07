@@ -127,6 +127,7 @@ public class LevelManagmentForm extends ViewComponent {
                 btnValidateActionListener(e);
             }
         });
+        btnValidate.setEnabled(false);
 
         dialog.add(lblInstructions, BorderLayout.NORTH);
         dialog.add(pnlPnlsManage, BorderLayout.CENTER);
@@ -151,6 +152,12 @@ public class LevelManagmentForm extends ViewComponent {
                 if (((BigDecimal)o[i+1]).compareTo(BigDecimal.ZERO) > 0) {
                     JRadioButton radioBtn = new JRadioButton(o[i] + " : " + o[i+1]);
                     radioBtn.setActionCommand(o[0] + TUSTSeparator.toString() + o[i]);
+                    radioBtn.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent arg0) {
+                            btnValidate.setEnabled(true);
+                        }
+                    });
                     btnSessionsGroup.add(radioBtn);
                     pnlUnplannedTU.add(radioBtn);
                 }
@@ -168,6 +175,7 @@ public class LevelManagmentForm extends ViewComponent {
     }
 
     private void btnValidateActionListener(ActionEvent e) {
+        if (btnSessionsGroup.getSelection() == null) return;
         String[] splitedAC = btnSessionsGroup.getSelection().getActionCommand().split(TUSTSeparator.toString());
         DAOFactory daoF = DAOFactoryManager.getDAOFactory();
         TU tu = daoF.getDAOTU().getByLibel(splitedAC[0]);
