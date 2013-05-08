@@ -20,7 +20,7 @@ public class CRoom implements Serializable {
     @Column (name="ID_CROOM")
     private int id;
 
-    @Column (name="NUM_SALLE", nullable=false, unique=true)
+    @Column (name="NUM_CROOM", nullable=false, unique=true)
     private String num;
 
     @Column (name="MAX_SIZE")

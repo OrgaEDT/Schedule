@@ -24,7 +24,7 @@ public class Unavailability implements Serializable {
     @JoinColumn (name="ID_TEACHER", nullable=false)
     private Teacher teacher;
 
-    @Column (name="DURATION_UNAV")
+    @Column (name="UNAV_DURATION")
     private int duration;
 
     public Unavailability() { }

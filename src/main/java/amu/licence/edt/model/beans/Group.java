@@ -20,7 +20,7 @@ public class Group implements Serializable {
     @Column (name="ID_GROUP")
     private int id;
 
-    @Column (name="GROUP_SIZE")
+    @Column (name="SIZE_GROUP")
     private int groupSize;
 
     @ManyToOne
