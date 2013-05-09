@@ -10,12 +10,9 @@ import amu.licence.edt.model.dao.DAOFactoryManager;
 @Entity
 @Table (name="T_TEACHER")
 @DiscriminatorValue (value="T")
-@NamedQueries ({
-    @NamedQuery (name=Teacher.COMPUTE_SERVICE_HOURS, // TODO fix this, cuz it's 100% wrong
-                 query="SELECT sum(s.duration) FROM Session s " +
-                       "WHERE  s.teacher = :t"),
-})
 @NamedNativeQueries ({
+    @NamedNativeQuery (name=Teacher.COMPUTE_SERVICE_HOURS,
+            query="SELECT teacher_service_hours(?1) FROM dual"),
     @NamedNativeQuery (name=Teacher.IS_BUSY,
                        query="SELECT teacher_busy(?1, ?2, ?3) FROM dual"),
 })
@@ -59,7 +56,7 @@ public class Teacher extends Admin
         this.rank = rank;
     }
 
-    public long computeServiceHours() {
+    public Double computeServiceHours() {
         return DAOFactoryManager.getDAOFactory().getDAOTeacher().computeServiceHours(this);
     }
 

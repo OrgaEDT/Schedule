@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 import amu.licence.edt.model.beans.TU;
 import amu.licence.edt.model.beans.Teacher;
@@ -20,14 +19,10 @@ public class DAOTeacherJPA extends DAOGeneriqueJPA<Teacher> implements DAOTeache
     }
 
     @Override
-    public Long computeServiceHours(Teacher t) {
-
-        TypedQuery<Long> q = entityManager.createNamedQuery(Teacher.COMPUTE_SERVICE_HOURS, Long.class);
-        q.setParameter("t", t);
-        Long serviceHours = q.getSingleResult();
-
-        return (serviceHours != null) ? t.getAdminHours() + serviceHours
-                                      : t.getAdminHours();
+    public Double computeServiceHours(Teacher t) {
+        Query q = entityManager.createNamedQuery(Teacher.COMPUTE_SERVICE_HOURS);
+        q.setParameter(1, t.getId());
+        return ((BigDecimal)q.getSingleResult()).doubleValue();
     }
 
     @Override
