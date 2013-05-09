@@ -160,7 +160,7 @@ public class AdminStatusPanel extends ViewComponent {
     }
 
     protected void btnRemoveSessionActionPerformed(ActionEvent e) {
-        presenter.removeSessionButtonPresesd();
+        presenter.removeSessionButtonPressed();
     }
 
 }

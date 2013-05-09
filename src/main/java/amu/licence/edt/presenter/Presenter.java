@@ -91,7 +91,7 @@ public class Presenter implements ModelObserver {
         view.getLevelManagmentForm(l).getComponent().setVisible(true);
     }
 
-    public void removeSessionButtonPresesd() {
+    public void removeSessionButtonPressed() {
         Session s = view.getMainFrame().getScheduleTableComponent().getSelectedSession();
         if (s == null) {
             return;
