@@ -140,7 +140,9 @@ public class AdminStatusPanel extends ViewComponent {
             });
             pnlManage.add(btnManageLevel);
         }
-        pnlManage.add(btnRemoveSession);
+        if (user.getLevels().size() > 0) {
+            pnlManage.add(btnRemoveSession);
+        }
         pnlManage.setVisible(pnlManage.getComponentCount() != 0);
         try {   // if it's a teacher, show services hours
             Teacher t = (Teacher) user;     // ok if it passes
