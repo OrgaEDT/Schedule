@@ -8,6 +8,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
+import amu.licence.edt.controller.CExc;
 import amu.licence.edt.controller.Controller;
 import amu.licence.edt.model.ModelObserver;
 import amu.licence.edt.model.Schedule;
@@ -96,9 +97,12 @@ public class Presenter implements ModelObserver {
         if (s == null) {
             return;
         }
-        controller.removeSessionRequested(s);
-        // if no exception, removal is done
-        JOptionPane.showMessageDialog(null, "OK.");
+        try {
+            controller.removeSessionRequested(s);
+            JOptionPane.showMessageDialog(null, "OK.");
+        } catch (CExc e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), e.getDefaultTitle(), JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public TreeNode scheduleTreeCreating() {
@@ -137,9 +141,12 @@ public class Presenter implements ModelObserver {
     }
 
     public void addUnavailabilityButtonPressed(Teacher teacher, Date date, Integer duration) {
-        controller.addUnavailabilityRequested(teacher, date, duration);
-        // id no exception, change have been made
-        JOptionPane.showMessageDialog(null, "OK.");
+        try {
+            controller.addUnavailabilityRequested(teacher, date, duration);
+            JOptionPane.showMessageDialog(null, "OK.");
+        } catch (CExc e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), e.getDefaultTitle(), JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void changeNbAdminHoursButtonPressed(Teacher t, int nHours) {
@@ -178,8 +185,12 @@ public class Presenter implements ModelObserver {
     public void validateAddSessionButtonPressed(Date startDate, Integer duration, TU tu,
                                                 Teacher teacher, CRoom croom, SessionType st,
                                                 Group group) {
-        controller.addSessionRequest(startDate, duration, tu, teacher, croom, st, group);
-        view.getCRoomTeacherChooser().getComponent().setVisible(false);
+        try {
+            controller.addSessionRequest(startDate, duration, tu, teacher, croom, st, group);
+            view.getCRoomTeacherChooser().getComponent().setVisible(false);
+        } catch (CExc e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), e.getDefaultTitle(), JOptionPane.ERROR_MESSAGE);
+        }
     }
 
 }

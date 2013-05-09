@@ -8,6 +8,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
+import amu.licence.edt.controller.CExc;
 import amu.licence.edt.model.beans.Admin;
 import amu.licence.edt.model.beans.CRoom;
 import amu.licence.edt.model.beans.CRoomType;
@@ -187,20 +188,19 @@ public class Model {
         return DAOFactoryManager.getDAOFactory().getDAOGroup().isAvailable(group, date, duration);
     }
 
-    public void addSession(Session session) {
+    public void addSession(Session session) throws Exception {
         DAOFactoryManager.getDAOFactory().getDAOSession().create(session);
     }
 
-    public void removeSession(Session session) {
+    public void removeSession(Session session) throws CExc {
         if (user != null && user.isLevelAdmin(session.gettU().getLevel())) {
             DAOFactoryManager.getDAOFactory().getDAOSession().delete(session);
         } else {
-            // TODO throw exc
-            System.err.println("u don't have the rights");
+            throw new CExc(-20101, "Vous n'êtes pas administrateur du niveau " + session.gettU().getLevel().getLibel());
         }
     }
 
-    public void addUnavailability(Unavailability unavailability) {
+    public void addUnavailability(Unavailability unavailability) throws Exception {
         DAOFactoryManager.getDAOFactory().getDAOUnavailability().create(unavailability);
     }
 

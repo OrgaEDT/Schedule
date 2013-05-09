@@ -45,8 +45,12 @@ public class Controller {
         return model.getTeachersList();
     }
 
-    public void addUnavailabilityRequested(Teacher teacher, Date date, Integer duration) {
-        model.addUnavailability(new Unavailability(date, teacher, duration));
+    public void addUnavailabilityRequested(Teacher teacher, Date date, Integer duration) throws CExc {
+        try {
+            model.addUnavailability(new Unavailability(date, teacher, duration));
+        } catch (Exception e) {
+            throw new CExc(e);
+        }
     }
 
     public void changeNbHoursAdminRequested(Teacher t, int nHours) {
@@ -99,11 +103,15 @@ public class Controller {
 
     public void addSessionRequest(Date startDate, Integer duration, TU tu,
                                   Teacher teacher, CRoom croom, SessionType st,
-                                  Group group) {
-        model.addSession(new Session(startDate, duration, tu, teacher, croom, st, (group.getId() != 0) ? group : null));
+                                  Group group) throws CExc {
+        try {
+            model.addSession(new Session(startDate, duration, tu, teacher, croom, st, (group.getId() != 0) ? group : null));
+        } catch (Exception e) {
+            throw new CExc(e);
+        }
     }
 
-    public void removeSessionRequested(Session session) {
+    public void removeSessionRequested(Session session) throws CExc {
         model.removeSession(session);
     }
 
