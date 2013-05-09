@@ -2081,6 +2081,32 @@ On conviendra que si aucun groupe ne participe à une séance, alors c'est toute
 \newpage
 \section{Programmation et interfaces}
 
+Bien que toute l'analyse ait été faite en francais, l'implémentation sur machine (tables, classes, ...) sera en anglais.
+
+\subsection{Modèle Logique des Données}
+{\ttfamily
+\begin{tabular}{l l}
+T\_ADMIN & (\underline{ID\_ADMIN}, LOGIN, PW, IS\_TEACHER\_ADMIN, ADMIN\_STATUS) \\
+T\_COMPETENT\_TEACHER & (\underline{ID\_TEACHER\#, ID\_TU\#}) \\
+T\_CROOM & (\underline{ID\_CROOM}, NUM\_CROOM, MAX\_SIZE, ID\_CROOM\_TYPE) \\
+T\_CROOM\_TYPE & (\underline{ID\_CROOM\_TYPE}, LIBEL\_CROOM\_TYPE) \\
+T\_GROUP & (\underline{ID\_GROUP}, SIZE\_GROUP, ID\_PROMO\#) \\
+T\_LEVEL & (\underline{ID\_LEVEL}, CODE\_LEVEL, LIBEL\_LEVEL) \\
+T\_LEVEL\_ADMIN & (\underline{ID\_ADMIN\#, ID\_LEVEL\#}) \\
+T\_PROMO & (\underline{ID\_PROMO}, SIZE\_PROMO, ID\_LEVEL\#) \\
+T\_RANK & (\underline{ID\_RANK}, LIBEL\_RANK) \\
+T\_SESSION & (\underline{ID\_SESSION}, SESSION\_START\_DATE, SESSION\_DURATION, ID\_CROOM\#, \\
+           &  ID\_GROUP\#, ID\_SESSION\_TYPE\#, ID\_TU\#, ID\_TEACHER\#) \\
+T\_SESSION\_CROOM\_COMPATIBILITY & (\underline{ID\_SESSION\_TYPE\#, ID\_CROOM\_TYPE\#}) \\
+T\_SESSION\_TYPE & (\underline{ID\_SESSION\_TYPE}, LIBEL\_SESSION\_TYPE, TUTOR\_WORTH\_COEF) \\
+T\_TEACHER & (\underline{ID\_ADMIN}, NAME\_TEACHER, MAIL\_TEACHER, TEL\_TEACHER, ADMIN\_HOURS, \\
+          &  ID\_RANK\_TEACHER\#, ATTACHMENT\_SITE) \\
+T\_TU & (\underline{ID\_TU}, CODE\_TU, LIBEL\_TU, COLOR\_TU, CLASS\_HOURS, TUTOR\_HOURS, \\
+     &  PRACTICAL\_HOURS, PROJECT\_HOURS, ID\_LEVEL\#, ID\_RESP\_TEACHER\#) \\
+T\_UNAVAILABILITY & (\underline{ID\_UNAVAILABILITY}, START\_UNAV\_DATE, UNAV\_DURATION, ID\_TEACHER\#) \\
+\end{tabular}}
+Les clés primaires sont soulignés, les clés étrangères sont suivis d'un {\ttfamily \#}.
+
 \subsection{Les DAO (Data Access Object)}
 DAOFactoryManager créé la bonne DAOFactory qui créé les DAOs.
 
