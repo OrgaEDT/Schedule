@@ -91,6 +91,16 @@ public class Presenter implements ModelObserver {
         view.getLevelManagmentForm(l).getComponent().setVisible(true);
     }
 
+    public void removeSessionButtonPresesd() {
+        Session s = view.getMainFrame().getScheduleTableComponent().getSelectedSession();
+        if (s == null) {
+            return;
+        }
+        controller.removeSessionRequested(s);
+        // if no exception, removal is done
+        JOptionPane.showMessageDialog(null, "OK.");
+    }
+
     public TreeNode scheduleTreeCreating() {
         return controller.scheduleRootNodeRequested();
     }

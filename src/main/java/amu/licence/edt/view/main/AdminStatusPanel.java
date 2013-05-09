@@ -34,6 +34,7 @@ public class AdminStatusPanel extends ViewComponent {
 
     private JButton btnManageTeachers;
     private JPanel pnlManage;
+    private JButton btnRemoveSession;
 
     private JButton btnConnect;
     private JButton btnDisconnect;
@@ -69,6 +70,14 @@ public class AdminStatusPanel extends ViewComponent {
                                                      TitledBorder.LEADING, TitledBorder.TOP,
                                                      null, Color.RED));
         pnlManage.setVisible(false);
+
+        btnRemoveSession = new JButton("Supprimer séance");
+        btnRemoveSession.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btnRemoveSessionActionPerformed(e);
+            }
+        });
 
         btnConnect = new JButton("Connexion");
         btnConnect.addActionListener(new ActionListener() {
@@ -131,6 +140,7 @@ public class AdminStatusPanel extends ViewComponent {
             });
             pnlManage.add(btnManageLevel);
         }
+        pnlManage.add(btnRemoveSession);
         pnlManage.setVisible(pnlManage.getComponentCount() != 0);
         try {   // if it's a teacher, show services hours
             Teacher t = (Teacher) user;     // ok if it passes
@@ -145,6 +155,10 @@ public class AdminStatusPanel extends ViewComponent {
 
     protected void btnManageTeachersActionPerformed(ActionEvent e) {
         presenter.manageTeachersButtonPressed();
+    }
+
+    protected void btnRemoveSessionActionPerformed(ActionEvent e) {
+        presenter.removeSessionButtonPresesd();
     }
 
 }

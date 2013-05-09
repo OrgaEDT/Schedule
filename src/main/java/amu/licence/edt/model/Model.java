@@ -191,6 +191,15 @@ public class Model {
         DAOFactoryManager.getDAOFactory().getDAOSession().create(session);
     }
 
+    public void removeSession(Session session) {
+        if (user != null && user.getLevels().contains(session.gettU().getLevel())) {
+            DAOFactoryManager.getDAOFactory().getDAOSession().delete(session);
+        } else {
+            // TODO throw exc
+            System.err.println("u don't have the rights");
+        }
+    }
+
     public void addUnavailability(Unavailability unavailability) {
         DAOFactoryManager.getDAOFactory().getDAOUnavailability().create(unavailability);
     }

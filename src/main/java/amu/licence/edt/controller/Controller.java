@@ -103,4 +103,8 @@ public class Controller {
         model.addSession(new Session(startDate, duration, tu, teacher, croom, st, (group.getId() != 0) ? group : null));
     }
 
+    public void removeSessionRequested(Session session) {
+        model.removeSession(session);
+    }
+
 }

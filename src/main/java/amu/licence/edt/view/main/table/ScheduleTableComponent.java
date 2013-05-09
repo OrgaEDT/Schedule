@@ -34,4 +34,12 @@ public class ScheduleTableComponent extends ViewComponent {
         tableModel.fillData(sessions);
     }
 
+    public Session getSelectedSession() {
+        if (table.getSelectedRow() < 0 || table.getSelectedColumn() < 0) {
+            return null;
+        } else {
+            return (Session) tableModel.getValueAt(table.getSelectedRow(), table.getSelectedColumn());
+        }
+    }
+
 }
