@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -18,6 +19,7 @@ import amu.licence.edt.model.beans.Level;
 import amu.licence.edt.model.beans.Teacher;
 import amu.licence.edt.presenter.Presenter;
 import amu.licence.edt.view.ViewComponent;
+import amu.licence.edt.view.dialogs.UserObjectButtonModel;
 
 public class AdminStatusPanel extends ViewComponent {
 
@@ -113,13 +115,20 @@ public class AdminStatusPanel extends ViewComponent {
 
     public void displayAdminUser(Admin user) {
         ((CardLayout)pnlConnectBtn.getLayout()).show(pnlConnectBtn, DISCONNECT_BTN);
+        pnlManage.removeAll();
         lblConnexionLogin.setText(user.getLogin());
         if (user.isTeacherAdmin()) {
             pnlManage.add(btnManageTeachers);
         }
         for (Level l : user.getLevels()) {
             JButton btnManageLevel = new JButton(l.getCode());
-            btnManageLevel.addActionListener(new btnManageActionListener(this, l));
+            btnManageLevel.setModel(new UserObjectButtonModel<Level>(l));
+            btnManageLevel.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    btnManageLevelActionPerformed(e);
+                }
+            });
             pnlManage.add(btnManageLevel);
         }
         pnlManage.setVisible(pnlManage.getComponentCount() != 0);
@@ -129,28 +138,13 @@ public class AdminStatusPanel extends ViewComponent {
         } catch (ClassCastException cce) {}
     }
 
-    protected void btnManageLevelActionPerformed(ActionEvent e, Level l) {
-        presenter.manageLevelButtonPressed(l);
+    @SuppressWarnings("unchecked")
+    protected void btnManageLevelActionPerformed(ActionEvent e) {
+        presenter.manageLevelButtonPressed(((UserObjectButtonModel<Level>)((AbstractButton)e.getSource()).getModel()).getUserObject());
     }
 
     protected void btnManageTeachersActionPerformed(ActionEvent e) {
         presenter.manageTeachersButtonPressed();
-    }
-
-    class btnManageActionListener implements ActionListener {
-
-        private AdminStatusPanel asp;
-        private Level l;
-
-        public btnManageActionListener(AdminStatusPanel asp, Level l) {
-            this.asp = asp;
-            this.l = l;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            asp.btnManageLevelActionPerformed(e, l);
-        }
     }
 
 }
