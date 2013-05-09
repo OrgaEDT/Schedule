@@ -20,6 +20,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
@@ -117,7 +118,7 @@ public class LevelManagmentForm extends ViewComponent {
         pnlPlanSessionForm.add(lblDuration);
         pnlPlanSessionForm.add(durationInput);
 
-        pnlPnlsManage.add(pnlUnplannedSessions, BorderLayout.WEST);
+        pnlPnlsManage.add(new JScrollPane(pnlUnplannedSessions), BorderLayout.WEST);
         pnlPnlsManage.add(pnlPlanSessionForm, BorderLayout.EAST);
 
         btnValidate = new JButton("Recherche");
