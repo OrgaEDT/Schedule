@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -24,7 +25,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.border.TitledBorder;
 
 import amu.licence.edt.model.beans.Group;
 import amu.licence.edt.model.beans.Level;
@@ -91,6 +91,7 @@ public class LevelManagmentForm extends ViewComponent {
         /* Panel plan session form */
 
         pnlPlanSessionForm = new JPanel(new GridLayout(0, 2));
+        pnlPlanSessionForm.setBorder(BorderFactory.createLineBorder(Color.BLUE));
 
         lblGroup = new JLabel("Groupe");
         groupInput = new JComboBox();
@@ -119,7 +120,9 @@ public class LevelManagmentForm extends ViewComponent {
         pnlPlanSessionForm.add(durationInput);
 
         pnlPnlsManage.add(new JScrollPane(pnlUnplannedSessions), BorderLayout.WEST);
-        pnlPnlsManage.add(pnlPlanSessionForm, BorderLayout.EAST);
+        JPanel pnl = new JPanel();
+        pnl.add(pnlPlanSessionForm);
+        pnlPnlsManage.add(pnl, BorderLayout.EAST);
 
         btnValidate = new JButton("Recherche");
         btnValidate.addActionListener(new ActionListener() {
@@ -146,9 +149,10 @@ public class LevelManagmentForm extends ViewComponent {
         TUSTSeparator = '#';
         for (Object[] o : unplanned) {
             JPanel pnlUnplannedTU = new JPanel(new GridLayout(0, 1));
-            pnlUnplannedTU.setBorder(new TitledBorder(null, (String)o[0],
-                                     TitledBorder.LEADING, TitledBorder.TOP,
-                                     null, Color.RED));
+            pnlUnplannedTU.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+            JLabel lblUnplannedTU = new JLabel((String)o[0]);
+            lblUnplannedTU.setForeground(Color.RED);
+            pnlUnplannedTU.add(lblUnplannedTU);
             for (int i = 1; i < o.length; i += 2) {
                 if (((BigDecimal)o[i+1]).compareTo(BigDecimal.ZERO) > 0) {
                     JRadioButton radioBtn = new JRadioButton(o[i] + " : " + o[i+1]);
@@ -163,7 +167,7 @@ public class LevelManagmentForm extends ViewComponent {
                     pnlUnplannedTU.add(radioBtn);
                 }
             }
-            if (pnlUnplannedTU.getComponentCount() > 0) {
+            if (pnlUnplannedTU.getComponentCount() > 1) {   // > 1 because of label
                 pnlUnplannedSessions.add(pnlUnplannedTU);
             }
         }
