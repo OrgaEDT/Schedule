@@ -18,6 +18,7 @@ import amu.licence.edt.model.beans.Session;
 import amu.licence.edt.model.beans.SessionType;
 import amu.licence.edt.model.beans.TU;
 import amu.licence.edt.model.beans.Teacher;
+import amu.licence.edt.model.beans.Unavailability;
 import amu.licence.edt.model.dao.DAOFactoryManager;
 
 public class Model {
@@ -188,6 +189,10 @@ public class Model {
 
     public void addSession(Session session) {
         DAOFactoryManager.getDAOFactory().getDAOSession().create(session);
+    }
+
+    public void addUnavailability(Unavailability unavailability) {
+        DAOFactoryManager.getDAOFactory().getDAOUnavailability().create(unavailability);
     }
 
 }

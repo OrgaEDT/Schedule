@@ -19,7 +19,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
@@ -41,7 +40,7 @@ public class TeacherManagmentForm extends ViewComponent {
 
     private JPanel pnlUnavForm;
     private JSpinner spinnUnavStartDate;
-    private JTextField txtUnavDuration;
+    private JSpinner spinnUnavDuration;
     private JButton btnAddUnavailability;
 
     private JPanel pnlNbAdminHoursForm;
@@ -88,17 +87,23 @@ public class TeacherManagmentForm extends ViewComponent {
 
         spinnUnavStartDate = new JSpinner();
         spinnUnavStartDate.setModel(new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_YEAR));
-        spinnUnavStartDate.setEditor(new JSpinner.DateEditor(spinnUnavStartDate, "d MMMM yyyy - H:m"));
+        spinnUnavStartDate.setEditor(new JSpinner.DateEditor(spinnUnavStartDate, "d MMMM yyyy - HH:00"));
 
-        txtUnavDuration = new JTextField();
+        spinnUnavDuration = new JSpinner();
+        spinnUnavDuration.setModel(new SpinnerNumberModel(1, 1, 9000, 1));
 
         btnAddUnavailability = new JButton("Ajouter");
-        btnAddUnavailability.addActionListener(null);
+        btnAddUnavailability.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                btnAddUnavailabilityActionListener();
+            }
+        });
 
         pnlUnavForm.add(new JLabel("Date de début"));
         pnlUnavForm.add(spinnUnavStartDate);
-        pnlUnavForm.add(new JLabel("Durée"));
-        pnlUnavForm.add(txtUnavDuration);
+        pnlUnavForm.add(new JLabel("Durée (heures)"));
+        pnlUnavForm.add(spinnUnavDuration);
 
         pnlUnavailability.add(pnlUnavForm);
         pnlUnavailability.add(btnAddUnavailability);
@@ -139,6 +144,12 @@ public class TeacherManagmentForm extends ViewComponent {
 
         dialog.pack();
         return dialog;
+    }
+
+    protected void btnAddUnavailabilityActionListener() {
+        presenter.addUnavailabilityButtonPressed((Teacher)cbbTeachers.getSelectedItem(),
+                                                 (Date)spinnUnavStartDate.getModel().getValue(),
+                                                 (Integer)spinnUnavDuration.getModel().getValue());
     }
 
     protected void btnChangeNbAdminHoursActionListener() {

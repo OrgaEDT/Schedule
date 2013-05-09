@@ -14,6 +14,7 @@ import amu.licence.edt.model.beans.Session;
 import amu.licence.edt.model.beans.SessionType;
 import amu.licence.edt.model.beans.TU;
 import amu.licence.edt.model.beans.Teacher;
+import amu.licence.edt.model.beans.Unavailability;
 
 public class Controller {
 
@@ -42,6 +43,10 @@ public class Controller {
 
     public List<Teacher> teachersListRequested() {
         return model.getTeachersList();
+    }
+
+    public void addUnavailabilityRequested(Teacher teacher, Date date, Integer duration) {
+        model.addUnavailability(new Unavailability(date, teacher, duration));
     }
 
     public void changeNbHoursAdminRequested(Teacher t, int nHours) {

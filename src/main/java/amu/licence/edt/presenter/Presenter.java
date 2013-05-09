@@ -126,9 +126,15 @@ public class Presenter implements ModelObserver {
         return controller.teachersListRequested();
     }
 
+    public void addUnavailabilityButtonPressed(Teacher teacher, Date date, Integer duration) {
+        controller.addUnavailabilityRequested(teacher, date, duration);
+        // id no exception, change have been made
+        JOptionPane.showMessageDialog(null, "OK.");
+    }
+
     public void changeNbAdminHoursButtonPressed(Teacher t, int nHours) {
         controller.changeNbHoursAdminRequested(t, nHours);
-        // if no exception, changed have been made
+        // if no exception, change have been made
         JOptionPane.showMessageDialog(null, "OK.");
     }
 
