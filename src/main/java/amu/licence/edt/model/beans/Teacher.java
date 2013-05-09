@@ -11,7 +11,7 @@ import amu.licence.edt.model.dao.DAOFactoryManager;
 @Table (name="T_TEACHER")
 @DiscriminatorValue (value="T")
 @NamedQueries ({
-    @NamedQuery (name=Teacher.COMPUTE_SERVICE_HOURS,
+    @NamedQuery (name=Teacher.COMPUTE_SERVICE_HOURS, // TODO fix this, cuz it's 100% wrong
                  query="SELECT sum(s.duration) FROM Session s " +
                        "WHERE  s.teacher = :t"),
 })

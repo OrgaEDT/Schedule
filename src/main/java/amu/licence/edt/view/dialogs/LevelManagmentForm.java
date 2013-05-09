@@ -124,7 +124,7 @@ public class LevelManagmentForm extends ViewComponent {
         btnValidate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                btnValidateActionListener(e);
+                btnValidateActionPerformed(e);
             }
         });
         btnValidate.setEnabled(false);
@@ -174,7 +174,7 @@ public class LevelManagmentForm extends ViewComponent {
         thisDialog.pack();
     }
 
-    private void btnValidateActionListener(ActionEvent e) {
+    private void btnValidateActionPerformed(ActionEvent e) {
         if (btnSessionsGroup.getSelection() == null) return;
         String[] splitedAC = btnSessionsGroup.getSelection().getActionCommand().split(TUSTSeparator.toString());
         DAOFactory daoF = DAOFactoryManager.getDAOFactory();

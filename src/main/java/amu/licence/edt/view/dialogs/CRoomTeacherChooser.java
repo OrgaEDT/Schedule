@@ -82,7 +82,7 @@ public class CRoomTeacherChooser extends ViewComponent {
         btnValidate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                btnValidateActionListener(e);
+                btnValidateActionPerformed(e);
             }
         });
 
@@ -114,7 +114,7 @@ public class CRoomTeacherChooser extends ViewComponent {
         return thisDialog;
     }
 
-    protected void btnValidateActionListener(ActionEvent e) {
+    protected void btnValidateActionPerformed(ActionEvent e) {
         presenter.validateAddSessionButtonPressed(date, duration, tu,
                                                   (Teacher)jlistTeachers.getSelectedValue(),
                                                   (CRoom)jlistCRooms.getSelectedValue(),

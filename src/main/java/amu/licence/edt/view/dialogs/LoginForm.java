@@ -76,7 +76,7 @@ public class LoginForm extends ViewComponent {
         btnSubmit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                btnSubmitActionListener(e);
+                btnSubmitActionPerformed(e);
             }
         });
 
@@ -104,7 +104,7 @@ public class LoginForm extends ViewComponent {
         showErrorLbl(false);
     }
 
-    protected void btnSubmitActionListener(ActionEvent e) {
+    protected void btnSubmitActionPerformed(ActionEvent e) {
         presenter.validateLoginButtonPressed(usernameInput.getText(), new String(passwordInput.getPassword()));
     }
 

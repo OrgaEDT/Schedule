@@ -96,7 +96,7 @@ public class TeacherManagmentForm extends ViewComponent {
         btnAddUnavailability.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                btnAddUnavailabilityActionListener();
+                btnAddUnavailabilityActionPerformed();
             }
         });
 
@@ -124,7 +124,7 @@ public class TeacherManagmentForm extends ViewComponent {
         btnChangeNbAdminHours.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                btnChangeNbAdminHoursActionListener();
+                btnChangeNbAdminHoursActionPerformed();
             }
         });
 
@@ -146,13 +146,13 @@ public class TeacherManagmentForm extends ViewComponent {
         return dialog;
     }
 
-    protected void btnAddUnavailabilityActionListener() {
+    protected void btnAddUnavailabilityActionPerformed() {
         presenter.addUnavailabilityButtonPressed((Teacher)cbbTeachers.getSelectedItem(),
                                                  (Date)spinnUnavStartDate.getModel().getValue(),
                                                  (Integer)spinnUnavDuration.getModel().getValue());
     }
 
-    protected void btnChangeNbAdminHoursActionListener() {
+    protected void btnChangeNbAdminHoursActionPerformed() {
         presenter.changeNbAdminHoursButtonPressed((Teacher)cbbTeachers.getSelectedItem(),
                                                   (Integer)spinnNbAdminHours.getModel().getValue());
     }
