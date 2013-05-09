@@ -16,7 +16,7 @@ import amu.licence.edt.model.dao.DAOFactoryManager;
                        "WHERE  s.teacher = :t"),
 })
 @NamedNativeQueries ({
-    @NamedNativeQuery (name=Teacher.FIND_AVAILABLES_BY_TU_PERIOD,
+    @NamedNativeQuery (name=Teacher.IS_BUSY,
                        query="SELECT teacher_busy(?1, ?2, ?3) FROM dual"),
 })
 public class Teacher extends Admin
@@ -24,7 +24,7 @@ public class Teacher extends Admin
     private static final long serialVersionUID = 1L;
 
     public static final String COMPUTE_SERVICE_HOURS = "computeTeacherServiceHours";
-    public static final String FIND_AVAILABLES_BY_TU_PERIOD = "findAvailablesTeachersByTUPeriod";
+    public static final String IS_BUSY = "isTeacherBusy";
 
     @Column (name="NAME_TEACHER")
     private String name;
