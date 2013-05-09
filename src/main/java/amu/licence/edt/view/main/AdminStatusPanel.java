@@ -50,7 +50,7 @@ public class AdminStatusPanel extends ViewComponent {
 
         lblConnectedAs = new JLabel("Connecté en tant que :");
         lblConnexionLogin = new JLabel(publicLogin);
-        lblConnexionLogin.setForeground(Color.GREEN);
+        lblConnexionLogin.setForeground(Color.BLUE);
 
         pnlConnectLbl = new JPanel(new BorderLayout());
         pnlConnectLbl.add(lblConnectedAs, BorderLayout.NORTH);
