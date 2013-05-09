@@ -190,11 +190,17 @@ public class Model {
 
     public void addSession(Session session) throws Exception {
         DAOFactoryManager.getDAOFactory().getDAOSession().create(session);
+        List<Session> sessions = schedule.getSessions();
+        sessions.add(session);
+        schedule.setSessions(sessions);
     }
 
     public void removeSession(Session session) throws CExc {
         if (user != null && user.isLevelAdmin(session.gettU().getLevel())) {
             DAOFactoryManager.getDAOFactory().getDAOSession().delete(session);
+            List<Session> sessions = schedule.getSessions();
+            sessions.remove(session);
+            schedule.setSessions(sessions);
         } else {
             throw new CExc(-20101, "Vous n'êtes pas administrateur du niveau " + session.gettU().getLevel().getLibel());
         }

@@ -99,6 +99,7 @@ public class Presenter implements ModelObserver {
         }
         try {
             controller.removeSessionRequested(s);
+            view.getMainFrame().getScheduleTableComponent().displaySessions(controller.scheduleSessionsRequested());
             JOptionPane.showMessageDialog(null, "OK.");
         } catch (CExc e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), e.getDefaultTitle(), JOptionPane.ERROR_MESSAGE);
@@ -188,6 +189,7 @@ public class Presenter implements ModelObserver {
         try {
             controller.addSessionRequest(startDate, duration, tu, teacher, croom, st, group);
             view.getCRoomTeacherChooser().getComponent().setVisible(false);
+            view.getMainFrame().getScheduleTableComponent().displaySessions(controller.scheduleSessionsRequested());
         } catch (CExc e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), e.getDefaultTitle(), JOptionPane.ERROR_MESSAGE);
         }
