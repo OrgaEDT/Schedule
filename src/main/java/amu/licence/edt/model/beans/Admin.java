@@ -98,6 +98,10 @@ public class Admin implements Serializable {
         return isTeacherAdmin;
     }
 
+    public boolean isLevelAdmin(Level l) {
+        return levels.contains(l);
+    }
+
     public void setTeacherAdmin(boolean isTeacherAdmin) {
         this.isTeacherAdmin = isTeacherAdmin;
     }

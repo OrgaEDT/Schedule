@@ -192,7 +192,7 @@ public class Model {
     }
 
     public void removeSession(Session session) {
-        if (user != null && user.getLevels().contains(session.gettU().getLevel())) {
+        if (user != null && user.isLevelAdmin(session.gettU().getLevel())) {
             DAOFactoryManager.getDAOFactory().getDAOSession().delete(session);
         } else {
             // TODO throw exc
