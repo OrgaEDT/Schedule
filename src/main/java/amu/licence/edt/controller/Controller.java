@@ -104,6 +104,10 @@ public class Controller {
     public void addSessionRequest(Date startDate, Integer duration, TU tu,
                                   Teacher teacher, CRoom croom, SessionType st,
                                   Group group) throws CExc {
+        if (startDate == null || duration == null || tu == null || teacher == null ||
+            croom == null || st == null || group == null) {
+            throw new CExc(20024, "Quelque chose manque...");
+        }
         try {
             model.addSession(new Session(startDate, duration, tu, teacher, croom, st, (group.getId() != 0) ? group : null));
         } catch (Exception e) {
