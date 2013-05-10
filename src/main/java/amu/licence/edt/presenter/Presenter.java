@@ -153,6 +153,7 @@ public class Presenter implements ModelObserver {
     public void changeNbAdminHoursButtonPressed(Teacher t, int nHours) {
         controller.changeNbHoursAdminRequested(t, nHours);
         // if no exception, change have been made
+        view.getMainFrame().getAdminStatusPanel().refreshServiceHours();
         JOptionPane.showMessageDialog(null, "OK.");
     }
 

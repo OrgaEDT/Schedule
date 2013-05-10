@@ -17,6 +17,7 @@ import javax.swing.border.TitledBorder;
 import amu.licence.edt.model.beans.Admin;
 import amu.licence.edt.model.beans.Level;
 import amu.licence.edt.model.beans.Teacher;
+import amu.licence.edt.model.dao.DAOFactoryManager;
 import amu.licence.edt.presenter.Presenter;
 import amu.licence.edt.view.ViewComponent;
 import amu.licence.edt.view.dialogs.UserObjectButtonModel;
@@ -39,6 +40,8 @@ public class AdminStatusPanel extends ViewComponent {
     private JButton btnConnect;
     private JButton btnDisconnect;
     private JPanel pnlConnectBtn;
+
+    private Admin user;
 
     public AdminStatusPanel(Presenter presenter) {
         super(presenter);
@@ -116,6 +119,7 @@ public class AdminStatusPanel extends ViewComponent {
     }
 
     public void displayPublicUserStatus() {
+        this.user = null;
         ((CardLayout)pnlConnectBtn.getLayout()).show(pnlConnectBtn, CONNECT_BTN);
         lblConnexionLogin.setText(publicLogin);
         pnlManage.removeAll();
@@ -123,9 +127,9 @@ public class AdminStatusPanel extends ViewComponent {
     }
 
     public void displayAdminUser(Admin user) {
+        this.user = user;
         ((CardLayout)pnlConnectBtn.getLayout()).show(pnlConnectBtn, DISCONNECT_BTN);
         pnlManage.removeAll();
-        lblConnexionLogin.setText(user.getLogin());
         if (user.isTeacherAdmin()) {
             pnlManage.add(btnManageTeachers);
         }
@@ -144,10 +148,7 @@ public class AdminStatusPanel extends ViewComponent {
             pnlManage.add(btnRemoveSession);
         }
         pnlManage.setVisible(pnlManage.getComponentCount() != 0);
-        try {   // if it's a teacher, show services hours
-            Teacher t = (Teacher) user;     // ok if it passes
-            lblConnexionLogin.setText(lblConnexionLogin.getText() + " (" + t.computeServiceHours() + ")");
-        } catch (ClassCastException cce) {}
+        refreshServiceHours();
     }
 
     @SuppressWarnings("unchecked")
@@ -161,6 +162,15 @@ public class AdminStatusPanel extends ViewComponent {
 
     protected void btnRemoveSessionActionPerformed(ActionEvent e) {
         presenter.removeSessionButtonPressed();
+    }
+
+    public void refreshServiceHours() {
+        if (user == null) return;
+        lblConnexionLogin.setText(user.getLogin());
+        try {   // if it's a teacher, show services hours
+            Teacher t = (Teacher) user;     // ok if it passes
+            lblConnexionLogin.setText(lblConnexionLogin.getText() + " (" + t.computeServiceHours() + ")");
+        } catch (ClassCastException cce) {}
     }
 
 }
