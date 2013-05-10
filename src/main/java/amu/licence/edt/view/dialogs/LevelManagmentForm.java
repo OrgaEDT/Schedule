@@ -72,7 +72,7 @@ public class LevelManagmentForm extends ViewComponent {
 
     @Override
     protected Component createComponent() {
-        JDialog dialog = new JDialog(owner, true);
+        JDialog dialog = new JDialog(owner, false);
         dialog.setLayout(new BorderLayout());
         dialog.addWindowListener(new WindowAdapter() {
             @Override
@@ -190,6 +190,10 @@ public class LevelManagmentForm extends ViewComponent {
         Integer duration = (Integer) durationInput.getValue();
         if (group.getId() == 0) group.setGroupSize(level.getPromo().getSize());
         presenter.btnSearchCRoomTeacherPressed(tu, st, group, date, duration);
+    }
+
+    public void refreshDatas() {
+        fillDialogWithLevelData();
     }
 
 }

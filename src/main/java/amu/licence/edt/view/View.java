@@ -39,7 +39,7 @@ public class View extends AbstractView {
         return teacherManagmentForm;
     }
 
-    public ViewComponent getLevelManagmentForm(Level l) {
+    public LevelManagmentForm getLevelManagmentForm(Level l) {
         LevelManagmentForm lmf = levelManagmentForms.get(l);
         if (lmf == null) {
             lmf = new LevelManagmentForm(presenter, mainFrame.getFrame(), l);

@@ -190,7 +190,9 @@ public class Presenter implements ModelObserver {
         try {
             controller.addSessionRequest(startDate, duration, tu, teacher, croom, st, group);
             view.getCRoomTeacherChooser().getComponent().setVisible(false);
+            view.getLevelManagmentForm(tu.getLevel()).refreshDatas();
             view.getMainFrame().getScheduleTableComponent().displaySessions(controller.scheduleSessionsRequested());
+            JOptionPane.showMessageDialog(null, "OK.");
         } catch (CExc e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), e.getDefaultTitle(), JOptionPane.ERROR_MESSAGE);
         }
