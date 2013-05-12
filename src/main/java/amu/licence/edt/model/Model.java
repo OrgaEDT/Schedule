@@ -1,6 +1,7 @@
 package amu.licence.edt.model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -208,6 +209,36 @@ public class Model {
 
     public void addUnavailability(Unavailability unavailability) throws Exception {
         DAOFactoryManager.getDAOFactory().getDAOUnavailability().create(unavailability);
+    }
+
+    /**
+     * check if the session's period is in an uncomfortable period
+     * @param date
+     * @param duration
+     * @return 0 if it's in a comfortable period
+     *         1 if it's in lunch time
+     *         2 if it's after 6pm
+     *         3 if it's on the week-end
+     */
+    public int checkSessionPeriod(Date date, Integer duration) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY ||
+            c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            return 3;
+        }
+        Integer h = c.get(Calendar.HOUR_OF_DAY);
+        if (h >= 14) {
+            if ((h < 18 && h+duration > 18) ||
+                h >= 18) {
+                return 2;
+            }
+        } else {
+            if (h > 12 || h+duration > 12) {
+                return 1;
+            }
+        }
+        return 0;
     }
 
 }

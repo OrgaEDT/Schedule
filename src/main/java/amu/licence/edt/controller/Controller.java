@@ -119,4 +119,8 @@ public class Controller {
         model.removeSession(session);
     }
 
+    public int checkSessionPeriodRequested(Date date, Integer duration) {
+        return model.checkSessionPeriod(date, duration);
+    }
+
 }

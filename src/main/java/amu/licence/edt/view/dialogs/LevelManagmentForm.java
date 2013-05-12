@@ -25,6 +25,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import amu.licence.edt.model.beans.Group;
 import amu.licence.edt.model.beans.Level;
@@ -60,8 +62,11 @@ public class LevelManagmentForm extends ViewComponent {
     private JSpinner startDayInput;
 //    private JSpinner hourStartInput;
     private JSpinner durationInput;
+    private JLabel lblWarning;
 
     private JButton btnValidate;
+
+    private ChangeListener dateChangeListener;
 
     public LevelManagmentForm(Presenter presenter, Frame owner, Level level) {
         super(presenter);
@@ -101,6 +106,13 @@ public class LevelManagmentForm extends ViewComponent {
         startDayInput = new JSpinner();
         startDayInput.setModel(new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_YEAR));
         startDayInput.setEditor(new JSpinner.DateEditor(startDayInput, "d MMMM yyyy - HH:00"));
+        dateChangeListener = new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                startDayInputStateChanged();
+            }
+        };
+        startDayInput.getModel().addChangeListener(dateChangeListener);
 
 //        lblHourStart = new JLabel("Heure de début");
 //        hourStartInput = new JSpinner();
@@ -109,6 +121,11 @@ public class LevelManagmentForm extends ViewComponent {
         lblDuration = new JLabel("Durée");
         durationInput = new JSpinner();
         durationInput.setModel(new SpinnerNumberModel(2, 1, 4, 1));
+        durationInput.addChangeListener(dateChangeListener);
+
+        lblWarning = new JLabel();
+        lblWarning.setForeground(Color.RED);
+        lblWarning.setVisible(false);
 
         pnlPlanSessionForm.add(lblGroup);
         pnlPlanSessionForm.add(groupInput);
@@ -118,6 +135,7 @@ public class LevelManagmentForm extends ViewComponent {
 //        pnlPlanSessionForm.add(hourStartInput);
         pnlPlanSessionForm.add(lblDuration);
         pnlPlanSessionForm.add(durationInput);
+        pnlPlanSessionForm.add(lblWarning);
 
         pnlPnlsManage.add(new JScrollPane(pnlUnplannedSessions), BorderLayout.WEST);
         JPanel pnl = new JPanel();
@@ -141,6 +159,10 @@ public class LevelManagmentForm extends ViewComponent {
         return thisDialog;
     }
 
+    protected void startDayInputStateChanged() {
+        presenter.startDayChanged((Date)startDayInput.getValue(), (Integer)durationInput.getValue(), this);
+    }
+
     private void fillDialogWithLevelData() {
         pnlUnplannedSessions.removeAll();
         thisDialog.setTitle("Administration niveau " + level.getLibel());
@@ -160,7 +182,7 @@ public class LevelManagmentForm extends ViewComponent {
                     radioBtn.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent arg0) {
-                            btnValidate.setEnabled(true);
+                            dateChangeListener.stateChanged(null);
                         }
                     });
                     btnSessionsGroup.add(radioBtn);
@@ -176,6 +198,7 @@ public class LevelManagmentForm extends ViewComponent {
         for (Group g : level.getPromo().getGroups()) {
             groupInput.addItem(g);
         }
+        dateChangeListener.stateChanged(null);  // initial date
         thisDialog.pack();
     }
 
@@ -194,6 +217,12 @@ public class LevelManagmentForm extends ViewComponent {
 
     public void refreshDatas() {
         fillDialogWithLevelData();
+    }
+
+    public void periodIsUncomfortable(int badness, String txt) {
+        lblWarning.setText(txt);
+        lblWarning.setVisible(badness > 0);
+        btnValidate.setEnabled(btnSessionsGroup.getSelection() != null && badness < 3);
     }
 
 }

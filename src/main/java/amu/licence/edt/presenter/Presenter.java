@@ -22,6 +22,7 @@ import amu.licence.edt.model.beans.SessionType;
 import amu.licence.edt.model.beans.TU;
 import amu.licence.edt.model.beans.Teacher;
 import amu.licence.edt.view.View;
+import amu.licence.edt.view.dialogs.LevelManagmentForm;
 import amu.licence.edt.view.renderers.CRoomRenderer;
 import amu.licence.edt.view.renderers.CRoomTypeRenderer;
 import amu.licence.edt.view.renderers.ClassBasedDDR;
@@ -196,6 +197,19 @@ public class Presenter implements ModelObserver {
         } catch (CExc e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), e.getDefaultTitle(), JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public void startDayChanged(Date date, Integer duration, LevelManagmentForm dialog) {
+        int s = controller.checkSessionPeriodRequested(date, duration);
+        String txt = null;
+        if (s == 1) {
+            txt = "Entre midi et 2h";
+        } else if (s == 2) {
+            txt = "Apres 18h";
+        } else if (s == 3) {
+            txt = "week-end !";
+        }
+        dialog.periodIsUncomfortable(s, txt);
     }
 
 }
